@@ -47,7 +47,7 @@ public class TipoPago implements ITipoPago,LimitsDB {
 
 	@Override
 	public String toString() {
-		return "Type: " + this.sNombreTipoPago + "\n";
+		return " " + this.sNombreTipoPago + "\n";
 	}
 	
 }

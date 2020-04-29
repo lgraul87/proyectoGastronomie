@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.Date;
 
-public class Pedido implements LimitsDB {
+public class Pedido implements IPedido, LimitsDB {
 	private int iIdPedido; // PK
 	private Date dFecha; // NN
 	private Usuario oUsuario; // FK
@@ -18,12 +18,12 @@ public class Pedido implements LimitsDB {
 		setoInstalacion(oInstalacion);
 
 	}
-
+	@Override
 	public int getiIdPedido() {
 		return this.iIdPedido;
 	}
-
-	public boolean setiIdPedido(int iIdPedido) {
+	
+	private boolean setiIdPedido(int iIdPedido) {
 		boolean bValido = false;
 		if (iIdPedido >= MIN_INT_0 && iIdPedido <= MAX_INT_100) {
 			this.iIdPedido = iIdPedido;
@@ -33,11 +33,11 @@ public class Pedido implements LimitsDB {
 		}
 		return bValido;
 	}
-
+	@Override
 	public Date getdFecha() {
 		return this.dFecha;
 	}
-
+	@Override
 	public boolean setdFecha(Date dFecha) {
 		boolean bValido = false;
 		if (dFecha != null) {
@@ -45,11 +45,11 @@ public class Pedido implements LimitsDB {
 		}
 		return bValido;
 	}
-
+	@Override
 	public Usuario getoUsuario() {
 		return this.oUsuario;
 	}
-
+	@Override
 	public boolean setoUsuario(Usuario oUsuario) {
 		boolean bValido = false;
 		if (oUsuario != null) {
@@ -57,11 +57,11 @@ public class Pedido implements LimitsDB {
 		}
 		return bValido;
 	}
-
+	@Override
 	public Pago getoPago() {
 		return oPago;
 	}
-
+	@Override
 	public boolean setoPago(Pago oPago) {
 		boolean bValido = false;
 		if (oPago != null) {
@@ -69,11 +69,11 @@ public class Pedido implements LimitsDB {
 		}
 		return bValido;
 	}
-
+	@Override
 	public Instalacion getoInstalacion() {
 		return this.oInstalacion;
 	}
-
+	@Override
 	public boolean setoInstalacion(Instalacion oInstalacion) {
 		boolean bValido = false;
 		if (oInstalacion != null) {
@@ -81,7 +81,7 @@ public class Pedido implements LimitsDB {
 		}
 		return bValido;
 	}
-
+	@Override
 	public boolean checkPedido() {
 		boolean bValido = false;
 		if (this.iIdPedido != -1 && this.dFecha != null && this.oInstalacion != null && this.oUsuario != null
@@ -119,7 +119,7 @@ public class Pedido implements LimitsDB {
 				//
 				+ "  --Establecimiento: " + this.oInstalacion.toString() + "\n"
 				//
-				+ "  --Forma de pago: " + this.oPago.toString() + "\n"
+				+ "  --Pago: " + this.oPago.toString() + "\n"
 				//
 				+ "  --Fecha: " + this.dFecha + "\n";
 		//
