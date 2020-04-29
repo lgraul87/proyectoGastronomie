@@ -1,6 +1,6 @@
 package modelo;
 
-public class Usuario implements LimitsDB {
+public class Usuario implements IUsuario,LimitsDB {
 	private String sNombreUsuario;// NN
 	private String sDni;// PK
 	private String sApellidos;// NN
@@ -11,45 +11,46 @@ public class Usuario implements LimitsDB {
 	public Usuario(String sNombreUsuario, String sDni, String sApellidos, int iTelefono, String sCorreoElectronico,
 			TipoUsuario oTipoUsuario) {
 
-		this.sNombreUsuario = sNombreUsuario;
-		this.sDni = sDni;
-		this.sApellidos = sApellidos;
-		this.iTelefono = iTelefono;
-		this.sCorreoElectronico = sCorreoElectronico;
-		this.oTipoUsuario = oTipoUsuario;
+		setsNombreUsuario(sNombreUsuario);
+		setsDni(sDni);
+		setsApellidos(sApellidos);
+		setiTelefono(iTelefono);
+		setsCorreoElectronico(sCorreoElectronico);
+		setoTipoUsuario(oTipoUsuario);
+		
 	}
 
 	public Usuario(String sNombreUsuario, String sDni, String sApellidos, String sCorreoElectronico,
 			TipoUsuario oTipoUsuario) {
 
-		this.sNombreUsuario = sNombreUsuario;
-		this.sDni = sDni;
-		this.sApellidos = sApellidos;
-		this.sCorreoElectronico = sCorreoElectronico;
-		this.oTipoUsuario = oTipoUsuario;
+		setsNombreUsuario(sNombreUsuario);
+		setsDni(sDni);
+		setsApellidos(sApellidos);
+		setsCorreoElectronico(sCorreoElectronico);
+		setoTipoUsuario(oTipoUsuario);
 	}
 
 	public Usuario(String sNombreUsuario, String sDni, String sApellidos, int iTelefono, TipoUsuario oTipoUsuario) {
 
-		this.sNombreUsuario = sNombreUsuario;
-		this.sDni = sDni;
-		this.sApellidos = sApellidos;
-		this.iTelefono = iTelefono;
-		this.oTipoUsuario = oTipoUsuario;
+		setsNombreUsuario(sNombreUsuario);
+		setsDni(sDni);
+		setsApellidos(sApellidos);
+		setiTelefono(iTelefono);
+		setoTipoUsuario(oTipoUsuario);
 	}
 
 	public Usuario(String sNombreUsuario, String sDni, String sApellidos, TipoUsuario oTipoUsuario) {
 
-		this.sNombreUsuario = sNombreUsuario;
-		this.sDni = sDni;
-		this.sApellidos = sApellidos;
-		this.oTipoUsuario = oTipoUsuario;
+		setsNombreUsuario(sNombreUsuario);
+		setsDni(sDni);
+		setsApellidos(sApellidos);
+		setoTipoUsuario(oTipoUsuario);
 	}
-
+@Override
 	public String getsNombreUsuario() {
 		return this.sNombreUsuario;
 	}
-
+@Override
 	public boolean setsNombreUsuario(String sNombreUsuario) {
 		boolean bValido = false;
 		if (sNombreUsuario != null && sNombreUsuario.length() <= MAX_CHAR_20) {
@@ -57,7 +58,7 @@ public class Usuario implements LimitsDB {
 		}
 		return bValido;
 	}
-
+@Override
 	public String getsDni() {
 		return this.sDni;
 	}
@@ -69,11 +70,11 @@ public class Usuario implements LimitsDB {
 		}
 		return bValido;
 	}
-
+	@Override
 	public String getsApellidos() {
 		return this.sApellidos;
 	}
-
+	@Override
 	public boolean setsApellidos(String sApellidos) {
 		boolean bValido = false;
 		if (sApellidos != null && sApellidos.length() <= MAX_CHAR_20) {
@@ -81,11 +82,11 @@ public class Usuario implements LimitsDB {
 		}
 		return bValido;
 	}
-
+	@Override
 	public int getiTelefono() {
 		return this.iTelefono;
 	}
-
+	@Override
 	public boolean setiTelefono(int iTelefono) {
 		boolean bValido = false;
 		if (iTelefono >= MIN_TELEFONO && iTelefono <= MAX_TELEFONO) {
@@ -95,11 +96,11 @@ public class Usuario implements LimitsDB {
 		}
 		return bValido;
 	}
-
+	@Override
 	public String getsCorreoElectronico() {
 		return this.sCorreoElectronico;
 	}
-
+	@Override
 	public boolean setsCorreoElectronico(String sCorreoElectronico) {
 		boolean bValido = false;
 		if (sCorreoElectronico != null && sCorreoElectronico.length() <= MAX_CHAR_30
@@ -108,11 +109,11 @@ public class Usuario implements LimitsDB {
 		}
 		return bValido;
 	}
-
+	@Override
 	public TipoUsuario getoTipoUsuario() {
 		return this.oTipoUsuario;
 	}
-
+	@Override
 	public boolean setoTipoUsuario(TipoUsuario oTipoUsuario) {
 		boolean bValido = false;
 		if (oTipoUsuario != null) {
@@ -120,7 +121,7 @@ public class Usuario implements LimitsDB {
 		}
 		return bValido;
 	}
-
+	@Override
 	public boolean checkUsuario() {
 		boolean bValido = false;
 		if (this.sNombreUsuario != null && this.sApellidos != null && this.sDni != null && this.oTipoUsuario != null) {
@@ -141,18 +142,24 @@ public class Usuario implements LimitsDB {
 	public boolean equals(Object obj) {
 		boolean bIgual = false;
 		Usuario other = (Usuario) obj;
-		if (checkUsuario()&& other.checkUsuario()&& this.sDni.equals(other.sDni)) {
+		if (checkUsuario() && other.checkUsuario() && this.sDni.equals(other.sDni)) {
 			bIgual = true;
 		}
-		return bIgual; 
+		return bIgual;
 	}
 
 	@Override
 	public String toString() {
-		return "  --Usuario: "+this.oTipoUsuario.ge + this.sNombreUsuario +" "+this.sApellidos+"\n"
-				+ "  --Dni: " + this.sDni + "  --Telefono: " + this.iTelefono+"  --email: "+this.sCorreoElectronico
-				+ ", iTelefono=" + iTelefono + ", sCorreoElectronico=" + sCorreoElectronico + ", oTipoUsuario="
-				+ oTipoUsuario + "]";
+		String sResultado = "";
+		if (this.iTelefono != -1) {
+			sResultado += "\n  --Telefono: " + this.iTelefono;
+		}
+		if (this.sCorreoElectronico != null) {
+			sResultado += "\n  --email: " + this.sCorreoElectronico;
+		}
+		return "  --Usuario: " + this.oTipoUsuario.toString() + "\n" + "  --Datos Personales: " + "\n"
+				+ this.sNombreUsuario + " " + this.sApellidos + "  --Dni: " + this.sDni + sResultado;
+
 	}
-	
+
 }
