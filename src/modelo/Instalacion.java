@@ -4,8 +4,8 @@ public class Instalacion implements IInstalacion {
 
 	private String sNombreInstalacion; // PK
 	private String sDescripcion;
-	private String sDireccion;
-	private float fCuotaMensual;
+	private String sDireccion; // NN
+	private float fCuotaMensual; // NN
 
 	public Instalacion(String sNombreInstalacion, String sDireccion, float fCuotaMensual) {
 		setsNombreInstalacion(sNombreInstalacion);
@@ -22,11 +22,11 @@ public class Instalacion implements IInstalacion {
 	}
 
 	@Override
-	public String getsNombreInstalacion() { // PK
+	public String getsNombreInstalacion() {
 		return this.sNombreInstalacion;
 	}
 
-	private boolean setsNombreInstalacion(String sNombreInstalacion) {
+	private boolean setsNombreInstalacion(String sNombreInstalacion) { // PK
 		boolean bValido = false;
 		if (sNombreInstalacion != null && sNombreInstalacion.length() <= MAX_CHAR_NOMBRE) {
 			this.sNombreInstalacion = sNombreInstalacion;
@@ -83,7 +83,7 @@ public class Instalacion implements IInstalacion {
 	}
 
 	@Override
-	public boolean validarInstalacion() {
+	public boolean checkInstalacion() {
 		boolean bValido = false;
 		if (this.sNombreInstalacion != null && this.sDireccion != null && this.fCuotaMensual != -1) {
 			bValido = true;
@@ -103,7 +103,8 @@ public class Instalacion implements IInstalacion {
 	public boolean equals(Object obj) {
 		boolean bIgual = false;
 		Instalacion other = (Instalacion) obj;
-		if (this.sNombreInstalacion.equals(other.sNombreInstalacion)) {
+		if (this.checkInstalacion() && other.checkInstalacion()
+				&& this.sNombreInstalacion.equals(other.sNombreInstalacion)) {
 			bIgual = true;
 		}
 		return bIgual;

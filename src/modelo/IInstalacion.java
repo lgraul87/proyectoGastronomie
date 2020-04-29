@@ -21,7 +21,7 @@ public interface IInstalacion {
 
 	public boolean setfCuotaMensual(float fCuotaMensual);
 
-	public boolean validarInstalacion();
+	public boolean checkInstalacion();
 
 	public int hashCode();
 
