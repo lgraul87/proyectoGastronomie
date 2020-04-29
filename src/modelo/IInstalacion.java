@@ -1,11 +1,8 @@
 package modelo;
 
 public interface IInstalacion {
-	public final int MAX_CHAR_NOMBRE = 30;
-	public final int MAX_CHAR_DESCRIPCION = 100;
-	public final int MAX_CHAR_DIRECCION = 40;
-	public final float MAX_CUOTA_MENSUAL = 3000;
-	public final float MIN_CUOTA_MENSUAL = 0;
+	
+	
 
 	public String getsNombreInstalacion();
 

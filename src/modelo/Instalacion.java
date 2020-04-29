@@ -1,6 +1,6 @@
 package modelo;
 
-public class Instalacion implements IInstalacion {
+public class Instalacion implements IInstalacion, LimitsDB {
 
 	private String sNombreInstalacion; // PK
 	private String sDescripcion;
@@ -28,7 +28,7 @@ public class Instalacion implements IInstalacion {
 
 	private boolean setsNombreInstalacion(String sNombreInstalacion) { // PK
 		boolean bValido = false;
-		if (sNombreInstalacion != null && sNombreInstalacion.length() <= MAX_CHAR_NOMBRE) {
+		if (sNombreInstalacion != null && sNombreInstalacion.length() <= MAX_CHAR_30) {
 			this.sNombreInstalacion = sNombreInstalacion;
 			bValido = true;
 		}
@@ -43,7 +43,7 @@ public class Instalacion implements IInstalacion {
 	@Override
 	public boolean setsDescripcion(String sDescripcion) {
 		boolean bValido = false;
-		if (sDescripcion != null && sDescripcion.length() <= MAX_CHAR_DESCRIPCION) {
+		if (sDescripcion != null && sDescripcion.length() <= MAX_CHAR_100) {
 			this.sDescripcion = sDescripcion;
 			bValido = true;
 		}
@@ -58,7 +58,7 @@ public class Instalacion implements IInstalacion {
 	@Override
 	public boolean setsDireccion(String sDireccion) {
 		boolean bValido = false;
-		if (sDireccion != null && sDireccion.length() <= MAX_CHAR_DIRECCION) {
+		if (sDireccion != null && sDireccion.length() <= MAX_CHAR_40) {
 			this.sDireccion = sDireccion;
 			bValido = true;
 		}
@@ -73,7 +73,7 @@ public class Instalacion implements IInstalacion {
 	@Override
 	public boolean setfCuotaMensual(float fCuotaMensual) {
 		boolean bValido = false;
-		if (fCuotaMensual <= MAX_CUOTA_MENSUAL && fCuotaMensual >= MIN_CUOTA_MENSUAL) {
+		if (fCuotaMensual <= MAX_FLOAT_3000 && fCuotaMensual >= MIN_FLOAT_0) {
 			this.fCuotaMensual = fCuotaMensual;
 			bValido = true;
 		} else {
