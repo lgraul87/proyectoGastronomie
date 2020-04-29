@@ -113,12 +113,16 @@ public class Pedido implements LimitsDB {
 
 	@Override
 	public String toString() {
-		return "Pedido (Solicitud) nº: " + this.iIdPedido + "\n"
+		return "  --Pedido (Solicitud) nº: " + this.iIdPedido + "\n"
 		//
-				+ "Para: "this.oUsuario.ge
+				+ "  --Para: " + this.oUsuario.toString() + "\n"
 				//
-				+ ", dFecha=" + dFecha + ", oUsuario=" + oUsuario + ", oPago=" + oPago + ", oInstalacion="
-				+ oInstalacion + "]";
+				+ "  --Establecimiento: " + this.oInstalacion.toString() + "\n"
+				//
+				+ "  --Forma de pago: " + this.oPago.toString() + "\n"
+				//
+				+ "  --Fecha: " + this.dFecha + "\n";
+		//
 	}
 
 }
