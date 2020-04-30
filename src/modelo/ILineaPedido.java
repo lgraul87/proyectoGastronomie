@@ -16,6 +16,10 @@ public interface ILineaPedido {
 
 	public boolean setoProducto(Producto oProducto);
 
+	public byte getbCantidad();
+
+	public boolean setbCantidad(byte bCantidad);
+
 	public boolean checkLineaPedido();
 
 	public int hashCode();

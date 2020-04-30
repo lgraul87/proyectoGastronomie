@@ -5,19 +5,23 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 	private Pedido oPedido; // FK
 	private Material oMaterial; // FK
 	private Producto oProducto; // FK
+	private byte bCantidad;// NN
 
-	public LineaPedido(int iIdLineaPedido, Pedido oPedido, Material oMaterial) {
+	public LineaPedido(int iIdLineaPedido, Pedido oPedido, Material oMaterial, byte bCantidad) {
 		setiIdLineaPedido(iIdLineaPedido);
 		setoPedido(oPedido);
 		setoMaterial(oMaterial);
+		setbCantidad(bCantidad);
 
 	}
 
-	public LineaPedido(int iIdLineaPedido, Pedido oPedido, Producto oProducto) {
+	public LineaPedido(int iIdLineaPedido, Pedido oPedido, Producto oProducto, byte bCantidad) {
 		setiIdLineaPedido(iIdLineaPedido);
 		setoPedido(oPedido);
 		setoProducto(oProducto);
+		setbCantidad(bCantidad);
 	}
+
 	@Override
 	public int getiIdLineaPedido() {
 		return this.iIdLineaPedido;
@@ -33,10 +37,12 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 		}
 		return bValido;
 	}
+
 	@Override
 	public Pedido getoPedido() {
 		return this.oPedido;
 	}
+
 	@Override
 	public boolean setoPedido(Pedido oPedido) {
 		boolean bValido = false;
@@ -46,10 +52,12 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 		return bValido;
 
 	}
+
 	@Override
 	public Material getoMaterial() {
 		return this.oMaterial;
 	}
+
 	@Override
 	public boolean setoMaterial(Material oMaterial) {
 		boolean bValido = false;
@@ -59,10 +67,12 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 		return bValido;
 
 	}
+
 	@Override
 	public Producto getoProducto() {
 		return oProducto;
 	}
+
 	@Override
 	public boolean setoProducto(Producto oProducto) {
 		boolean bValido = false;
@@ -72,11 +82,30 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 		return bValido;
 
 	}
+
+	@Override
+	public byte getbCantidad() {
+		return this.bCantidad;
+	}
+
+	@Override
+	public boolean setbCantidad(byte bCantidad) {
+		boolean bValido = false;
+		if (bCantidad > MIN_INT_0 && bCantidad <= MAX_INT_100) {
+			this.bCantidad = bCantidad;
+			bValido = true;
+		} else {
+			this.bCantidad = -1;
+		}
+		return bValido;
+	}
+
 	@Override
 	public boolean checkLineaPedido() {
 		boolean bValido = false;
-		if (this.iIdLineaPedido != -1 && this.oPedido != null && this.oMaterial != null
-				|| this.iIdLineaPedido != -1 && this.oPedido != null && this.oProducto != null) {
+		if (this.iIdLineaPedido != -1 && this.oPedido != null && this.oMaterial != null && this.bCantidad != -1
+				|| this.iIdLineaPedido != -1 && this.oPedido != null && this.oProducto != null
+						&& this.bCantidad != -1) {
 			bValido = true;
 		}
 		return bValido;
@@ -105,8 +134,8 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 	public String toString() {
 		return "LineaPedido nº: " + this.iIdLineaPedido + "\n"
 		//
-				+"Cliente: "oPedido.
-				+ ", oPedido=" + oPedido + ", oMaterial=" + oMaterial + ", oProducto=" + oProducto + "]";
+				+ "Cliente: " + this.oPedido.getoUsuario().getsNombreUsuario() + ", oPedido=" + oPedido + ", oMaterial="
+				+ oMaterial + ", oProducto=" + oProducto + "]";
 	}
 
 }
