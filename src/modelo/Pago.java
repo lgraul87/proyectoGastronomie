@@ -6,12 +6,12 @@ public class Pago implements IPago, LimitsDB {
 
 	private int iIdPago; // PK
 	private Date dFecha; // NN
-	private TipoPago oTipoPago; // FK
+	private MetodoPago oMetodoPago; // FK
 
-	public Pago(int iIdPago, Date dFecha, TipoPago oTipoPago) {
+	public Pago(int iIdPago, Date dFecha, MetodoPago oMetodoPago) {
 		setiIdPago(iIdPago);
 		setdFecha(dFecha);
-		setoTipoPago(oTipoPago);
+		setoMetodoPago(oMetodoPago);
 
 	}
 	@Override
@@ -43,14 +43,14 @@ public class Pago implements IPago, LimitsDB {
 		return bValido;
 	}
 	@Override
-	public TipoPago getoTipoPago() {
-		return this.oTipoPago;
+	public MetodoPago getoMetodoPago() {
+		return this.oMetodoPago;
 	}
 	@Override
-	public boolean setoTipoPago(TipoPago oTipoPago) {
+	public boolean setoMetodoPago(MetodoPago oMetodoPago) {
 		boolean bValido = false;
-		if (oTipoPago != null) {
-			this.oTipoPago = oTipoPago;
+		if (oMetodoPago != null) {
+			this.oMetodoPago = oMetodoPago;
 			bValido = true;
 		}
 		return bValido;
@@ -58,7 +58,7 @@ public class Pago implements IPago, LimitsDB {
 	@Override
 	public boolean checkPago() {
 		boolean bValido = false;
-		if (this.iIdPago != -1 && this.dFecha != null && this.oTipoPago != null) {
+		if (this.iIdPago != -1 && this.dFecha != null && this.oMetodoPago != null) {
 			bValido = true;
 		}
 		return bValido;
@@ -86,7 +86,7 @@ public class Pago implements IPago, LimitsDB {
 	public String toString() {
 		return "  -- Nº: " + this.iIdPago + "\n"
 		//
-				+ "  --Type: " + this.oTipoPago.toString() 
+				+ "  --Type: " + this.oMetodoPago.toString() 
 				//
 				+ "  --Fecha: " + this.dFecha + "\n";
 	}

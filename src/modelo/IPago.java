@@ -3,15 +3,16 @@ package modelo;
 import java.util.Date;
 
 public interface IPago {
+
 	public int getiIdPago();
 
 	public Date getdFecha();
 
 	public boolean setdFecha(Date dFecha);
 
-	public TipoPago getoTipoPago();
+	public MetodoPago getoMetodoPago();
 
-	public boolean setoTipoPago(TipoPago oTipoPago);
+	public boolean setoMetodoPago(MetodoPago oMetodoPago);
 
 	public boolean checkPago();
 
