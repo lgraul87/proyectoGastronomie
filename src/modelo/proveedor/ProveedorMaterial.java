@@ -70,7 +70,7 @@ public class ProveedorMaterial implements IProveedorMaterial{
 
 	@Override
 	public String toString() {
-		return "  --Proveedor Material: " + this.oProveedor + "  --Material: " + this.oMaterial;
+		return "  --Proveedor Material: " + this.oProveedor.getsNombreProveedor() + "  --Material: " + this.oMaterial;
 	}
 
 }
