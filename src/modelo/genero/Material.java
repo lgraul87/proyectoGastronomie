@@ -1,4 +1,6 @@
-package modelo;
+package modelo.genero;
+
+import modelo.limitdb.LimitsDB;
 
 public class Material implements IMaterial, LimitsDB {
 	private String sNombreMaterial; // PK

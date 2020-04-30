@@ -1,4 +1,6 @@
-package modelo;
+package modelo.genero;
+
+import modelo.limitdb.LimitsDB;
 
 public class Producto implements IProducto, LimitsDB {
 	private String sNombreProducto; // PK

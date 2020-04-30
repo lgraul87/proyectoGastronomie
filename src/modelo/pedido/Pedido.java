@@ -1,6 +1,11 @@
-package modelo;
+package modelo.pedido;
 
 import java.util.Date;
+
+import modelo.instalacion.Instalacion;
+import modelo.limitdb.LimitsDB;
+import modelo.pago.Pago;
+import modelo.usuario.Usuario;
 
 public class Pedido implements IPedido, LimitsDB {
 	private int iIdPedido; // PK

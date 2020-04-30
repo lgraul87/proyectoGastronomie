@@ -1,4 +1,4 @@
-package modelo;
+package modelo.limitdb;
 
 public interface LimitsDB {
 

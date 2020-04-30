@@ -1,6 +1,6 @@
 package modelo.proveedor;
 
-import modelo.Material;
+import modelo.genero.Material;
 
 public interface IProveedorMaterial {
 

@@ -1,6 +1,10 @@
-package modelo;
+package modelo.pedido;
 
 import java.util.Date;
+
+import modelo.instalacion.Instalacion;
+import modelo.pago.Pago;
+import modelo.usuario.Usuario;
 
 public interface IPedido {
 

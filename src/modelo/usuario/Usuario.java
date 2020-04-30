@@ -1,4 +1,6 @@
-package modelo;
+package modelo.usuario;
+
+import modelo.limitdb.LimitsDB;
 
 public class Usuario implements IUsuario,LimitsDB {
 	private String sNombreUsuario;// NN

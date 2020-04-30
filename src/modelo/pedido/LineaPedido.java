@@ -1,4 +1,8 @@
-package modelo;
+package modelo.pedido;
+
+import modelo.genero.Material;
+import modelo.genero.Producto;
+import modelo.limitdb.LimitsDB;
 
 public class LineaPedido implements ILineaPedido, LimitsDB {
 	private int iIdLineaPedido; // PK

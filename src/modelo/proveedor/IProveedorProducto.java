@@ -1,6 +1,6 @@
 package modelo.proveedor;
 
-import modelo.Producto;
+import modelo.genero.Producto;
 
 public interface IProveedorProducto {
 

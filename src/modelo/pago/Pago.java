@@ -1,6 +1,8 @@
-package modelo;
+package modelo.pago;
 
 import java.util.Date;
+
+import modelo.limitdb.LimitsDB;
 
 public class Pago implements IPago, LimitsDB {
 

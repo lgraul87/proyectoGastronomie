@@ -1,4 +1,4 @@
-package modelo;
+package modelo.genero;
 
 public interface IMaterial {
 	

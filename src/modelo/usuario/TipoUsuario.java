@@ -1,4 +1,6 @@
-package modelo;
+package modelo.usuario;
+
+import modelo.limitdb.LimitsDB;
 
 public class TipoUsuario implements ITipoUsuario, LimitsDB {
 

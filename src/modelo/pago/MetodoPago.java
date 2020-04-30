@@ -1,4 +1,6 @@
-package modelo;
+package modelo.pago;
+
+import modelo.limitdb.LimitsDB;
 
 public class MetodoPago implements IMetodoPago,LimitsDB {
 	private String sNombrePago; // PK

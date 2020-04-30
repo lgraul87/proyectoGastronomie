@@ -1,4 +1,6 @@
-package modelo;
+package modelo.instalacion;
+
+import modelo.limitdb.LimitsDB;
 
 public class Instalacion implements IInstalacion, LimitsDB {
 

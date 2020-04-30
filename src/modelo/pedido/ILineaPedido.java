@@ -1,4 +1,7 @@
-package modelo;
+package modelo.pedido;
+
+import modelo.genero.Material;
+import modelo.genero.Producto;
 
 public interface ILineaPedido {
 

@@ -1,4 +1,4 @@
-package modelo;
+package modelo.instalacion;
 
 public interface IInstalacion {
 	

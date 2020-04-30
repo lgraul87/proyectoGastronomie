@@ -1,6 +1,6 @@
 package modelo.proveedor;
 
-import modelo.LimitsDB;
+import modelo.limitdb.LimitsDB;
 
 public class TipoProveedor implements ITipoProveedor,LimitsDB {
 	private String sNombreTipoProveedor; // PK
