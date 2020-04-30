@@ -132,10 +132,23 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 
 	@Override
 	public String toString() {
-		return "LineaPedido nº: " + this.iIdLineaPedido + "\n"
+		String sResultado = "";
 		//
-				+ "Cliente: " + this.oPedido.getoUsuario().getsNombreUsuario() + ", oPedido=" + oPedido + ", oMaterial="
-				+ oMaterial + ", oProducto=" + oProducto + "]";
+		if (this.oMaterial != null) {
+			sResultado = this.oMaterial.getsNombreMaterial() + "  --Precio: " + this.oMaterial.getfPrecio()
+					+ "  --Total: " + this.oMaterial.getfPrecio() * this.bCantidad + "\n";
+		}
+		//
+		if (this.oProducto != null) {
+			sResultado = this.oProducto.getsNombreProducto() + "  --Precio: " + this.oProducto.getfPrecio()
+					+ "  --Total: " + this.oProducto.getfPrecio() * this.bCantidad + "\n";
+
+		}
+		//
+		return "LineaPedido nº: " + this.iIdLineaPedido + "  --Cliene: "
+				+ this.oPedido.getoUsuario().getsNombreUsuario() + "\n"
+				//
+				+ sResultado + "  --Fecha: " + this.oPedido.getdFecha();
 	}
 
 }
