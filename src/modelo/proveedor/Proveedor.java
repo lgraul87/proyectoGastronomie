@@ -2,7 +2,7 @@ package modelo.proveedor;
 
 import modelo.LimitsDB;
 
-public class Proveedor implements LimitsDB {
+public class Proveedor implements IProveedor,LimitsDB {
 	private String sNombreProveedor; // PK
 	private int iTelefono; // NN
 	private String sCorreoElectronico;
@@ -11,25 +11,27 @@ public class Proveedor implements LimitsDB {
 
 	public Proveedor(String sNombreProveedor, int iTelefono, String sCorreoElectronico, String sDireccion,
 			TipoProveedor oTipoProveedor) {
-		this.sNombreProveedor = sNombreProveedor;
-		this.iTelefono = iTelefono;
-		this.sCorreoElectronico = sCorreoElectronico;
-		this.sDireccion = sDireccion;
-		this.oTipoProveedor = oTipoProveedor;
+		
+		setsNombreProveedor(sNombreProveedor);
+		setiTelefono(iTelefono);
+		setsCorreoElectronico(sCorreoElectronico);
+		setsDireccion(sDireccion);
+		setoTipoProveedor(oTipoProveedor);
 	}
 
 	public Proveedor(String sNombreProveedor, int iTelefono, String sDireccion, TipoProveedor oTipoProveedor) {
-		this.sNombreProveedor = sNombreProveedor;
-		this.iTelefono = iTelefono;
-		this.sDireccion = sDireccion;
-		this.oTipoProveedor = oTipoProveedor;
+		setsNombreProveedor(sNombreProveedor);
+		setiTelefono(iTelefono);
+		setsDireccion(sDireccion);
+		setoTipoProveedor(oTipoProveedor);
 	}
-
+	
+	@Override
 	public String getsNombreProveedor() {
 		return this.sNombreProveedor;
 	}
 
-	public boolean setsNombreProveedor(String sNombreProveedor) {
+	private boolean setsNombreProveedor(String sNombreProveedor) {  //PK
 		boolean bValido = false;
 		if (sNombreProveedor != null && sNombreProveedor.length() <= MAX_CHAR_30) {
 			this.sNombreProveedor = sNombreProveedor;
@@ -37,11 +39,11 @@ public class Proveedor implements LimitsDB {
 		}
 		return bValido;
 	}
-
+	@Override
 	public int getiTelefono() {
 		return this.iTelefono;
 	}
-
+	@Override
 	public boolean setiTelefono(int iTelefono) {
 		boolean bValido = false;
 		if (iTelefono >= MIN_TELEFONO && iTelefono <= MAX_TELEFONO) {
@@ -52,11 +54,11 @@ public class Proveedor implements LimitsDB {
 		}
 		return bValido;
 	}
-
+	@Override
 	public String getsCorreoElectronico() {
 		return this.sCorreoElectronico;
 	}
-
+	@Override
 	public boolean setsCorreoElectronico(String sCorreoElectronico) {
 		boolean bValido = false;
 		if (sCorreoElectronico != null && sCorreoElectronico.length() <= MAX_CHAR_30 && sCorreoElectronico.contains("@")) {
@@ -65,11 +67,11 @@ public class Proveedor implements LimitsDB {
 		}
 		return bValido;
 	}
-
+	@Override
 	public String getsDireccion() {
 		return this.sDireccion;
 	}
-
+	@Override
 	public boolean setsDireccion(String sDireccion) {
 		boolean bValido = false;
 		if (sDireccion != null && sDireccion.length() <= MAX_CHAR_50) {
@@ -78,11 +80,11 @@ public class Proveedor implements LimitsDB {
 		}
 		return bValido;
 	}
-
+	@Override
 	public TipoProveedor getoTipoProveedor() {
 		return this.oTipoProveedor;
 	}
-
+	@Override
 	public boolean setoTipoProveedor(TipoProveedor oTipoProveedor) {
 		boolean bValido = false;
 		if (oTipoProveedor != null) {
@@ -91,7 +93,7 @@ public class Proveedor implements LimitsDB {
 		}
 		return bValido;
 	}
-
+	@Override
 	public boolean checkProveedor() {
 		boolean bValido = false;
 		if (this.sNombreProveedor != null && this.sDireccion != null && this.iTelefono != -1
