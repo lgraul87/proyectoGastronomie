@@ -1,17 +1,19 @@
-package modelo;
+package modelo.proveedor;
 
-public class TipoProveedor implements LimitsDB {
+import modelo.LimitsDB;
+
+public class TipoProveedor implements ITipoProveedor,LimitsDB {
 	private String sNombreTipoProveedor; // PK
 
 	public TipoProveedor(String sNombreTipoProveedor) {
 		setsNombreTipoProveedor(sNombreTipoProveedor);
 	}
-
+	@Override
 	public String getsNombreTipoProveedor() {
 		return this.sNombreTipoProveedor;
 	}
 
-	private boolean setsNombreTipoProveedor(String sNombreTipoProveedor) {
+	private boolean setsNombreTipoProveedor(String sNombreTipoProveedor) {  //PK
 		boolean bValido = false;
 		if (sNombreTipoProveedor != null && sNombreTipoProveedor.length() <= MAX_CHAR_15) {
 			this.sNombreTipoProveedor = sNombreTipoProveedor;
@@ -19,7 +21,7 @@ public class TipoProveedor implements LimitsDB {
 		}
 		return bValido;
 	}
-
+	@Override
 	public boolean checkTipoProveedor() {
 		boolean bValido = false;
 		if (this.sNombreTipoProveedor != null) {
