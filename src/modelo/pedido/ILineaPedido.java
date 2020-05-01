@@ -5,6 +5,9 @@ import modelo.genero.Producto;
 
 public interface ILineaPedido {
 
+	public final String COMPRAS = "Compra";
+	public final String VENTAS = "Venta";
+
 	public int getiIdLineaPedido();
 
 	public Pedido getoPedido();
@@ -22,6 +25,10 @@ public interface ILineaPedido {
 	public byte getbCantidad();
 
 	public boolean setbCantidad(byte bCantidad);
+
+	public String getsTipo();
+
+	public boolean setsTipo(String sTipo);
 
 	public boolean checkLineaPedido();
 

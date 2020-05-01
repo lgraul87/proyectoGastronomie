@@ -2,6 +2,8 @@ package modelo.genero;
 
 public interface IMaterial {
 	
+	
+	
 	public String getsNombreMaterial();
 
 	public float getfPrecio();

@@ -3,11 +3,13 @@ package modelo.genero;
 import modelo.limitdb.LimitsDB;
 
 public class Material implements IMaterial, LimitsDB {
+	
 	private String sNombreMaterial; // PK
 	private float fPrecio; // NN
 	private short shStock; // NN
 
-	public Material(String sNombreMaterial, float fPrecio, short shStock) {
+	
+	public Material(String sNombreMaterial, float fPrecio, short shStock, String sTipo) {
 		
 		setsNombreMaterial(sNombreMaterial);
 		setfPrecio(fPrecio);
@@ -58,10 +60,12 @@ public class Material implements IMaterial, LimitsDB {
 		}
 		return bValido;
 	}
+	
+	
 	@Override
 	public boolean checkMaterial() {
 		boolean bValido = false;
-		if (this.sNombreMaterial!=null && this.fPrecio!=-1 && this.shStock!=-1) {
+		if (this.sNombreMaterial!=null && this.fPrecio!=-1 && this.shStock!=-1 ) {
 			bValido = true;
 		}
 		return bValido;

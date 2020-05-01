@@ -6,12 +6,14 @@ public class Producto implements IProducto, LimitsDB {
 	private String sNombreProducto; // PK
 	private float fPrecio; // NN
 	private short shStock; // NN
+	private String sTipo;
 
-	public Producto(String sNombreProducto, float fPrecio, short shStock) {
+	public Producto(String sNombreProducto, float fPrecio, short shStock,String sTipo) {
 
 		setsNombreProducto(sNombreProducto);
 		setfPrecio(fPrecio);
 		setShStock(shStock);
+		setsTipo(sTipo);
 	}
 
 	@Override
@@ -61,7 +63,20 @@ public class Producto implements IProducto, LimitsDB {
 		}
 		return bValido;
 	}
+	@Override
+	public String getsTipo() {
+		return this.sTipo;
+	}
+	@Override
+	public boolean setsTipo(String sTipo) {
+		boolean bValido = false;
+		if (sTipo.equals(CARTA_BEBIDA)|| sTipo.equals(CARTA_COMIDA)||sTipo.equals(DERIVADOS)) {
+			this.sTipo = sTipo;
+			bValido = true;
 
+		}
+		return bValido;
+	}
 	@Override
 	public boolean checkProducto() {
 		boolean bValido = false;
