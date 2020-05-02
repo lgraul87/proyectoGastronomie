@@ -43,13 +43,15 @@ public class PedidoView {
 		MetodoPago oMetodoPago = new MetodoPago(sMetodoPago);
 
 		Pago oPago = new Pago(controlGeneral.getPagoController().asignarId(), new Date(), oMetodoPago);
-		
+
 		Instalacion oInstalacion = new Instalacion("Gastronomie", "C/Comercio, 72", 1000);
 
-		Pedido oPedido = new Pedido(controlGeneral.getPedidoController().asignarId(), new Date(), oUsuario, oPago, oInstalacion);
+		Pedido oPedido = new Pedido(controlGeneral.getPedidoController().asignarId(), new Date(), oUsuario, oPago,
+				oInstalacion);
 
-		LineaPedido oLineaPedido = new LineaPedido(controlGeneral.getLineaPedidoController().asignarId(), oPedido, oProducto, bCantidad);
-		
+		LineaPedido oLineaPedido = new LineaPedido(controlGeneral.getLineaPedidoController().asignarId(), oPedido,
+				oProducto, bCantidad);
+
 		controlGeneral.getLineaPedidoController().upDateLineaPedido(oLineaPedido);
 	}
 
@@ -63,6 +65,7 @@ public class PedidoView {
 				+ "\n  --Efectivo: (1)"
 				//
 				+ "\n  --Tarjeta: (2)", 1, 2, 3);
+
 		if (bOption == 1) {
 			sMetodoPago = "Efectivo";
 
@@ -82,6 +85,57 @@ public class PedidoView {
 	 * ADMIN
 	 ****************************************************************************************************/
 	public static void operacionesPedido() {
+		byte bOption;
+		do {
+			bOption = (byte) L.valida(""
+					//
+					+ "*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
+					//
+					+ "\n					ADMINISTRACION"
+					//
+					+ "\n*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
+					//
+					+ "\n"
+					//
+					+ "\n  --Aniadir Pedido (Compras): (1)"
+					//
+					+ "\n  --Borrar Pedido (Compras):     (2)"
+					//
+					+ "\n  --Buscar Pedido (Compras): (3)"
+					//
+					+ "\n  --Mostrar Pedido (Compras): (4)"
+					//
+					+ "\n  --Salir: (5)", 1, 5, 3);
+			//
+
+			if (bOption == 1) {
+				aniadirPedido();
+			} else if (bOption == 2) {
+				borrarPedido();
+			} else if (bOption == 3) {
+				buscarPedido();
+			} else if (bOption == 4) {
+				mostrarPedido();
+			}
+		} while (bOption != 5);
+	}
+
+	private static void aniadirPedido() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private static void borrarPedido() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private static void buscarPedido() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private static void mostrarPedido() {
 		// TODO Auto-generated method stub
 
 	}
