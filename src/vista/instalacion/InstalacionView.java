@@ -1,5 +1,6 @@
 package vista.instalacion;
 
+import controlador.database.GeneralController;
 import validaciones.L;
 
 public class InstalacionView {
@@ -7,8 +8,9 @@ public class InstalacionView {
 	
 	/***********************************************************************************************
 	 * ADMIN
+	 * @param controlGeneral 
 	 ***********************************************************************************************/
-	public static void operacionesInstalacion() {
+	public static void operacionesInstalacion(GeneralController controlGeneral) {
 		byte bOption;
 		do {
 			bOption = (byte) L.valida(""

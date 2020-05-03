@@ -4,22 +4,29 @@ import controlador.LineaPedidoController;
 import controlador.PagoController;
 import controlador.PedidoController;
 import controlador.ProductoController;
+import controlador.UsuarioController;
 
 public class GeneralController {
 
 	private ConexionDB conexionDB;
+	private UsuarioController usuarioController;
 	private ProductoController productoController;
 	private PagoController pagoController;
 	private PedidoController pedidoController;
 	private LineaPedidoController lineaPedidoController;
 
 	public GeneralController(String sDatabase) {
-		
+
 		this.conexionDB = new ConexionDB(sDatabase);
+		this.usuarioController = new UsuarioController();
 		this.productoController = new ProductoController();
 		this.pagoController = new PagoController();
 		this.pedidoController = new PedidoController();
 		this.lineaPedidoController = new LineaPedidoController();
+	}
+
+	public UsuarioController getUsuarioController() {
+		return this.usuarioController;
 	}
 
 	public ProductoController getProductoController() {
@@ -41,7 +48,5 @@ public class GeneralController {
 	public LineaPedidoController getLineaPedidoController() {
 		return lineaPedidoController;
 	}
-
-	
 
 }

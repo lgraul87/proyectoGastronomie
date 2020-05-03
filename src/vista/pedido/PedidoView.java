@@ -76,15 +76,16 @@ public class PedidoView {
 		return sMetodoPago;
 	}
 
-	public static void tomarNotaTakeAway() {
+	public static void tomarNotaTakeAway(GeneralController controlGeneral) {
 		// TODO Auto-generated method stub
 
 	}
 
 	/****************************************************************************************************
 	 * ADMIN
+	 * @param controlGeneral 
 	 ****************************************************************************************************/
-	public static void operacionesPedido() {
+	public static void operacionesPedido(GeneralController controlGeneral) {
 		byte bOption;
 		do {
 			bOption = (byte) L.valida(""

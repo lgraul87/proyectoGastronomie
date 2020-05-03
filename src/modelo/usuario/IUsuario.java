@@ -2,9 +2,9 @@ package modelo.usuario;
 
 public interface IUsuario {
 
-	public String getsNombreUsuario();
+	public String getsNombre();
 
-	public boolean setsNombreUsuario(String sNombreUsuario);
+	public boolean setsNombre(String sNombre);
 
 	public String getsDni();
 

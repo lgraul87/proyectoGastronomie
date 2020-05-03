@@ -1,13 +1,15 @@
 package vista.pago;
 
+import controlador.database.GeneralController;
 import validaciones.L;
 
 public class PagoView {
 
 	/***********************************************************************************************
 	 * ADMIN
+	 * @param controlGeneral 
 	 ***********************************************************************************************/
-	public static void operacionesPago() {
+	public static void operacionesPago(GeneralController controlGeneral) {
 		byte bOption;
 		do {
 			bOption = (byte) L.valida(""

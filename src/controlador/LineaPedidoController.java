@@ -1,9 +1,5 @@
 package controlador;
 
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import controlador.database.ConexionDB;
 import modelo.pedido.LineaPedido;
 
 public class LineaPedidoController implements ILineaPedidoController {
@@ -32,7 +28,7 @@ public class LineaPedidoController implements ILineaPedidoController {
 	 * UPDATE BDD
 	 ******************************************************************************/
 	public void upDateLineaPedido(LineaPedido oLineaPedido) {
-
+/*
 		int idLineaPedido = oLineaPedido.getiIdLineaPedido();
 
 		byte bCantidad = oLineaPedido.getbCantidad();
@@ -62,6 +58,6 @@ public class LineaPedidoController implements ILineaPedidoController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+*/
 	}
 }

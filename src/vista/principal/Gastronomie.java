@@ -11,6 +11,7 @@ import vista.proveedor.ProveedorView;
 import vista.usuario.UsuarioView;
 
 public class Gastronomie {
+	
 	public static GeneralController controlGeneral = new GeneralController("raulbase");
 
 	public static void main(String[] args) {
@@ -51,7 +52,7 @@ public class Gastronomie {
 			if (bOption == 1) {
 				PedidoView.tomarNotaLocal(controlGeneral);
 			} else if (bOption == 2) {
-				PedidoView.tomarNotaTakeAway();
+				PedidoView.tomarNotaTakeAway(controlGeneral);
 			} else if (bOption == 3) {
 				System.out.println("Buen dia, adios");
 			} else if (bOption == 4) {
@@ -93,19 +94,19 @@ public class Gastronomie {
 			//
 
 			if (bOption == 1) {
-				UsuarioView.operacionesUsuario();
+				UsuarioView.operacionesUsuario(controlGeneral);
 			} else if (bOption == 2) {
-				InstalacionView.operacionesInstalacion();
+				InstalacionView.operacionesInstalacion(controlGeneral);
 			} else if (bOption == 3) {
-				ProveedorView.operacionesProveedor();
+				ProveedorView.operacionesProveedor(controlGeneral);
 			} else if (bOption == 4) {
-				MaterialView.operacionesMaterial();
+				MaterialView.operacionesMaterial(controlGeneral);
 			}else if (bOption == 5) {
-				ProductoView.operacionesProducto();
+				ProductoView.operacionesProducto(controlGeneral);
 			}else if (bOption == 6) {
-				PagoView.operacionesPago();
+				PagoView.operacionesPago(controlGeneral);
 			}else if (bOption == 7) {
-				PedidoView.operacionesPedido();
+				PedidoView.operacionesPedido(controlGeneral);
 			}
 		} while (bOption != 8);
 	}

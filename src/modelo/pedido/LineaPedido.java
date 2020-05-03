@@ -167,7 +167,7 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 		}
 		//
 		return "LineaPedido nº: " + this.iIdLineaPedido + "  --Cliene: "
-				+ this.oPedido.getoUsuario().getsNombreUsuario() + "\n"
+				+ this.oPedido.getoUsuario().getsNombre() + "\n"
 				//
 				+ sResultado + "  --Fecha: " + this.oPedido.getdFecha();
 	}

@@ -1,13 +1,15 @@
 package vista.genero;
 
+import controlador.database.GeneralController;
 import validaciones.L;
 
 public class ProductoView {
 
 	/***********************************************************************************************
 	 * ADMIN
+	 * @param controlGeneral 
 	 ***********************************************************************************************/
-	public static void operacionesProducto() {
+	public static void operacionesProducto(GeneralController controlGeneral) {
 		byte bOption;
 		do {
 			bOption = (byte) L.valida(""

@@ -3,17 +3,17 @@ package modelo.usuario;
 import modelo.limitdb.LimitsDB;
 
 public class Usuario implements IUsuario,LimitsDB {
-	private String sNombreUsuario;// NN
-	private String sDni;// PK
+	private String sNombre;// NN
 	private String sApellidos;// NN
+	private String sDni;// PK
 	private int iTelefono;
 	private String sCorreoElectronico;
 	private TipoUsuario oTipoUsuario;// FK
 
-	public Usuario(String sNombreUsuario, String sDni, String sApellidos, int iTelefono, String sCorreoElectronico,
+	public Usuario(String sNombre, String sDni, String sApellidos, int iTelefono, String sCorreoElectronico,
 			TipoUsuario oTipoUsuario) {
 
-		setsNombreUsuario(sNombreUsuario);
+		setsNombre(sNombre);
 		setsDni(sDni);
 		setsApellidos(sApellidos);
 		setiTelefono(iTelefono);
@@ -22,41 +22,41 @@ public class Usuario implements IUsuario,LimitsDB {
 		
 	}
 
-	public Usuario(String sNombreUsuario, String sDni, String sApellidos, String sCorreoElectronico,
+	public Usuario(String sNombre, String sDni, String sApellidos, String sCorreoElectronico,
 			TipoUsuario oTipoUsuario) {
 
-		setsNombreUsuario(sNombreUsuario);
+		setsNombre(sNombre);
 		setsDni(sDni);
 		setsApellidos(sApellidos);
 		setsCorreoElectronico(sCorreoElectronico);
 		setoTipoUsuario(oTipoUsuario);
 	}
 
-	public Usuario(String sNombreUsuario, String sDni, String sApellidos, int iTelefono, TipoUsuario oTipoUsuario) {
+	public Usuario(String sNombre, String sDni, String sApellidos, int iTelefono, TipoUsuario oTipoUsuario) {
 
-		setsNombreUsuario(sNombreUsuario);
+		setsNombre(sNombre);
 		setsDni(sDni);
 		setsApellidos(sApellidos);
 		setiTelefono(iTelefono);
 		setoTipoUsuario(oTipoUsuario);
 	}
 
-	public Usuario(String sNombreUsuario, String sDni, String sApellidos, TipoUsuario oTipoUsuario) {
+	public Usuario(String sNombre, String sDni, String sApellidos, TipoUsuario oTipoUsuario) {
 
-		setsNombreUsuario(sNombreUsuario);
+		setsNombre(sNombre);
 		setsDni(sDni);
 		setsApellidos(sApellidos);
 		setoTipoUsuario(oTipoUsuario);
 	}
 @Override
-	public String getsNombreUsuario() {
-		return this.sNombreUsuario;
+	public String getsNombre() {
+		return this.sNombre;
 	}
 @Override
-	public boolean setsNombreUsuario(String sNombreUsuario) {
+	public boolean setsNombre(String sNombre) {
 		boolean bValido = false;
-		if (sNombreUsuario != null && sNombreUsuario.length() <= MAX_CHAR_20) {
-			this.sNombreUsuario = sNombreUsuario;
+		if (sNombre != null && sNombre.length() <= MAX_CHAR_20) {
+			this.sNombre = sNombre;
 		}
 		return bValido;
 	}
@@ -126,7 +126,7 @@ public class Usuario implements IUsuario,LimitsDB {
 	@Override
 	public boolean checkUsuario() {
 		boolean bValido = false;
-		if (this.sNombreUsuario != null && this.sApellidos != null && this.sDni != null && this.oTipoUsuario != null) {
+		if (this.sNombre != null && this.sApellidos != null && this.sDni != null && this.oTipoUsuario != null) {
 			bValido = true;
 		}
 		return bValido;
@@ -160,7 +160,7 @@ public class Usuario implements IUsuario,LimitsDB {
 			sResultado += "\n  --email: " + this.sCorreoElectronico;
 		}
 		return "  --Usuario: " + this.oTipoUsuario.toString() + "\n" + "  --Datos Personales: " + "\n"
-				+ this.sNombreUsuario + " " + this.sApellidos + "  --Dni: " + this.sDni + sResultado;
+				+ this.sNombre + " " + this.sApellidos + "  --Dni: " + this.sDni + sResultado;
 
 	}
 

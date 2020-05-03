@@ -1,12 +1,14 @@
 package vista.proveedor;
 
+import controlador.database.GeneralController;
 import validaciones.L;
 
 public class ProveedorView {
 	/***********************************************************************************************
 	 * ADMIN
+	 * @param controlGeneral 
 	 ***********************************************************************************************/
-	public static void operacionesProveedor() {
+	public static void operacionesProveedor(GeneralController controlGeneral) {
 		byte bOption;
 		do {
 			bOption = (byte) L.valida(""
