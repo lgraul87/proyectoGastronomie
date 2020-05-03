@@ -1,13 +1,13 @@
-package vista;
+package vista.usuario;
 
 import validaciones.L;
 
-public class ProductoView {
+public class UsuarioView {
 
 	/***********************************************************************************************
 	 * ADMIN
 	 ***********************************************************************************************/
-	public static void operacionesProducto() {
+	public static void operacionesUsuario() {
 		byte bOption;
 		do {
 			bOption = (byte) L.valida(""
@@ -20,45 +20,45 @@ public class ProductoView {
 					//
 					+ "\n"
 					//
-					+ "\n  --Aniadir Producto (Compra): (1)"
+					+ "\n  --Aniadir Usuario: (1)"
 					//
-					+ "\n  --Borrar Producto (Compra):     (2)"
+					+ "\n  --Borrar Usuario:     (2)"
 					//
-					+ "\n  --Buscar Producto (Compra): (3)"
+					+ "\n  --Buscar Usuario: (3)"
 					//
-					+ "\n  --Mostrar Almacen (Producto): (4)"
+					+ "\n  --Mostrar Usuario: (4)"
 					//
 					+ "\n  --Salir: (5)", 1, 5, 3);
 			//
 
 			if (bOption == 1) {
-				aniadirProducto();
+				aniadirUsuario();
 			} else if (bOption == 2) {
-				borrarProducto();
+				borrarUsuario();
 			} else if (bOption == 3) {
-				buscarProducto();
+				buscarUsuario();
 			} else if (bOption == 4) {
-				mostrarAlmacen();
+				mostrarUsuario();
 			}
 		} while (bOption != 5);
 	}
 
-	private static void aniadirProducto() {
+	private static void aniadirUsuario() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void borrarProducto() {
+	private static void borrarUsuario() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void buscarProducto() {
+	private static void buscarUsuario() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void mostrarAlmacen() {
+	private static void mostrarUsuario() {
 		// TODO Auto-generated method stub
 
 	}

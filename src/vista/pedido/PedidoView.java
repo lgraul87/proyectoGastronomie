@@ -1,4 +1,4 @@
-package vista;
+package vista.pedido;
 
 import java.util.Date;
 

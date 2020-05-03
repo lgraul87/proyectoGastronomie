@@ -1,13 +1,12 @@
-package vista;
+package vista.proveedor;
 
 import validaciones.L;
 
-public class MaterialProveedorView {
-
+public class ProductoProveedorView {
 	/***********************************************************************************************
 	 * ADMIN
 	 ***********************************************************************************************/
-	public static void operacionesMaterialProveedor() {
+	public static void operacionesProductoProveedor() {
 		byte bOption;
 		do {
 			bOption = (byte) L.valida(""
@@ -20,45 +19,45 @@ public class MaterialProveedorView {
 					//
 					+ "\n"
 					//
-					+ "\n  --Asignar Material a Proveedor (Lista): (1)"
+					+ "\n  --Asignar Producto a Proveedor (Lista): (1)"
 					//
-					+ "\n  --Borrar Material a Proveedor (Lista):     (2)"
+					+ "\n  --Borrar Producto a Proveedor (Lista):     (2)"
 					//
-					+ "\n  --Buscar Material de Proveedor (Lista): (3)"
+					+ "\n  --Buscar Producto de Proveedor (Lista): (3)"
 					//
-					+ "\n  --Mostrar Material de Proveedor (Lista): (4)"
+					+ "\n  --Mostrar Producto de Proveedor (Lista): (4)"
 					//
 					+ "\n  --Salir: (5)", 1, 5, 3);
 			//
 
 			if (bOption == 1) {
-				asignarMaterialProveedor();
+				asignarProductoProveedor();
 			} else if (bOption == 2) {
-				borrarMaterialProveedor();
+				borrarProductoProveedor();
 			} else if (bOption == 3) {
-				buscarMaterialProveedor();
+				buscarProductoProveedor();
 			} else if (bOption == 4) {
-				mostrarMaterialProveedor();
+				mostrarProductoProveedor();
 			}
 		} while (bOption != 5);
 	}
 
-	private static void asignarMaterialProveedor() {
+	private static void asignarProductoProveedor() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void borrarMaterialProveedor() {
+	private static void borrarProductoProveedor() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void buscarMaterialProveedor() {
+	private static void buscarProductoProveedor() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void mostrarMaterialProveedor() {
+	private static void mostrarProductoProveedor() {
 		// TODO Auto-generated method stub
 
 	}

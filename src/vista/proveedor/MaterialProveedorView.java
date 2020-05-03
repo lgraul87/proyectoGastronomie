@@ -1,13 +1,13 @@
-package vista;
+package vista.proveedor;
 
 import validaciones.L;
 
-public class UsuarioView {
+public class MaterialProveedorView {
 
 	/***********************************************************************************************
 	 * ADMIN
 	 ***********************************************************************************************/
-	public static void operacionesUsuario() {
+	public static void operacionesMaterialProveedor() {
 		byte bOption;
 		do {
 			bOption = (byte) L.valida(""
@@ -20,45 +20,45 @@ public class UsuarioView {
 					//
 					+ "\n"
 					//
-					+ "\n  --Aniadir Usuario: (1)"
+					+ "\n  --Asignar Material a Proveedor (Lista): (1)"
 					//
-					+ "\n  --Borrar Usuario:     (2)"
+					+ "\n  --Borrar Material a Proveedor (Lista):     (2)"
 					//
-					+ "\n  --Buscar Usuario: (3)"
+					+ "\n  --Buscar Material de Proveedor (Lista): (3)"
 					//
-					+ "\n  --Mostrar Usuario: (4)"
+					+ "\n  --Mostrar Material de Proveedor (Lista): (4)"
 					//
 					+ "\n  --Salir: (5)", 1, 5, 3);
 			//
 
 			if (bOption == 1) {
-				aniadirUsuario();
+				asignarMaterialProveedor();
 			} else if (bOption == 2) {
-				borrarUsuario();
+				borrarMaterialProveedor();
 			} else if (bOption == 3) {
-				buscarUsuario();
+				buscarMaterialProveedor();
 			} else if (bOption == 4) {
-				mostrarUsuario();
+				mostrarMaterialProveedor();
 			}
 		} while (bOption != 5);
 	}
 
-	private static void aniadirUsuario() {
+	private static void asignarMaterialProveedor() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void borrarUsuario() {
+	private static void borrarMaterialProveedor() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void buscarUsuario() {
+	private static void buscarMaterialProveedor() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void mostrarUsuario() {
+	private static void mostrarMaterialProveedor() {
 		// TODO Auto-generated method stub
 
 	}

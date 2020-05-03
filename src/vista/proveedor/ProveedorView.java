@@ -1,14 +1,12 @@
-package vista;
+package vista.proveedor;
 
 import validaciones.L;
 
-public class InstalacionView {
-
-	
+public class ProveedorView {
 	/***********************************************************************************************
 	 * ADMIN
 	 ***********************************************************************************************/
-	public static void operacionesInstalacion() {
+	public static void operacionesProveedor() {
 		byte bOption;
 		do {
 			bOption = (byte) L.valida(""
@@ -21,45 +19,45 @@ public class InstalacionView {
 					//
 					+ "\n"
 					//
-					+ "\n  --Aniadir Instalacion (Alquiler): (1)"
+					+ "\n  --Aniadir Proveedor (Compra): (1)"
 					//
-					+ "\n  --Borrar Instalacion (Alquiler):     (2)"
+					+ "\n  --Borrar Proveedor (Compra):     (2)"
 					//
-					+ "\n  --Buscar Instalacion (Alquiler): (3)"
+					+ "\n  --Buscar Proveedor (Compra): (3)"
 					//
-					+ "\n  --Mostrar Instalacion (Alquiler): (4)"
+					+ "\n  --Mostrar Proveedor (Compra): (4)"
 					//
 					+ "\n  --Salir: (5)", 1, 5, 3);
 			//
 
 			if (bOption == 1) {
-				aniadirInstalacion();
+				aniadirProveedor();
 			} else if (bOption == 2) {
-				borrarInstalacion();
+				borrarProveedor();
 			} else if (bOption == 3) {
-				buscarInstalacion();
+				buscarProveedor();
 			} else if (bOption == 4) {
-				mostrarInstalacion();
+				mostrarProveedor();
 			}
 		} while (bOption != 5);
 	}
 
-	private static void aniadirInstalacion() {
+	private static void aniadirProveedor() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void borrarInstalacion() {
+	private static void borrarProveedor() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void buscarInstalacion() {
+	private static void buscarProveedor() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void mostrarInstalacion() {
+	private static void mostrarProveedor() {
 		// TODO Auto-generated method stub
 
 	}

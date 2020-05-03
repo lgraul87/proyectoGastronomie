@@ -7,7 +7,7 @@ public class ConexionDB {
 	private String port = "3306";
 	private String user = "root";
 	private String password = "RAUL";
-	private String pattern = "jdbc:mysql://" + host + ":" + port + "/";
+	private String pattern = "jdbc:mariadb://" + host + ":" + port + "/";
 	private static Connection connectionDb = null;
 	private String database;
 	private String url;
@@ -23,9 +23,9 @@ public class ConexionDB {
 
 		// Registramos el Driver
 		try {
-			Class.forName("org.mariadb.jdbc.Driver");
+		    Class.forName("org.mariadb.jdbc.Driver");
 		} catch (ClassNotFoundException ex) {
-			System.out.println("Error al registrar el driver de MariaDB: " + ex);
+			System.out.println("Error¡¡ al registrar el driver de MariaDB: " + ex);
 		}
 
 		// Establecemos la conexion
@@ -35,7 +35,8 @@ public class ConexionDB {
 	public void connectDataBase(String url) {
 		try {
 			connectionDb = DriverManager.getConnection(url, user, password);
-		} catch (Exception sqle) {
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
 			connectionDb = null;
 		}
 	}

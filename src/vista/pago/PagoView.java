@@ -1,12 +1,13 @@
-package vista;
+package vista.pago;
 
 import validaciones.L;
 
-public class ProductoProveedorView {
+public class PagoView {
+
 	/***********************************************************************************************
 	 * ADMIN
 	 ***********************************************************************************************/
-	public static void operacionesProductoProveedor() {
+	public static void operacionesPago() {
 		byte bOption;
 		do {
 			bOption = (byte) L.valida(""
@@ -19,45 +20,45 @@ public class ProductoProveedorView {
 					//
 					+ "\n"
 					//
-					+ "\n  --Asignar Producto a Proveedor (Lista): (1)"
+					+ "\n  --Aniadir Pago (Compra): (1)"
 					//
-					+ "\n  --Borrar Producto a Proveedor (Lista):     (2)"
+					+ "\n  --Borrar Pago (Compra):     (2)"
 					//
-					+ "\n  --Buscar Producto de Proveedor (Lista): (3)"
+					+ "\n  --Buscar Pago (Compra): (3)"
 					//
-					+ "\n  --Mostrar Producto de Proveedor (Lista): (4)"
+					+ "\n  --Mostrar Pago (Compra): (4)"
 					//
 					+ "\n  --Salir: (5)", 1, 5, 3);
 			//
 
 			if (bOption == 1) {
-				asignarProductoProveedor();
+				aniadirPago();
 			} else if (bOption == 2) {
-				borrarProductoProveedor();
+				borrarPago();
 			} else if (bOption == 3) {
-				buscarProductoProveedor();
+				buscarPago();
 			} else if (bOption == 4) {
-				mostrarProductoProveedor();
+				mostrarPago();
 			}
 		} while (bOption != 5);
 	}
 
-	private static void asignarProductoProveedor() {
+	private static void aniadirPago() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void borrarProductoProveedor() {
+	private static void borrarPago() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void buscarProductoProveedor() {
+	private static void buscarPago() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void mostrarProductoProveedor() {
+	private static void mostrarPago() {
 		// TODO Auto-generated method stub
 
 	}

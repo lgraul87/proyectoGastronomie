@@ -1,7 +1,14 @@
-package vista;
+package vista.principal;
 
 import controlador.database.GeneralController;
 import validaciones.L;
+import vista.genero.MaterialView;
+import vista.genero.ProductoView;
+import vista.instalacion.InstalacionView;
+import vista.pago.PagoView;
+import vista.pedido.PedidoView;
+import vista.proveedor.ProveedorView;
+import vista.usuario.UsuarioView;
 
 public class Gastronomie {
 	public static GeneralController controlGeneral = new GeneralController("raulbase");

@@ -1,13 +1,13 @@
-package vista;
+package vista.genero;
 
 import validaciones.L;
 
-public class MaterialView {
+public class ProductoView {
 
 	/***********************************************************************************************
 	 * ADMIN
 	 ***********************************************************************************************/
-	public static void operacionesMaterial() {
+	public static void operacionesProducto() {
 		byte bOption;
 		do {
 			bOption = (byte) L.valida(""
@@ -20,40 +20,40 @@ public class MaterialView {
 					//
 					+ "\n"
 					//
-					+ "\n  --Aniadir Material (Compra): (1)"
+					+ "\n  --Aniadir Producto (Compra): (1)"
 					//
-					+ "\n  --Borrar Material (Compra):     (2)"
+					+ "\n  --Borrar Producto (Compra):     (2)"
 					//
-					+ "\n  --Buscar Material (Compra): (3)"
+					+ "\n  --Buscar Producto (Compra): (3)"
 					//
-					+ "\n  --Mostrar Almacen (Material): (4)"
+					+ "\n  --Mostrar Almacen (Producto): (4)"
 					//
 					+ "\n  --Salir: (5)", 1, 5, 3);
 			//
 
 			if (bOption == 1) {
-				aniadirMaterial();
+				aniadirProducto();
 			} else if (bOption == 2) {
-				borrarMaterial();
+				borrarProducto();
 			} else if (bOption == 3) {
-				buscarMaterial();
+				buscarProducto();
 			} else if (bOption == 4) {
 				mostrarAlmacen();
 			}
 		} while (bOption != 5);
 	}
 
-	private static void aniadirMaterial() {
+	private static void aniadirProducto() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void borrarMaterial() {
+	private static void borrarProducto() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void buscarMaterial() {
+	private static void buscarProducto() {
 		// TODO Auto-generated method stub
 
 	}

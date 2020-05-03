@@ -1,13 +1,13 @@
-package vista;
+package vista.genero;
 
 import validaciones.L;
 
-public class PagoView {
+public class MaterialView {
 
 	/***********************************************************************************************
 	 * ADMIN
 	 ***********************************************************************************************/
-	public static void operacionesPago() {
+	public static void operacionesMaterial() {
 		byte bOption;
 		do {
 			bOption = (byte) L.valida(""
@@ -20,45 +20,45 @@ public class PagoView {
 					//
 					+ "\n"
 					//
-					+ "\n  --Aniadir Pago (Compra): (1)"
+					+ "\n  --Aniadir Material (Compra): (1)"
 					//
-					+ "\n  --Borrar Pago (Compra):     (2)"
+					+ "\n  --Borrar Material (Compra):     (2)"
 					//
-					+ "\n  --Buscar Pago (Compra): (3)"
+					+ "\n  --Buscar Material (Compra): (3)"
 					//
-					+ "\n  --Mostrar Pago (Compra): (4)"
+					+ "\n  --Mostrar Almacen (Material): (4)"
 					//
 					+ "\n  --Salir: (5)", 1, 5, 3);
 			//
 
 			if (bOption == 1) {
-				aniadirPago();
+				aniadirMaterial();
 			} else if (bOption == 2) {
-				borrarPago();
+				borrarMaterial();
 			} else if (bOption == 3) {
-				buscarPago();
+				buscarMaterial();
 			} else if (bOption == 4) {
-				mostrarPago();
+				mostrarAlmacen();
 			}
 		} while (bOption != 5);
 	}
 
-	private static void aniadirPago() {
+	private static void aniadirMaterial() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void borrarPago() {
+	private static void borrarMaterial() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void buscarPago() {
+	private static void buscarMaterial() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void mostrarPago() {
+	private static void mostrarAlmacen() {
 		// TODO Auto-generated method stub
 
 	}
