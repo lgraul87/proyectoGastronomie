@@ -9,8 +9,6 @@ public class UsuarioView {
 
 	/***********************************************************************************************
 	 * ADMIN
-	 * 
-	 * @param controlGeneral
 	 ***********************************************************************************************/
 	public static void operacionesUsuario(GeneralController controlGeneral) {
 		byte bOption;
@@ -25,15 +23,15 @@ public class UsuarioView {
 					//
 					+ "\n"
 					//
-					+ "\n  --Aniadir Usuario: (1)"
+					+ "\n  --Aniadir Usuario:    (1)"
 					//
 					+ "\n  --Borrar Usuario:     (2)"
 					//
-					+ "\n  --Buscar Usuario: (3)"
+					+ "\n  --Buscar Usuario:     (3)"
 					//
-					+ "\n  --Mostrar Usuario: (4)"
+					+ "\n  --Mostrar Usuario:    (4)"
 					//
-					+ "\n  --Salir: (5)", 1, 5, 3);
+					+ "\n  --Salir:              (5)", 1, 5, 3);
 			//
 
 			if (bOption == 1) {
@@ -41,13 +39,16 @@ public class UsuarioView {
 			} else if (bOption == 2) {
 				borrarUsuario(controlGeneral);
 			} else if (bOption == 3) {
-				buscarUsuario();
+				buscarUsuario(controlGeneral);
 			} else if (bOption == 4) {
-				mostrarUsuario();
+				mostrarUsuario(controlGeneral);
 			}
 		} while (bOption != 5);
 	}
 
+	/***********************************************************************************************
+	 * ANIADIR USUARIO
+	 ***********************************************************************************************/
 	private static void aniadirUsuario(GeneralController controlGeneral) {
 
 		String sResultado = "";
@@ -58,14 +59,11 @@ public class UsuarioView {
 		Usuario oUsuario = null;
 		int bOptionTelefono = 0;
 		int bOptionCorreo = 0;
-		String sDni;
 
 		String sNombre = L.leer("Nombre (Usuario): ");
 		String sApellidos = L.leer("Apellido (Usuario): ");
 
-		
-			sDni = L.leer("Dni (Usuario): ");
-
+		String sDni = L.leer("Dni (Usuario): ");
 
 		String sTipoUsuario = L.leer("Tipo (Usuario): ");
 
@@ -148,31 +146,81 @@ public class UsuarioView {
 		System.out.println(sResultado);
 	}
 
+	/***********************************************************************************************
+	 * BORRAR USUARIO
+	 ***********************************************************************************************/
+
 	private static void borrarUsuario(GeneralController controlGeneral) {
-		
-		String sResultado ="No se pudo borrar el usuario";
-		
+
+		String sResultado = "No se pudo borrar el usuario";
+
 		String sDni = L.leer("Dni (Usuario):");
-		
-		
+
 		if (controlGeneral.getUsuarioController().remove(sDni)) {
-			sResultado ="Usuario borrado";
+			sResultado = "Usuario borrado";
 		}
-		
+
 		System.out.println(sResultado);
 
 	}
 
-	private static void buscarUsuario() {
-		
-		
-		// TODO Auto-generated method stub
+	/***********************************************************************************************
+	 * BUSCAR USUARIO
+	 ***********************************************************************************************/
+	private static void buscarUsuario(GeneralController controlGeneral) {
+		String sResultado = "Usuario no registrado";
 
+		String sDni = L.leer("Dni (Usuario): ");
+
+		if (controlGeneral.getUsuarioController().searchUser(sDni)) {
+			sResultado = "Usuario registrado";
+		}
+		System.out.println(sResultado);
 	}
 
-	private static void mostrarUsuario() {
-		// TODO Auto-generated method stub
+	/***********************************************************************************************
+	 * MOSTRAR USUARIO
+	 ***********************************************************************************************/
+	private static void mostrarUsuario(GeneralController controlGeneral) {
 
+		String sResultado = null;
+
+		byte bOption = 0;
+
+		boolean errorControl = true;
+
+		do {
+			try {
+				bOption = (byte) L.valida(""
+						//
+						+ "Un usuario: 		(1)"
+						//
+						+ "\nLista de usuarios: 	(2)", 1, 2, 3);
+
+				errorControl = false;
+
+			} catch (NumberFormatException e) {
+				System.out.println(e.getMessage());
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		} while (errorControl);
+
+		if (bOption == 1) {
+
+			String sDni = L.leer("Dni (Usuario):");
+
+			if (controlGeneral.getUsuarioController().searchUser(sDni)) {
+				sResultado = controlGeneral.getUsuarioController().mostrarUsuario(sDni);
+
+			} else {
+				sResultado = "Usuario no encontrado";
+			}
+
+		} else if (bOption == 2) {
+			sResultado = controlGeneral.getUsuarioController().mostrarUsuarios();
+		}
+		System.out.println(sResultado);
 	}
 
 }

@@ -36,15 +36,15 @@ public class Gastronomie {
 					//
 					+ "\n"
 					//
-					+ "\n  --Para tomar aqui: (1)"
+					+ "\n  --Para tomar aqui:    	(1)"
 					//
-					+ "\n  --Para llevar:     (2)"
+					+ "\n  --Para llevar:     		(2)"
 					//
-					+ "\n  --Salir: (3)"
+					+ "\n  --Salir:           		(3)"
 					//
 					+ "\n"
 					//
-					+ "\n  --Admin(4)"
+					+ "\n  --Admin:			(4)"
 					//
 					+ "\n", 1, 4, 3);
 			//
@@ -74,21 +74,21 @@ public class Gastronomie {
 					//
 					+ "\n"
 					//
-					+ "\n  --Operaciones usuario: (1)"
+					+ "\n  --Operaciones usuario: 			(1)"
 					//
-					+ "\n  --Operaciones instalacion:     (2)"
+					+ "\n  --Operaciones instalacion:     		(2)"
 					//
-					+ "\n  --Operaciones proveedor: (3)"
+					+ "\n  --Operaciones proveedor: 			(3)"
 					//
-					+ "\n  --Operaciones material: (4)"
+					+ "\n  --Operaciones material: 			(4)"
 					//
-					+ "\n  --Operaciones Producto: (5)"
+					+ "\n  --Operaciones Producto: 			(5)"
 					//
-					+ "\n  --Operaciones Pago: (6)"
+					+ "\n  --Operaciones Pago: 				(6)"
 					//
-					+ "\n  --Operaciones Pedido: (7)"
+					+ "\n  --Operaciones Pedido: 			(7)"
 					//
-					+ "\n  --Salir: (8)"
+					+ "\n  --Salir: 					(8)"
 					//
 					+ "\n", 1, 8, 3);
 			//
