@@ -104,7 +104,7 @@ public class UsuarioController {
 		boolean bDelete = false;
 		String sTipo = null;
 
-		String sql3 = "SELECT NOMBRE_USUARIO FROM USUARIO WHERE DNI = '" + sDni + "';";
+		String sql3 = "SELECT * FROM USUARIO WHERE DNI = '" + sDni + "';";
 
 		try {
 
