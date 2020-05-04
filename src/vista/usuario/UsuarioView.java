@@ -39,7 +39,7 @@ public class UsuarioView {
 			if (bOption == 1) {
 				aniadirUsuario(controlGeneral);
 			} else if (bOption == 2) {
-				borrarUsuario();
+				borrarUsuario(controlGeneral);
 			} else if (bOption == 3) {
 				buscarUsuario();
 			} else if (bOption == 4) {
@@ -148,12 +148,24 @@ public class UsuarioView {
 		System.out.println(sResultado);
 	}
 
-	private static void borrarUsuario() {
-		// TODO Auto-generated method stub
+	private static void borrarUsuario(GeneralController controlGeneral) {
+		
+		String sResultado ="No se pudo borrar el usuario";
+		
+		String sDni = L.leer("Dni (Usuario):");
+		
+		
+		if (controlGeneral.getUsuarioController().remove(sDni)) {
+			sResultado ="Usuario borrado";
+		}
+		
+		System.out.println(sResultado);
 
 	}
 
 	private static void buscarUsuario() {
+		
+		
 		// TODO Auto-generated method stub
 
 	}
