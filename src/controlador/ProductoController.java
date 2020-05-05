@@ -138,4 +138,14 @@ public class ProductoController {
 		}
 		return sProducto;
 	}
+
+	public String mostrarCartaBebida() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Producto obtenerProducto(String sBebida) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

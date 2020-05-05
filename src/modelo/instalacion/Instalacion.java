@@ -75,7 +75,7 @@ public class Instalacion implements IInstalacion, LimitsDB {
 	@Override
 	public boolean setfCuotaMensual(float fCuotaMensual) {
 		boolean bValido = false;
-		if (fCuotaMensual <= MAX_FLOAT_3000 && fCuotaMensual >= MIN_FLOAT_0) {
+		if (fCuotaMensual <= MAX_FLOAT_3000 && fCuotaMensual > MIN_FLOAT_0) {
 			this.fCuotaMensual = fCuotaMensual;
 			bValido = true;
 		} else {
