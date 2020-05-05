@@ -1,7 +1,7 @@
 package modelo.genero;
 
 public interface IMaterial {
-	
+
 	public String getsNombreMaterial();
 
 	public float getfPrecio();
@@ -11,6 +11,10 @@ public interface IMaterial {
 	public short getShStock();
 
 	public boolean setShStock(short shStock);
+
+	public String getsTipo();
+
+	public boolean setsTipo(String sTipo);
 
 	public boolean checkMaterial();
 

@@ -68,7 +68,7 @@ public class Gastronomie {
 					//
 					+ "*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
 					//
-					+ "\n					ADMINISTRACION"
+					+ "\n		ADMINISTRACION"
 					//
 					+ "\n*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
 					//

@@ -3,26 +3,26 @@ package modelo.genero;
 import modelo.limitdb.LimitsDB;
 
 public class Material implements IMaterial, LimitsDB {
-	
+
 	private String sNombreMaterial; // PK
 	private float fPrecio; // NN
 	private short shStock; // NN
+	private String sTipo;// NN
 
-	
 	public Material(String sNombreMaterial, float fPrecio, short shStock, String sTipo) {
-		
+
 		setsNombreMaterial(sNombreMaterial);
 		setfPrecio(fPrecio);
 		setShStock(shStock);
-		
-		
+		setsTipo(sTipo);
 	}
+
 	@Override
 	public String getsNombreMaterial() {
 		return this.sNombreMaterial;
 	}
-	
-	private boolean setsNombreMaterial(String sNombreMaterial) {  //PK
+
+	private boolean setsNombreMaterial(String sNombreMaterial) { // PK
 		boolean bValido = false;
 		if (sNombreMaterial != null && sNombreMaterial.length() <= MAX_CHAR_15) {
 			this.sNombreMaterial = sNombreMaterial;
@@ -30,10 +30,12 @@ public class Material implements IMaterial, LimitsDB {
 		}
 		return bValido;
 	}
+
 	@Override
 	public float getfPrecio() {
 		return this.fPrecio;
 	}
+
 	@Override
 	public boolean setfPrecio(float fPrecio) {
 		boolean bValido = false;
@@ -45,10 +47,12 @@ public class Material implements IMaterial, LimitsDB {
 		}
 		return bValido;
 	}
+
 	@Override
 	public short getShStock() {
 		return this.shStock;
 	}
+
 	@Override
 	public boolean setShStock(short shStock) {
 		boolean bValido = false;
@@ -60,12 +64,26 @@ public class Material implements IMaterial, LimitsDB {
 		}
 		return bValido;
 	}
-	
-	
+
+	@Override
+	public String getsTipo() {
+		return this.sTipo;
+	}
+
+	@Override
+	public boolean setsTipo(String sTipo) {
+		boolean bValido = false;
+		if (sTipo != null && sTipo.length() <= MAX_CHAR_30) {
+			this.sTipo = sTipo;
+
+		}
+		return bValido;
+	}
+
 	@Override
 	public boolean checkMaterial() {
 		boolean bValido = false;
-		if (this.sNombreMaterial!=null && this.fPrecio!=-1 && this.shStock!=-1 ) {
+		if (this.sNombreMaterial != null && this.fPrecio != -1 && this.shStock != -1 && this.sTipo != null) {
 			bValido = true;
 		}
 		return bValido;
@@ -91,8 +109,7 @@ public class Material implements IMaterial, LimitsDB {
 
 	@Override
 	public String toString() {
-		return "  --Material: " + this.sNombreMaterial + "  --Precio: " + this.fPrecio + "  --Stock: " + this.shStock ;
+		return "  --Material: " + this.sNombreMaterial + "  --Precio: " + this.fPrecio + "  --Stock: " + this.shStock;
 	}
-	
-	
+
 }

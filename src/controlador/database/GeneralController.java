@@ -1,6 +1,7 @@
 package controlador.database;
 
 import controlador.LineaPedidoController;
+import controlador.MaterialController;
 import controlador.PagoController;
 import controlador.PedidoController;
 import controlador.ProductoController;
@@ -12,6 +13,7 @@ public class GeneralController {
 	private ConexionDB conexionDB;
 	private UsuarioController usuarioController;
 	private ProveedorController proveedorController;
+	private MaterialController materialController;
 	private ProductoController productoController;
 	private PagoController pagoController;
 	private PedidoController pedidoController;
@@ -22,6 +24,7 @@ public class GeneralController {
 		this.conexionDB = new ConexionDB(sDatabase);
 		this.usuarioController = new UsuarioController();
 		this.proveedorController = new ProveedorController();
+		this.materialController = new MaterialController();
 		this.productoController = new ProductoController();
 		this.pagoController = new PagoController();
 		this.pedidoController = new PedidoController();
@@ -34,6 +37,10 @@ public class GeneralController {
 
 	public ProveedorController getProveedorController() {
 		return proveedorController;
+	}
+
+	public MaterialController getMaterialController() {
+		return materialController;
 	}
 
 	public ProductoController getProductoController() {
