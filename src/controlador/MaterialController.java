@@ -40,7 +40,23 @@ public class MaterialController {
 		boolean bSearch = false;
 		String sql = "SELECT COUNT(*) FROM MATERIAL WHERE NOMBRE_MATERIAL = '" + sNombre + "';";
 
-		if (ConexionDB.executeUpdate(sql) > 0) {
+		int iCount = 0;
+
+		try {
+			Statement statement = ConexionDB.getConnection().createStatement();
+			ResultSet resultSet = statement.executeQuery(sql);
+
+			while (resultSet.next()) {
+				iCount = 0;
+				iCount++;
+			}
+			resultSet.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		if (iCount != 0) {
 			bSearch = true;
 		}
 		return bSearch;
@@ -77,10 +93,27 @@ public class MaterialController {
 	}
 
 	public String mostrarMateriales() {
+		int iCount = 0;
 		String sMaterial = "";
-
 		String sql = "SELECT * FROM MATERIAL";
 
+		try {
+			Statement statement = ConexionDB.getConnection().createStatement();
+			ResultSet resultSet = statement.executeQuery(sql);
+
+			while (resultSet.next()) {
+				iCount = 0;
+				iCount++;
+			}
+			resultSet.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		if (iCount == 0) {
+			sMaterial = "No hay materiales";
+		}
 		try {
 			Statement statement = ConexionDB.getConnection().createStatement();
 			ResultSet resulset = statement.executeQuery(sql);

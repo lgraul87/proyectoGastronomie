@@ -8,8 +8,6 @@ public class MaterialView {
 
 	/***********************************************************************************************
 	 * ADMIN
-	 * 
-	 * @param controlGeneral
 	 ***********************************************************************************************/
 	public static void operacionesMaterial(GeneralController controlGeneral) {
 		byte bOption;
@@ -59,7 +57,7 @@ public class MaterialView {
 		boolean errorControl = true;
 		do {
 			try {
-				fPrecio = (float) L.valida("Precio (Material):", 0.1F, 3000F, 2);
+				fPrecio = (float) L.valida("Precio en euros (Material):", 0.1F, 3000F, 2);
 				errorControl = false;
 			} catch (NumberFormatException e) {
 				System.out.println(e.getMessage());

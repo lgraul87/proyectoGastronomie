@@ -1,6 +1,7 @@
 package controlador;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import controlador.database.ConexionDB;
@@ -8,88 +9,133 @@ import modelo.genero.Producto;
 
 public class ProductoController {
 
-	public String mostrarCartaBebida() {
+	public boolean add(Producto oProducto) {
 
-		String query = "";
-		// HACER LA QUERY
-		// *************************************************************************
+		boolean bAniadido = false;
+		String sNombre = oProducto.getsNombreProducto();
+		float fPrecio = oProducto.getfPrecio();
+		short shStock = oProducto.getShStock();
+		String sTipo = oProducto.getsTipo();
 
-		String sResultado2 = "\n";
+		String sql = "INSERT INTO PRODUCTO VALUES ('" + sNombre + "'," + fPrecio + "," + shStock + ",'" + sTipo + "');";
 
-		String sResultado = mostrarResultadoCoincidencias(query);
-
-		sResultado2 = mostrarListaProducto(query, sResultado2);
-
-		return sResultado + sResultado2;
-	}
-
-	/*********************************************************************************
-	 * REFACTORS
-	 ********************************************************************************/
-	public String mostrarResultadoCoincidencias(String query) {
-		int iResultado = ConexionDB.executeCount(query);
-		String sResultado = notificarResultado(iResultado);
-		return sResultado;
-	}
-
-	public String notificarResultado(int iResultado) {
-		String sResultado;
-		if (iResultado == 0) {
-			sResultado = "Operacion fallida";
-		} else {
-			sResultado = "Operacion aceptada. Numero de elementos: " + iResultado;
+		if (ConexionDB.executeUpdate(sql) > 0) {
+			bAniadido = true;
 		}
-		return sResultado;
+		return bAniadido;
+
 	}
 
-	/**
-	 * ---------------------------------------------------------------------------------------------------------
-	 */
-
-	public String mostrarListaProducto(String query, String sResultado2) {
-		try {
-			Statement statement = ConexionDB.getConnection().createStatement();
-			ResultSet resulSet = statement.executeQuery(query);
-			while (resulSet.next()) {
-				String sNombreProducto = resulSet.getString("nombre_producto");
-				float fPrecio = resulSet.getFloat("precio");
-				sResultado2 += sNombreProducto + " " + fPrecio + " euro/s";
-			}
-
-			resulSet.close();
-			statement.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+	public boolean remove(String sNombre) {
+		boolean bDelete = false;
+		String sql = "DELETE FROM PRODUCTO WHERE NOMBRE_PRODUCTO = '" + sNombre + "';";
+		if (ConexionDB.executeUpdate(sql) > 0) {
+			bDelete = true;
 		}
+		return bDelete;
 
-		return sResultado2;
 	}
 
-	public Producto obtenerProducto(String sBebida) {
+	public boolean search(String sNombre) {
+		boolean bSearch = false;
+		String sql = "SELECT COUNT(*) FROM PRODUCTO WHERE NOMBRE_PRODUCTO = '" + sNombre + "';";
 
-		String query = "";
-		// HACER LA QUERY
-		// *************************************************************************
-		Producto oProducto = null;
+		int iCount = 0;
 
 		try {
 			Statement statement = ConexionDB.getConnection().createStatement();
-			ResultSet resulSet = statement.executeQuery(query);
-			while (resulSet.next()) {
-				String sNombreProducto = resulSet.getString("nombre_producto");
-				float fPrecio = resulSet.getFloat("precio");
-				int shStock = resulSet.getInt("stock");
-				String sTipo = resulSet.getString("tipo");
+			ResultSet resultSet = statement.executeQuery(sql);
 
-				oProducto = new Producto(sNombreProducto, fPrecio, (short) shStock, sTipo);
+			while (resultSet.next()) {
+				iCount = 0;
+				iCount++;
 			}
-			resulSet.close();
+			resultSet.close();
 			statement.close();
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return oProducto;
+		if (iCount != 0) {
+			bSearch = true;
+		}
+		return bSearch;
+
 	}
 
+	public String mostrarProducto(String sNombre) {
+		String sProducto = "";
+
+		String sql = "SELECT * FROM PRODUCTO WHERE NOMBRE_PRODUCTO = '" + sNombre + "';";
+
+		try {
+			Statement statement = ConexionDB.getConnection().createStatement();
+			ResultSet resulset = statement.executeQuery(sql);
+
+			while (resulset.next()) {
+
+				String sNombreBD = resulset.getString("nombre_producto");
+				float fPrecioBD = resulset.getFloat("precio");
+				short shStockBD = resulset.getShort("stock");
+				String sTipoBD = resulset.getString("tipo");
+
+				sProducto = "  --Nombre: " + sNombreBD + "  --Precio: " + fPrecioBD + "  --Stock: " + shStockBD
+						+ "  --Tipo: " + sTipoBD;
+
+			}
+			resulset.close();
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sProducto;
+	}
+
+	public String mostrarProductos() {
+
+		int iCount = 0;
+		String sProducto = "";
+		String sql = "SELECT * FROM PRODUCTO";
+
+		try {
+			Statement statement = ConexionDB.getConnection().createStatement();
+			ResultSet resultSet = statement.executeQuery(sql);
+
+			while (resultSet.next()) {
+				iCount = 0;
+				iCount++;
+			}
+			resultSet.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		if (iCount == 0) {
+			sProducto = "No hay productos";
+		}
+		try {
+			Statement statement = ConexionDB.getConnection().createStatement();
+			ResultSet resulset = statement.executeQuery(sql);
+
+			while (resulset.next()) {
+
+				String sNombreBD = resulset.getString("nombre_producto");
+				float fPrecioBD = resulset.getFloat("precio");
+				short shStockBD = resulset.getShort("stock");
+				String sTipoBD = resulset.getString("tipo");
+
+				sProducto += "  --Nombre: " + sNombreBD + "  --Precio: " + fPrecioBD + "  --Stock: " + shStockBD
+						+ "  --Tipo: " + sTipoBD + "\n";
+
+			}
+			resulset.close();
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sProducto;
+	}
 }
