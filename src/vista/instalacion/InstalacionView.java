@@ -55,11 +55,8 @@ public class InstalacionView {
 		String sDescripcion = null;
 
 		String sNombre = L.leer("Nombre: (Instalacion)");
-		
-		
+
 		String sDireccion = L.leer("Direccion: (Instalacion)");
-		
-		
 
 		boolean errorControl = true;
 		do {
@@ -88,7 +85,6 @@ public class InstalacionView {
 
 		} while (errorControl);
 
-		
 		if (bOption == 1) {
 			sDescripcion = L.leer("Descripcion: (Instalacion)");
 			oInstalacion = new Instalacion(sNombre, sDescripcion, sDireccion, fCouta);

@@ -69,11 +69,11 @@ public class InstalacionController {
 
 				if (sDescripcionBD != null) {
 					sInstalacion = "  --Nombre: " + sNombreBD + "  --Descripcion: " + sDescripcionBD + "  --Direccion: "
-							+ sDireccionBD + "  --Cuota mensual: " + fPrecioBD+ "\n";
+							+ sDireccionBD + "  --Cuota mensual: " + fPrecioBD + "\n";
 
 				} else {
 					sInstalacion = "  --Nombre: " + sNombreBD + "  --Direccion: " + sDireccionBD + "  --Cuota mensual: "
-							+ fPrecioBD+ "\n";
+							+ fPrecioBD + "\n";
 				}
 
 			}
@@ -112,7 +112,7 @@ public class InstalacionController {
 
 				} else {
 					sInstalacion += "  --Nombre: " + sNombreBD + "  --Direccion: " + sDireccionBD
-							+ "  --Cuota mensual: " + fPrecioBD+ "\n";
+							+ "  --Cuota mensual: " + fPrecioBD + "\n";
 				}
 
 			}

@@ -2,12 +2,13 @@ package modelo.pago;
 
 import modelo.limitdb.LimitsDB;
 
-public class MetodoPago implements IMetodoPago,LimitsDB {
+public class MetodoPago implements IMetodoPago, LimitsDB {
 	private String sNombrePago; // PK
 
 	public MetodoPago(String sNombrePago) {
 		setsNombrePago(sNombrePago);
 	}
+
 	@Override
 	public String getsNombrePago() {
 		return this.sNombrePago;
@@ -21,6 +22,7 @@ public class MetodoPago implements IMetodoPago,LimitsDB {
 		}
 		return bValido;
 	}
+
 	@Override
 	public boolean checkMetodoPago() {
 		boolean bValido = false;
