@@ -140,12 +140,106 @@ public class ProductoController {
 	}
 
 	public String mostrarCartaBebida() {
-		// TODO Auto-generated method stub
-		return null;
+		String sCarta = "No hay bebidas";
+		String sCartaBebida = "Carta_bebida";
+
+		String sql2 = "SELECT COUNT(*) FROM PRODUCTO WHERE TIPO = '" + sCartaBebida + "';";
+
+		if (ConexionDB.executeCount(sql2) != 0) {
+			sCarta = "¡Carta de bebidas!\n--------------------------------------------------\n";
+		}
+
+		String sql = "SELECT * FROM PRODUCTO WHERE TIPO = '" + sCartaBebida + "';";
+
+		try {
+			Statement statement = ConexionDB.getConnection().createStatement();
+			ResultSet resulSet = statement.executeQuery(sql);
+
+			while (resulSet.next()) {
+				String sGeneroBD = resulSet.getString("nombre_producto");
+				float fPrecioBD = resulSet.getFloat("precio");
+
+				sCarta += "  --Producto: " + sGeneroBD + "  --Precio: " + fPrecioBD + "\n";
+
+			}
+			resulSet.close();
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sCarta;
 	}
 
 	public Producto obtenerProducto(String sBebida) {
-		// TODO Auto-generated method stub
-		return null;
+		Producto oProducto = null;
+
+		String sql = "SELECT * FROM PRODUCTO WHERE NOMBRE_PRODUCTO = '" + sBebida + "'";
+
+		try {
+			Statement statement = ConexionDB.getConnection().createStatement();
+			ResultSet resultSet = statement.executeQuery(sql);
+
+			while (resultSet.next()) {
+
+				String sNombreBD = resultSet.getString("nombre_producto");
+				float fPrecioBD = resultSet.getFloat("precio");
+				short shStockBD = resultSet.getShort("stock");
+				String sTipoBD = resultSet.getString("tipo");
+
+				oProducto = new Producto(sNombreBD, fPrecioBD, shStockBD, sTipoBD);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return oProducto;
+	}
+
+	public boolean update(Producto oProducto, byte bCantidad) {
+
+		boolean bUpdate = false;
+		int iCantidadTotal = oProducto.getShStock() - bCantidad;
+		String sNombre = oProducto.getsNombreProducto();
+
+		String sql = "UPDATE PRODUCTO SET STOCK = " + iCantidadTotal + " WHERE NOMBRE_PRODUCTO = '" + sNombre + "' ;";
+
+		if (ConexionDB.executeUpdate(sql) != 0) {
+			bUpdate = true;
+		}
+
+		return bUpdate;
+
+	}
+
+	public String mostrarCartaComida() {
+		String sCarta = "No hay comida";
+		String sCartaComida = "Carta_comida";
+
+		String sql2 = "SELECT COUNT(*) FROM PRODUCTO WHERE TIPO = '" + sCartaComida + "';";
+
+		if (ConexionDB.executeCount(sql2) != 0) {
+			sCarta = "¡Carta de tapas!\n--------------------------------------------------\n";
+		}
+
+		String sql = "SELECT * FROM PRODUCTO WHERE TIPO = '" + sCartaComida + "';";
+
+		try {
+			Statement statement = ConexionDB.getConnection().createStatement();
+			ResultSet resulSet = statement.executeQuery(sql);
+
+			while (resulSet.next()) {
+				String sGeneroBD = resulSet.getString("nombre_producto");
+				float fPrecioBD = resulSet.getFloat("precio");
+
+				sCarta += "  --Producto: " + sGeneroBD + "  --Precio: " + fPrecioBD + "\n";
+
+			}
+			resulSet.close();
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sCarta;
 	}
 }

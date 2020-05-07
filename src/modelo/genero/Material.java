@@ -56,7 +56,7 @@ public class Material implements IMaterial, LimitsDB {
 	@Override
 	public boolean setShStock(short shStock) {
 		boolean bValido = false;
-		if (shStock > MIN_INT_0 && shStock <= MAX_INT_100) {
+		if (shStock > MIN_INT_0 && shStock <= MAX_INT_10000000) {
 			this.shStock = shStock;
 			bValido = true;
 		} else {

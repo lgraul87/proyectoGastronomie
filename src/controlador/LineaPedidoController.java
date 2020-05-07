@@ -153,8 +153,15 @@ public class LineaPedidoController implements ILineaPedidoController {
 
 		iIdPedido = iIdPedido + 1;
 
-		String sql5 = "INSERT INTO PEDIDO VALUES (" + iIdPedido + ",'" + sqlDate + "','" + sDni + "'," + idPago + ",'"
-				+ sNombreInstalacion + "');";
+		String sql5 ="";
+		
+		if (sDni != null) {
+			 sql5 = "INSERT INTO PEDIDO VALUES (" + iIdPedido + ",'" + sqlDate + "','" + sDni + "'," + idPago
+					+ ",'" + sNombreInstalacion + "');";
+		} else if (sDni == null) {
+			 sql5 = "INSERT INTO PEDIDO VALUES (" + iIdPedido + ",'" + sqlDate + "',null," + idPago + ",'"
+					+ sNombreInstalacion + "');";
+		}
 
 		if (ConexionDB.executeUpdate(sql5) != 0) {
 			bAddPedido = true;
@@ -457,8 +464,6 @@ public class LineaPedidoController implements ILineaPedidoController {
 					ResultSet resulSet2 = statement.executeQuery(sql3);
 
 					while (resulSet2.next()) {
-
-						
 
 						if (sNombre != sNombreProveedorBD) {
 							sNombre = sNombreProveedorBD;

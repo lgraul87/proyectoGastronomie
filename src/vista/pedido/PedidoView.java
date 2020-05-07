@@ -11,6 +11,8 @@ import modelo.pago.Pago;
 import modelo.pedido.LineaPedido;
 import modelo.pedido.Pedido;
 import modelo.proveedor.Proveedor;
+import modelo.proveedor.TipoProveedor;
+import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import validaciones.L;
 
@@ -20,74 +22,341 @@ public class PedidoView {
 	 * PARA CLIENTES
 	 ****************************************************************************************************/
 	public static void tomarNotaLocal(GeneralController controlGeneral) {
+		String sResultado = "Error, pedido no realizado";
 
-		/*
-		 * System.out.println(controlGeneral.getProductoController().mostrarCartaBebida(
-		 * ));
-		 * 
-		 * String sBebida = L.leer("Introduce la bebida");
-		 * 
-		 * byte bCantidad = (byte) L.valida("Cantidad: (bebida)", 1, 30, 3);
-		 * 
-		 * String sNombrePersona = L.leer("Me dices tu nombre:");
-		 * 
-		 * String sApellidos = L.leer("Me dices tu apellido:");
-		 * 
-		 * String sDni = L.leer("Me dices tu DNI:");
-		 * 
-		 * String sMetodoPedido = asignarMetodoPedido();
-		 * 
-		 * Producto oProducto =
-		 * controlGeneral.getProductoController().obtenerProducto(sBebida);
-		 * 
-		 * TipoUsuario oTipoUsuario = new TipoUsuario("Cliente");
-		 * 
-		 * Usuario oUsuario = new Usuario(sNombrePersona, sDni, sApellidos,
-		 * oTipoUsuario);
-		 * 
-		 * MetodoPedido oMetodoPedido = new MetodoPedido(sMetodoPedido);
-		 * 
-		 * Pedido oPedido = new Pedido(controlGeneral.getPedidoController().asignarId(),
-		 * new Date(), oMetodoPedido);
-		 * 
-		 * Instalacion oInstalacion = new Instalacion("Gastronomie", "C/Comercio, 72",
-		 * 1000);
-		 * 
-		 * Pedido oPedido = new Pedido(controlGeneral.getPedidoController().asignarId(),
-		 * new Date(), oUsuario, oPedido, oInstalacion);
-		 * 
-		 * LineaPedido oLineaPedido = new
-		 * LineaPedido(controlGeneral.getLineaPedidoController().asignarId(), oPedido,
-		 * oProducto, bCantidad);
-		 * 
-		 * controlGeneral.getLineaPedidoController().upDateLineaPedido(oLineaPedido);
-		 */
-	}
+		byte bOptionPedir = 0;
+		boolean errorControl;
 
-	public static String asignarMetodoPedido() {
-		String sMetodoPedido = "";
+		errorControl = true;
 
-		byte bOption = (byte) L.valida(""
-				//
-				+ "Elige metodo de pago"
-				//
-				+ "\n  --Efectivo: (1)"
-				//
-				+ "\n  --Tarjeta: (2)", 1, 2, 3);
+		do {
+			try {
+				bOptionPedir = (byte) L.valida("Elige opcion:" + "\nBebidas: (1)" + "\nTapas: (2)", 1, 2, 3);
+				errorControl = false;
+			} catch (NumberFormatException e) {
+				System.out.println(e.getMessage());
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		} while (errorControl);
 
-		if (bOption == 1) {
-			sMetodoPedido = "Efectivo";
+		if (bOptionPedir == 1) {
 
-		} else if (bOption == 2) {
-			sMetodoPedido = "Tarjeta";
+
+			byte bCantidad = 0;
+			byte bOption = 0;
+			String sPago = null;
+			int iId = 1;
+
+			System.out.println(controlGeneral.getProductoController().mostrarCartaBebida());
+
+			String sBebida = L.leer("¡Que te pongo!\n--------------------------\nNombre: (Bebida)");
+
+			errorControl = true;
+			do {
+				try {
+					bCantidad = (byte) L.valida("Cantidad: ", 1, 100, 3);
+					errorControl = false;
+				} catch (NumberFormatException e) {
+					System.out.println(e.getMessage());
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			} while (errorControl);
+
+			errorControl = true;
+
+			do {
+				try {
+					bOption = (byte) L.valida("Elige metodo de pago: " + "\nEfectivo: (1)" + "\nTarjeta: (2)", 1, 2, 3);
+					errorControl = false;
+				} catch (NumberFormatException e) {
+					System.out.println(e.getMessage());
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			} while (errorControl);
+
+			if (bOption == 1) {
+				sPago = "efectivo";
+			}
+			if (bOption == 2) {
+				sPago = "tarjeta";
+			}
+			MetodoPago oMetodoPago = new MetodoPago(sPago);
+
+			Pago oPago = new Pago(iId, new Date(), oMetodoPago);
+
+			String sNombreLocal = "Local1";
+
+			TipoUsuario oTipoUsuario = new TipoUsuario("Cliente");
+			Instalacion oInstalacion = new Instalacion(sNombreLocal, "Central", 1000);
+			Usuario oUsuario = new Usuario("Cliente", "Cliente", "Cliente", oTipoUsuario);
+
+			Producto oProducto = controlGeneral.getProductoController().obtenerProducto(sBebida);
+
+			if (oProducto != null) {
+
+				float fPrecioTotal = oProducto.getfPrecio() * bCantidad;
+
+				if (controlGeneral.getProductoController().update(oProducto, bCantidad)) {
+
+					TipoProveedor oTipoProveedor = new TipoProveedor("Gastronomie");
+					Proveedor oProveedor = new Proveedor("Gastronomie", 654554321, "Gastronomie@gmail.com",
+							oTipoProveedor);
+					Pedido oPedido = new Pedido(iId, new Date(), oUsuario, oPago, oInstalacion);
+					LineaPedido oLineaPedido = new LineaPedido(iId, oPedido, oProducto, bCantidad, "Venta", oProveedor);
+					if (controlGeneral.getLineaPedidoController().add(oLineaPedido)) {
+						sResultado = "Aniadido correctamente: " + fPrecioTotal + " euros por favor.";
+					}
+				}
+
+			}
+
+		} else if (bOptionPedir == 2) {
+
+
+			byte bCantidad = 0;
+			byte bOption = 0;
+			String sPago = null;
+			int iId = 1;
+
+			System.out.println(controlGeneral.getProductoController().mostrarCartaComida());
+
+			String sTapas = L.leer("¡Que te pongo!\n--------------------------\nNombre: (Tapa)");
+
+			errorControl = true;
+			do {
+				try {
+					bCantidad = (byte) L.valida("Cantidad: ", 1, 100, 3);
+					errorControl = false;
+				} catch (NumberFormatException e) {
+					System.out.println(e.getMessage());
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			} while (errorControl);
+
+			errorControl = true;
+
+			do {
+				try {
+					bOption = (byte) L.valida("Elige metodo de pago: " + "\nEfectivo: (1)" + "\nTarjeta: (2)", 1, 2, 3);
+					errorControl = false;
+				} catch (NumberFormatException e) {
+					System.out.println(e.getMessage());
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			} while (errorControl);
+
+			if (bOption == 1) {
+				sPago = "efectivo";
+			}
+			if (bOption == 2) {
+				sPago = "tarjeta";
+			}
+			MetodoPago oMetodoPago = new MetodoPago(sPago);
+
+			Pago oPago = new Pago(iId, new Date(), oMetodoPago);
+
+			String sNombreLocal = "Local1";
+
+			TipoUsuario oTipoUsuario = new TipoUsuario("Cliente");
+			Instalacion oInstalacion = new Instalacion(sNombreLocal, "Central", 1000);
+			Usuario oUsuario = new Usuario("Cliente", "Cliente", "Cliente", oTipoUsuario);
+
+			Producto oProducto = controlGeneral.getProductoController().obtenerProducto(sTapas);
+
+			if (oProducto != null) {
+
+				float fPrecioTotal = oProducto.getfPrecio() * bCantidad;
+
+				if (controlGeneral.getProductoController().update(oProducto, bCantidad)) {
+
+					TipoProveedor oTipoProveedor = new TipoProveedor("Gastronomie");
+					Proveedor oProveedor = new Proveedor("Gastronomie", 654554321, "Gastronomie@gmail.com",
+							oTipoProveedor);
+					Pedido oPedido = new Pedido(iId, new Date(), oUsuario, oPago, oInstalacion);
+					LineaPedido oLineaPedido = new LineaPedido(iId, oPedido, oProducto, bCantidad, "Venta", oProveedor);
+					if (controlGeneral.getLineaPedidoController().add(oLineaPedido)) {
+						sResultado = "Aniadido correctamente: " + fPrecioTotal + " euros por favor.";
+					}
+				}
+
+			}
 
 		}
-		return sMetodoPedido;
+		System.out.println(sResultado);
 	}
 
 	public static void tomarNotaTakeAway(GeneralController controlGeneral) {
-		// TODO Auto-generated method stub
+		String sResultado = "Error, pedido no realizado";
 
+		byte bOptionPedir = 0;
+		boolean errorControl;
+
+		errorControl = true;
+
+		do {
+			try {
+				bOptionPedir = (byte) L.valida("Elige opcion:" + "\nBebidas: (1)" + "\nTapas: (2)", 1, 2, 3);
+				errorControl = false;
+			} catch (NumberFormatException e) {
+				System.out.println(e.getMessage());
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		} while (errorControl);
+
+		if (bOptionPedir == 1) {
+
+
+			byte bCantidad = 0;
+			byte bOption = 0;
+			String sPago = null;
+			int iId = 1;
+
+			System.out.println(controlGeneral.getProductoController().mostrarCartaBebida());
+
+			String sBebida = L.leer("¡Que te pongo!\n--------------------------\nNombre: (Bebida)");
+
+			errorControl = true;
+			do {
+				try {
+					bCantidad = (byte) L.valida("Cantidad: ", 1, 100, 3);
+					errorControl = false;
+				} catch (NumberFormatException e) {
+					System.out.println(e.getMessage());
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			} while (errorControl);
+
+			errorControl = true;
+
+			do {
+				try {
+					bOption = (byte) L.valida("Elige metodo de pago: " + "\nEfectivo: (1)" + "\nTarjeta: (2)", 1, 2, 3);
+					errorControl = false;
+				} catch (NumberFormatException e) {
+					System.out.println(e.getMessage());
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			} while (errorControl);
+
+			if (bOption == 1) {
+				sPago = "efectivo";
+			}
+			if (bOption == 2) {
+				sPago = "tarjeta";
+			}
+			MetodoPago oMetodoPago = new MetodoPago(sPago);
+
+			Pago oPago = new Pago(iId, new Date(), oMetodoPago);
+
+			String sNombreLocal = "Local1";
+
+			TipoUsuario oTipoUsuario = new TipoUsuario("Cliente");
+			Instalacion oInstalacion = new Instalacion(sNombreLocal, "Central", 1000);
+			Usuario oUsuario = new Usuario("Cliente", "Cliente", "Cliente", oTipoUsuario);
+
+			Producto oProducto = controlGeneral.getProductoController().obtenerProducto(sBebida);
+
+			if (oProducto != null) {
+
+				float fPrecioTotal = oProducto.getfPrecio() * bCantidad;
+
+				if (controlGeneral.getProductoController().update(oProducto, bCantidad)) {
+
+					TipoProveedor oTipoProveedor = new TipoProveedor("Gastronomie");
+					Proveedor oProveedor = new Proveedor("Gastronomie", 654554321, "Gastronomie@gmail.com",
+							oTipoProveedor);
+					Pedido oPedido = new Pedido(iId, new Date(), oUsuario, oPago, oInstalacion);
+					LineaPedido oLineaPedido = new LineaPedido(iId, oPedido, oProducto, bCantidad, "Venta", oProveedor);
+					if (controlGeneral.getLineaPedidoController().add(oLineaPedido)) {
+						sResultado = "Aniadido correctamente: " + fPrecioTotal + " euros por favor.";
+					}
+				}
+
+			}
+
+		} else if (bOptionPedir == 2) {
+
+
+			byte bCantidad = 0;
+			byte bOption = 0;
+			String sPago = null;
+			int iId = 1;
+
+			System.out.println(controlGeneral.getProductoController().mostrarCartaComida());
+
+			String sTapas = L.leer("¡Que te pongo!\n--------------------------\nNombre: (Tapa)");
+
+			errorControl = true;
+			do {
+				try {
+					bCantidad = (byte) L.valida("Cantidad: ", 1, 100, 3);
+					errorControl = false;
+				} catch (NumberFormatException e) {
+					System.out.println(e.getMessage());
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			} while (errorControl);
+
+			errorControl = true;
+
+			do {
+				try {
+					bOption = (byte) L.valida("Elige metodo de pago: " + "\nEfectivo: (1)" + "\nTarjeta: (2)", 1, 2, 3);
+					errorControl = false;
+				} catch (NumberFormatException e) {
+					System.out.println(e.getMessage());
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			} while (errorControl);
+
+			if (bOption == 1) {
+				sPago = "efectivo";
+			}
+			if (bOption == 2) {
+				sPago = "tarjeta";
+			}
+			MetodoPago oMetodoPago = new MetodoPago(sPago);
+
+			Pago oPago = new Pago(iId, new Date(), oMetodoPago);
+
+			String sNombreLocal = "Local1";
+
+			TipoUsuario oTipoUsuario = new TipoUsuario("Cliente");
+			Instalacion oInstalacion = new Instalacion(sNombreLocal, "Central", 1000);
+			Usuario oUsuario = new Usuario("Cliente", "Cliente", "Cliente", oTipoUsuario);
+
+			Producto oProducto = controlGeneral.getProductoController().obtenerProducto(sTapas);
+
+			if (oProducto != null) {
+
+				float fPrecioTotal = oProducto.getfPrecio() * bCantidad;
+
+				if (controlGeneral.getProductoController().update(oProducto, bCantidad)) {
+
+					TipoProveedor oTipoProveedor = new TipoProveedor("Gastronomie");
+					Proveedor oProveedor = new Proveedor("Gastronomie", 654554321, "Gastronomie@gmail.com",
+							oTipoProveedor);
+					Pedido oPedido = new Pedido(iId, new Date(), oUsuario, oPago, oInstalacion);
+					LineaPedido oLineaPedido = new LineaPedido(iId, oPedido, oProducto, bCantidad, "Venta", oProveedor);
+					if (controlGeneral.getLineaPedidoController().add(oLineaPedido)) {
+						sResultado = "Aniadido correctamente: " + fPrecioTotal + " euros por favor.";
+					}
+				}
+
+			}
+
+		}
+		System.out.println(sResultado);
 	}
 
 	/****************************************************************************************************
@@ -391,55 +660,6 @@ public class PedidoView {
 		System.out.println(sResultado);
 	}
 
-	private static Proveedor obtenerProveedorMaterial(String sNombreMaterial, GeneralController controlGeneral) {
-		Proveedor oProveedor = null;
-
-		oProveedor = controlGeneral.getMaterialProveedorController().obtenerProveedorMaterial(sNombreMaterial);
-		return oProveedor;
-	}
-
-	private static boolean determinarMaterial(String sNombreMaterial, GeneralController controlGeneral) {
-		boolean bEncontrado = false;
-
-		if (controlGeneral.getMaterialProveedorController().determinarMaterial(sNombreMaterial)) {
-			bEncontrado = true;
-		}
-
-		return bEncontrado;
-	}
-
-	private static Proveedor obtenerProveedorProducto(String sNombreProducto, GeneralController controlGeneral) {
-		Proveedor oProveedor = null;
-
-		oProveedor = controlGeneral.getProductoProveedorController().obtenerProveedorProducto(sNombreProducto);
-		return oProveedor;
-	}
-
-	private static boolean determinarProducto(String sNombreProducto, GeneralController controlGeneral) {
-
-		boolean bEncontrado = false;
-
-		if (controlGeneral.getProductoProveedorController().determinarProducto(sNombreProducto)) {
-			bEncontrado = true;
-		}
-
-		return bEncontrado;
-	}
-
-	private static Instalacion determinarInstalacion(String sNombreLocal, GeneralController controlGeneral) {
-		Instalacion oInstalacion = null;
-
-		oInstalacion = controlGeneral.getInstalacionController().determinarInstalacion(sNombreLocal);
-		return oInstalacion;
-	}
-
-	private static Usuario determinarUsuarioPedido(String sDni, GeneralController controlGeneral) {
-
-		Usuario oUsuario = controlGeneral.getUsuarioController().determinarUsuarioPedido(sDni);
-
-		return oUsuario;
-	}
-
 	/***********************************************************************************************
 	 * BORRAR LINEA DE PEDIDO
 	 ***********************************************************************************************/
@@ -539,9 +759,8 @@ public class PedidoView {
 
 			if (bOption == 1) {
 				String sNombreProveedor = null;
-				
+
 				sNombreProveedor = L.leer("Nombre: (Proveedor)");
-				
 
 				if (controlGeneral.getLineaPedidoController().searchPedidoProveedor(sNombreProveedor)) {
 					sResultado = controlGeneral.getLineaPedidoController().mostrarPedidoProveedor(sNombreProveedor);
@@ -558,4 +777,72 @@ public class PedidoView {
 			System.out.println(sAccion);
 		}
 	}
+
+	/*******************************************************************************************************************
+	 * OBTENER USUARIO A PARTIR DE UN DNI
+	 *******************************************************************************************************************/
+	private static Usuario determinarUsuarioPedido(String sDni, GeneralController controlGeneral) {
+
+		Usuario oUsuario = controlGeneral.getUsuarioController().determinarUsuarioPedido(sDni);
+
+		return oUsuario;
+	}
+
+	/*******************************************************************************************************************
+	 * DETERMINAR MATERIAL
+	 *******************************************************************************************************************/
+	private static boolean determinarMaterial(String sNombreMaterial, GeneralController controlGeneral) {
+		boolean bEncontrado = false;
+
+		if (controlGeneral.getMaterialProveedorController().determinarMaterial(sNombreMaterial)) {
+			bEncontrado = true;
+		}
+
+		return bEncontrado;
+	}
+
+	/*******************************************************************************************************************
+	 * OBTENER PROVEEDOR A PARTIR DE UN MATERIAL
+	 *******************************************************************************************************************/
+	private static Proveedor obtenerProveedorMaterial(String sNombreMaterial, GeneralController controlGeneral) {
+		Proveedor oProveedor = null;
+
+		oProveedor = controlGeneral.getMaterialProveedorController().obtenerProveedorMaterial(sNombreMaterial);
+		return oProveedor;
+	}
+
+	/*******************************************************************************************************************
+	 * DETERMINAR PRODUCTO
+	 *******************************************************************************************************************/
+	private static boolean determinarProducto(String sNombreProducto, GeneralController controlGeneral) {
+
+		boolean bEncontrado = false;
+
+		if (controlGeneral.getProductoProveedorController().determinarProducto(sNombreProducto)) {
+			bEncontrado = true;
+		}
+
+		return bEncontrado;
+	}
+
+	/*******************************************************************************************************************
+	 * OBTENER PROVEEDOR A PARTIR DE UN PRODUCTO
+	 *******************************************************************************************************************/
+	private static Proveedor obtenerProveedorProducto(String sNombreProducto, GeneralController controlGeneral) {
+		Proveedor oProveedor = null;
+
+		oProveedor = controlGeneral.getProductoProveedorController().obtenerProveedorProducto(sNombreProducto);
+		return oProveedor;
+	}
+
+	/*******************************************************************************************************************
+	 * DETERMINAR INSTALACION
+	 *******************************************************************************************************************/
+	private static Instalacion determinarInstalacion(String sNombreLocal, GeneralController controlGeneral) {
+		Instalacion oInstalacion = null;
+
+		oInstalacion = controlGeneral.getInstalacionController().determinarInstalacion(sNombreLocal);
+		return oInstalacion;
+	}
+
 }

@@ -1,5 +1,6 @@
 package vista.principal;
 
+import controlador.database.ConexionDB;
 import controlador.database.GeneralController;
 import validaciones.L;
 import vista.genero.MaterialView;
@@ -55,6 +56,7 @@ public class Gastronomie {
 				PedidoView.tomarNotaTakeAway(controlGeneral);
 			} else if (bOption == 3) {
 				System.out.println("Buen dia, adios");
+				ConexionDB.disconnectDatabase();
 			} else if (bOption == 4) {
 				seleccionOperaciones();
 			}
