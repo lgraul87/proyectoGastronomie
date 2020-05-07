@@ -4,6 +4,7 @@ import controlador.database.GeneralController;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import validaciones.L;
+import vista.principal.Gastronomie;
 
 public class UsuarioView {
 
@@ -228,6 +229,9 @@ public class UsuarioView {
 		String sUsuarioLogin = "";
 
 		sUsuarioLogin = L.leer("Nombre: (Usuario)");
+		
+		String hash = Gastronomie.encryptThisString(sUsuarioLogin);
+		System.out.println(hash);
 
 		if (controlGeneral.getUsuarioController().login(sUsuarioLogin)) {
 			sUsuario = sUsuarioLogin;
