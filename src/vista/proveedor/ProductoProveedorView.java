@@ -42,22 +42,22 @@ public class ProductoProveedorView {
 		} while (bOption != 5);
 	}
 
-	private static void asignarProductoProveedor() {
+	public static void asignarProductoProveedor() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void borrarProductoProveedor() {
+	public static void borrarProductoProveedor() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void buscarProductoProveedor() {
+	public static void buscarProductoProveedor() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void mostrarProductoProveedor() {
+	public static void mostrarProductoProveedor() {
 		// TODO Auto-generated method stub
 
 	}

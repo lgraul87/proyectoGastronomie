@@ -46,7 +46,7 @@ public class MaterialView {
 		} while (bOption != 5);
 	}
 
-	private static void aniadirMaterial(GeneralController controlGeneral) {
+	public static void aniadirMaterial(GeneralController controlGeneral) {
 
 		String sResultado = "";
 		float fPrecio = 0;
@@ -93,7 +93,7 @@ public class MaterialView {
 
 	}
 
-	private static void borrarMaterial(GeneralController controlGeneral) {
+	public static void borrarMaterial(GeneralController controlGeneral) {
 
 		String sResultado = "No se pudo borrar";
 
@@ -105,7 +105,7 @@ public class MaterialView {
 		System.out.println(sResultado);
 	}
 
-	private static void buscarMaterial(GeneralController controlGeneral) {
+	public static void buscarMaterial(GeneralController controlGeneral) {
 
 		String sResultado = "No esta registrado.";
 
@@ -117,7 +117,7 @@ public class MaterialView {
 		System.out.println(sResultado);
 	}
 
-	private static void mostrarAlmacen(GeneralController controlGeneral) {
+	public static void mostrarAlmacen(GeneralController controlGeneral) {
 		String sResultado = null;
 
 		byte bOption = 0;

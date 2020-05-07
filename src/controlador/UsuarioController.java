@@ -7,11 +7,12 @@ import controlador.database.ConexionDB;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 
-public class UsuarioController {
+public class UsuarioController implements IUsuarioController {
 
 	/***************************************************************************************************************
 	 * ADD USUARIO
 	 ***************************************************************************************************************/
+	@Override
 	public boolean add(Usuario oUsuario) {
 		boolean bAniadido = false;
 		boolean bCrearUsuario = false;
@@ -65,7 +66,8 @@ public class UsuarioController {
 
 	}
 
-	private void createTipoUsuario(String sTipo) {
+	@Override
+	public void createTipoUsuario(String sTipo) {
 
 		String sql = "INSERT INTO TIPO_USUARIO VALUES ('" + sTipo + "');";
 
@@ -73,7 +75,8 @@ public class UsuarioController {
 
 	}
 
-	private boolean searchTipoUsuario(String sTipo) {
+	@Override
+	public boolean searchTipoUsuario(String sTipo) {
 		boolean bEncontrado = false;
 
 		String sql = "SELECT COUNT(*) FROM tipo_usuario WHERE nombre_tipo = '" + sTipo + "';";
@@ -90,6 +93,7 @@ public class UsuarioController {
 	 * REMOVE USUARIO
 	 ***************************************************************************************************************/
 
+	@Override
 	public boolean remove(String sDni) {
 		boolean bRemove = false;
 		if (searchUser(sDni)) {
@@ -100,7 +104,8 @@ public class UsuarioController {
 		return bRemove;
 	}
 
-	private boolean deleteUser(String sDni) {
+	@Override
+	public boolean deleteUser(String sDni) {
 
 		boolean bDelete = false;
 		String sTipo = null;
@@ -145,6 +150,7 @@ public class UsuarioController {
 	/***************************************************************************************************************
 	 * SEARCH USER
 	 ***************************************************************************************************************/
+	@Override
 	public boolean searchUser(String sDni) {
 		boolean bEncontrado = false;
 
@@ -161,6 +167,7 @@ public class UsuarioController {
 	/***************************************************************************************************************
 	 * 1-. MOSTRAR USUARIO
 	 ***************************************************************************************************************/
+	@Override
 	public String mostrarUsuario(String sDni) {
 		String sResultado = null;
 		int iTelefonoBD = 0;
@@ -216,6 +223,7 @@ public class UsuarioController {
 	/***************************************************************************************************************
 	 * 2-. MOSTRAR LISTA DE USUARIOS
 	 ***************************************************************************************************************/
+	@Override
 	public String mostrarUsuarios() {
 		String sResultado = "No hay usuarios";
 
@@ -274,6 +282,7 @@ public class UsuarioController {
 		return sResultado;
 	}
 
+	@Override
 	public Usuario determinarUsuarioPedido(String sDni) {
 
 		Usuario oUsuario = null;

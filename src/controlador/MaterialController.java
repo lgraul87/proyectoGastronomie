@@ -7,8 +7,9 @@ import java.sql.Statement;
 import controlador.database.ConexionDB;
 import modelo.genero.Material;
 
-public class MaterialController {
+public class MaterialController implements IMaterialController{
 
+	@Override
 	public boolean add(Material oMaterial) {
 
 		boolean bAniadido = false;
@@ -26,6 +27,7 @@ public class MaterialController {
 
 	}
 
+	@Override
 	public boolean remove(String sNombre) {
 		boolean bDelete = false;
 		String sql = "DELETE FROM MATERIAL WHERE NOMBRE_MATERIAL = '" + sNombre + "';";
@@ -36,6 +38,7 @@ public class MaterialController {
 
 	}
 
+	@Override
 	public boolean search(String sNombre) {
 		boolean bSearch = false;
 		String sql = "SELECT COUNT(*) FROM MATERIAL WHERE NOMBRE_MATERIAL = '" + sNombre + "';";
@@ -63,6 +66,7 @@ public class MaterialController {
 
 	}
 
+	@Override
 	public String mostrarMaterial(String sNombre) {
 		String sMaterial = "";
 
@@ -92,6 +96,7 @@ public class MaterialController {
 		return sMaterial;
 	}
 
+	@Override
 	public String mostrarMateriales() {
 		int iCount = 0;
 		String sMaterial = "";

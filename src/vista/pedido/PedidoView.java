@@ -401,7 +401,7 @@ public class PedidoView {
 	/***********************************************************************************************
 	 * ANIADIR LINEA DE PEDIDO
 	 ***********************************************************************************************/
-	private static void aniadirPedido(GeneralController controlGeneral) {
+	public static void aniadirPedido(GeneralController controlGeneral) {
 
 		String sResultado = "No se pudo aniadir.";
 		byte bOptionPago = 0;
@@ -664,7 +664,7 @@ public class PedidoView {
 	 * BORRAR LINEA DE PEDIDO
 	 ***********************************************************************************************/
 
-	private static void borrarPedido(GeneralController controlGeneral) {
+	public static void borrarPedido(GeneralController controlGeneral) {
 
 		int iNumero = 0;
 
@@ -698,7 +698,7 @@ public class PedidoView {
 	/***********************************************************************************************
 	 * BUSCAR LINEA DE PEDIDO
 	 ***********************************************************************************************/
-	private static void buscarPedido(GeneralController controlGeneral) {
+	public static void buscarPedido(GeneralController controlGeneral) {
 		String sResultado = "Linea de Pedido no registrado";
 
 		String sAccion = controlGeneral.getLineaPedidoController().mostrarPedidosPorId();
@@ -730,7 +730,7 @@ public class PedidoView {
 	/***********************************************************************************************
 	 * MOSTRAR PEDIDO
 	 ***********************************************************************************************/
-	private static void mostrarPedido(GeneralController controlGeneral) {
+	public static void mostrarPedido(GeneralController controlGeneral) {
 
 		String sResultado = null;
 		String sAccion = controlGeneral.getLineaPedidoController().mostrarPedidosPorId();
@@ -781,7 +781,7 @@ public class PedidoView {
 	/*******************************************************************************************************************
 	 * OBTENER USUARIO A PARTIR DE UN DNI
 	 *******************************************************************************************************************/
-	private static Usuario determinarUsuarioPedido(String sDni, GeneralController controlGeneral) {
+	public static Usuario determinarUsuarioPedido(String sDni, GeneralController controlGeneral) {
 
 		Usuario oUsuario = controlGeneral.getUsuarioController().determinarUsuarioPedido(sDni);
 
@@ -791,7 +791,7 @@ public class PedidoView {
 	/*******************************************************************************************************************
 	 * DETERMINAR MATERIAL
 	 *******************************************************************************************************************/
-	private static boolean determinarMaterial(String sNombreMaterial, GeneralController controlGeneral) {
+	public static boolean determinarMaterial(String sNombreMaterial, GeneralController controlGeneral) {
 		boolean bEncontrado = false;
 
 		if (controlGeneral.getMaterialProveedorController().determinarMaterial(sNombreMaterial)) {
@@ -804,7 +804,7 @@ public class PedidoView {
 	/*******************************************************************************************************************
 	 * OBTENER PROVEEDOR A PARTIR DE UN MATERIAL
 	 *******************************************************************************************************************/
-	private static Proveedor obtenerProveedorMaterial(String sNombreMaterial, GeneralController controlGeneral) {
+	public static Proveedor obtenerProveedorMaterial(String sNombreMaterial, GeneralController controlGeneral) {
 		Proveedor oProveedor = null;
 
 		oProveedor = controlGeneral.getMaterialProveedorController().obtenerProveedorMaterial(sNombreMaterial);
@@ -814,7 +814,7 @@ public class PedidoView {
 	/*******************************************************************************************************************
 	 * DETERMINAR PRODUCTO
 	 *******************************************************************************************************************/
-	private static boolean determinarProducto(String sNombreProducto, GeneralController controlGeneral) {
+	public static boolean determinarProducto(String sNombreProducto, GeneralController controlGeneral) {
 
 		boolean bEncontrado = false;
 
@@ -828,7 +828,7 @@ public class PedidoView {
 	/*******************************************************************************************************************
 	 * OBTENER PROVEEDOR A PARTIR DE UN PRODUCTO
 	 *******************************************************************************************************************/
-	private static Proveedor obtenerProveedorProducto(String sNombreProducto, GeneralController controlGeneral) {
+	public static Proveedor obtenerProveedorProducto(String sNombreProducto, GeneralController controlGeneral) {
 		Proveedor oProveedor = null;
 
 		oProveedor = controlGeneral.getProductoProveedorController().obtenerProveedorProducto(sNombreProducto);
@@ -838,7 +838,7 @@ public class PedidoView {
 	/*******************************************************************************************************************
 	 * DETERMINAR INSTALACION
 	 *******************************************************************************************************************/
-	private static Instalacion determinarInstalacion(String sNombreLocal, GeneralController controlGeneral) {
+	public static Instalacion determinarInstalacion(String sNombreLocal, GeneralController controlGeneral) {
 		Instalacion oInstalacion = null;
 
 		oInstalacion = controlGeneral.getInstalacionController().determinarInstalacion(sNombreLocal);

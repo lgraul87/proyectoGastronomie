@@ -49,7 +49,7 @@ public class UsuarioView {
 	/***********************************************************************************************
 	 * ANIADIR USUARIO
 	 ***********************************************************************************************/
-	private static void aniadirUsuario(GeneralController controlGeneral) {
+	public static void aniadirUsuario(GeneralController controlGeneral) {
 
 		String sResultado = "";
 		int iTelefono = 0;
@@ -150,7 +150,7 @@ public class UsuarioView {
 	 * BORRAR USUARIO
 	 ***********************************************************************************************/
 
-	private static void borrarUsuario(GeneralController controlGeneral) {
+	public static void borrarUsuario(GeneralController controlGeneral) {
 
 		String sResultado = "No se pudo borrar el usuario";
 
@@ -167,7 +167,7 @@ public class UsuarioView {
 	/***********************************************************************************************
 	 * BUSCAR USUARIO
 	 ***********************************************************************************************/
-	private static void buscarUsuario(GeneralController controlGeneral) {
+	public static void buscarUsuario(GeneralController controlGeneral) {
 		String sResultado = "Usuario no registrado";
 
 		String sDni = L.leer("Dni (Usuario): ");
@@ -181,7 +181,7 @@ public class UsuarioView {
 	/***********************************************************************************************
 	 * MOSTRAR USUARIO
 	 ***********************************************************************************************/
-	private static void mostrarUsuario(GeneralController controlGeneral) {
+	public static void mostrarUsuario(GeneralController controlGeneral) {
 
 		String sResultado = null;
 

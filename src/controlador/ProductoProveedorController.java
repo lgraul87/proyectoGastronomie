@@ -8,8 +8,10 @@ import controlador.database.ConexionDB;
 import modelo.proveedor.Proveedor;
 import modelo.proveedor.TipoProveedor;
 
-public class ProductoProveedorController {
-
+public class ProductoProveedorController implements IProductoProveedorController {
+	
+	
+	@Override
 	public boolean determinarProducto(String sNombreProducto) {
 
 		boolean bEncontrado = false;
@@ -22,6 +24,7 @@ public class ProductoProveedorController {
 		return bEncontrado;
 	}
 
+	@Override
 	public Proveedor obtenerProveedorProducto(String sNombreProducto) {
 		Proveedor oProveedor = null;
 		String sNombreBD = null;
@@ -79,7 +82,5 @@ public class ProductoProveedorController {
 
 		return oProveedor;
 	}
-
-	
 
 }

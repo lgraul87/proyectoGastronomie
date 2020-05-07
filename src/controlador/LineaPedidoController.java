@@ -9,59 +9,8 @@ import controlador.database.ConexionDB;
 import modelo.pedido.LineaPedido;
 
 public class LineaPedidoController implements ILineaPedidoController {
-	private int autoId;
 
-	public LineaPedidoController() {
-		setAutoId(MIN_ID);
-	}
-
-	public int getAutoId() {
-		return this.autoId;
-	}
-
-	public void setAutoId(int autoId) {
-		this.autoId = autoId;
-	}
-
-	public int asignarId() {
-		int id = this.autoId;
-		id++;
-		this.autoId = id;
-		return id;
-	}
-
-	/******************************************************************************
-	 * UPDATE BDD
-	 ******************************************************************************/
-	public void upDateLineaPedido(LineaPedido oLineaPedido) {
-		/*
-		 * int idLineaPedido = oLineaPedido.getiIdLineaPedido();
-		 * 
-		 * byte bCantidad = oLineaPedido.getbCantidad();
-		 * 
-		 * String sTipo = oLineaPedido.getsTipo(); int idPedido =
-		 * oLineaPedido.getoPedido().getiIdPedido();
-		 * 
-		 * if (oLineaPedido.getoMaterial() != null) { String sNombreGenero =
-		 * oLineaPedido.getoMaterial().getsNombreMaterial();
-		 * 
-		 * }
-		 * 
-		 * if (oLineaPedido.getoProducto() != null) { String sNombreGenero =
-		 * oLineaPedido.getoProducto().getsNombreProducto();
-		 * 
-		 * }
-		 * 
-		 * String query = ""; // HACER LA QUERY //
-		 * *************************************************************************
-		 * 
-		 * try { Statement statement = ConexionDB.getConnection().createStatement();
-		 * statement.executeUpdate(query); statement.close();
-		 * 
-		 * } catch (SQLException e) { e.printStackTrace(); }
-		 */
-	}
-
+	@Override
 	public boolean add(LineaPedido oLineaPedido) {
 
 		boolean dAdd = false;
@@ -153,13 +102,13 @@ public class LineaPedidoController implements ILineaPedidoController {
 
 		iIdPedido = iIdPedido + 1;
 
-		String sql5 ="";
-		
+		String sql5 = "";
+
 		if (sDni != null) {
-			 sql5 = "INSERT INTO PEDIDO VALUES (" + iIdPedido + ",'" + sqlDate + "','" + sDni + "'," + idPago
-					+ ",'" + sNombreInstalacion + "');";
+			sql5 = "INSERT INTO PEDIDO VALUES (" + iIdPedido + ",'" + sqlDate + "','" + sDni + "'," + idPago + ",'"
+					+ sNombreInstalacion + "');";
 		} else if (sDni == null) {
-			 sql5 = "INSERT INTO PEDIDO VALUES (" + iIdPedido + ",'" + sqlDate + "',null," + idPago + ",'"
+			sql5 = "INSERT INTO PEDIDO VALUES (" + iIdPedido + ",'" + sqlDate + "',null," + idPago + ",'"
 					+ sNombreInstalacion + "');";
 		}
 
@@ -209,11 +158,13 @@ public class LineaPedidoController implements ILineaPedidoController {
 		return dAdd;
 	}
 
-	private java.sql.Date convert(java.util.Date uDate) {
+	@Override
+	public java.sql.Date convert(java.util.Date uDate) {
 		java.sql.Date sDate = new java.sql.Date(uDate.getTime());
 		return sDate;
 	}
 
+	@Override
 	public boolean addSinPago(LineaPedido oLineaPedido) {
 		boolean dAdd = false;
 		boolean bAddPedido = false;
@@ -318,6 +269,7 @@ public class LineaPedidoController implements ILineaPedidoController {
 		return dAdd;
 	}
 
+	@Override
 	public String mostrarPedidosPorId() {
 
 		String sPedidos = "No hay lineas de pedidos";
@@ -361,6 +313,7 @@ public class LineaPedidoController implements ILineaPedidoController {
 		return sPedidos;
 	}
 
+	@Override
 	public boolean remove(int iNumero) {
 		boolean bDelete = false;
 
@@ -373,6 +326,7 @@ public class LineaPedidoController implements ILineaPedidoController {
 		return bDelete;
 	}
 
+	@Override
 	public boolean search(int iNumero) {
 		boolean bSearch = false;
 
@@ -384,6 +338,7 @@ public class LineaPedidoController implements ILineaPedidoController {
 		return bSearch;
 	}
 
+	@Override
 	public boolean searchPedidoProveedor(String sNombreProveedor) {
 		boolean bSearch = false;
 
@@ -395,6 +350,7 @@ public class LineaPedidoController implements ILineaPedidoController {
 		return bSearch;
 	}
 
+	@Override
 	public String mostrarPedidoProveedor(String sNombreProveedor) {
 
 		String sPedidos = "No hay lineas de pedidos con ese proveedor";
@@ -436,6 +392,7 @@ public class LineaPedidoController implements ILineaPedidoController {
 		return sPedidos;
 	}
 
+	@Override
 	public String mostrarPedidos() {
 		String sPedidos = "No hay pedidos ";
 		String sNombre = null;

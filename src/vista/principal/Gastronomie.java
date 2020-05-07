@@ -63,7 +63,7 @@ public class Gastronomie {
 		} while (bOption != 3);
 	}
 
-	private static void seleccionOperaciones() {
+	public static void seleccionOperaciones() {
 		byte bOption;
 		do {
 			bOption = (byte) L.valida(""

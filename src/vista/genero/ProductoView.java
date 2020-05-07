@@ -45,7 +45,7 @@ public class ProductoView {
 		} while (bOption != 5);
 	}
 
-	private static void aniadirProducto(GeneralController controlGeneral) {
+	public static void aniadirProducto(GeneralController controlGeneral) {
 
 		String sResultado = "";
 		float fPrecio = 0;
@@ -110,7 +110,7 @@ public class ProductoView {
 
 	}
 
-	private static void borrarProducto(GeneralController controlGeneral) {
+	public static void borrarProducto(GeneralController controlGeneral) {
 
 		String sResultado = "No se pudo borrar";
 
@@ -122,7 +122,7 @@ public class ProductoView {
 		System.out.println(sResultado);
 	}
 
-	private static void buscarProducto(GeneralController controlGeneral) {
+	public static void buscarProducto(GeneralController controlGeneral) {
 
 		String sResultado = "No esta registrado.";
 
@@ -134,7 +134,7 @@ public class ProductoView {
 		System.out.println(sResultado);
 	}
 
-	private static void mostrarAlmacen(GeneralController controlGeneral) {
+	public static void mostrarAlmacen(GeneralController controlGeneral) {
 		String sResultado = null;
 
 		byte bOption = 0;

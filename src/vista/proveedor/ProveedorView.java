@@ -50,7 +50,7 @@ public class ProveedorView {
 	/***********************************************************************************************
 	 * ANIADIR Proveedor
 	 ***********************************************************************************************/
-	private static void aniadirProveedor(GeneralController controlGeneral) {
+	public static void aniadirProveedor(GeneralController controlGeneral) {
 
 		String sResultado = "";
 		int iTelefono = 0;
@@ -120,7 +120,7 @@ public class ProveedorView {
 	 * BORRAR Proveedor
 	 ***********************************************************************************************/
 
-	private static void borrarProveedor(GeneralController controlGeneral) {
+	public static void borrarProveedor(GeneralController controlGeneral) {
 
 		String sResultado = "No se pudo borrar el Proveedor";
 
@@ -137,7 +137,7 @@ public class ProveedorView {
 	/***********************************************************************************************
 	 * BUSCAR Proveedor
 	 ***********************************************************************************************/
-	private static void buscarProveedor(GeneralController controlGeneral) {
+	public static void buscarProveedor(GeneralController controlGeneral) {
 		String sResultado = "Proveedor no registrado";
 
 		String sNombre = L.leer("Nombre (Proveedor): ");
@@ -151,7 +151,7 @@ public class ProveedorView {
 	/***********************************************************************************************
 	 * MOSTRAR Proveedor
 	 ***********************************************************************************************/
-	private static void mostrarProveedor(GeneralController controlGeneral) {
+	public static void mostrarProveedor(GeneralController controlGeneral) {
 
 		String sResultado = null;
 

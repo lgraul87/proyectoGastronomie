@@ -5,7 +5,6 @@ import controlador.LineaPedidoController;
 import controlador.MaterialController;
 import controlador.MaterialProveedorController;
 import controlador.PagoController;
-import controlador.PedidoController;
 import controlador.ProductoController;
 import controlador.ProductoProveedorController;
 import controlador.ProveedorController;
@@ -20,11 +19,9 @@ public class GeneralController {
 	private ProductoController productoController;
 	private InstalacionController instalacionController;
 	private PagoController pagoController;
-	private PedidoController pedidoController;
 	private LineaPedidoController lineaPedidoController;
 	private ProductoProveedorController productoProveedorController;
 	private MaterialProveedorController materialProveedorController;
-
 
 	public GeneralController(String sDatabase) {
 
@@ -35,7 +32,6 @@ public class GeneralController {
 		this.productoController = new ProductoController();
 		this.instalacionController = new InstalacionController();
 		this.pagoController = new PagoController();
-		this.pedidoController = new PedidoController();
 		this.lineaPedidoController = new LineaPedidoController();
 		this.productoProveedorController = new ProductoProveedorController();
 		this.materialProveedorController = new MaterialProveedorController();
@@ -67,10 +63,6 @@ public class GeneralController {
 
 	public PagoController getPagoController() {
 		return pagoController;
-	}
-
-	public PedidoController getPedidoController() {
-		return pedidoController;
 	}
 
 	public LineaPedidoController getLineaPedidoController() {

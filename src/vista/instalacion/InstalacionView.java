@@ -47,7 +47,7 @@ public class InstalacionView {
 		} while (bOption != 5);
 	}
 
-	private static void aniadirInstalacion(GeneralController controlGeneral) {
+	public static void aniadirInstalacion(GeneralController controlGeneral) {
 
 		String sInstalacion = "No se aniadio la instalacion";
 		float fCouta = 0;
@@ -102,7 +102,7 @@ public class InstalacionView {
 
 	}
 
-	private static void borrarInstalacion(GeneralController controlGeneral) {
+	public static void borrarInstalacion(GeneralController controlGeneral) {
 
 		String sResultado = "No se pudo borrar";
 
@@ -114,7 +114,7 @@ public class InstalacionView {
 		System.out.println(sResultado);
 	}
 
-	private static void buscarInstalacion(GeneralController controlGeneral) {
+	public static void buscarInstalacion(GeneralController controlGeneral) {
 
 		String sResultado = "No esta registrado";
 
@@ -126,7 +126,7 @@ public class InstalacionView {
 		System.out.println(sResultado);
 	}
 
-	private static void mostrarInstalacion(GeneralController controlGeneral) {
+	public static void mostrarInstalacion(GeneralController controlGeneral) {
 		String sResultado = null;
 
 		byte bOption = 0;

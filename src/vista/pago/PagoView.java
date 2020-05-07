@@ -49,7 +49,7 @@ public class PagoView {
 	/***********************************************************************************************
 	 * ANIADIR PAGO
 	 ***********************************************************************************************/
-	private static void aniadirPago(GeneralController controlGeneral) {
+	public static void aniadirPago(GeneralController controlGeneral) {
 
 		String sResultado = "No se pudo aniadir.";
 		String sPago = null;
@@ -90,7 +90,7 @@ public class PagoView {
 	 * BORRAR PAGO
 	 ***********************************************************************************************/
 
-	private static void borrarPago(GeneralController controlGeneral) {
+	public static void borrarPago(GeneralController controlGeneral) {
 
 		int iNumero = 0;
 
@@ -124,7 +124,7 @@ public class PagoView {
 	/***********************************************************************************************
 	 * BUSCAR PAGO
 	 ***********************************************************************************************/
-	private static void buscarPago(GeneralController controlGeneral) {
+	public static void buscarPago(GeneralController controlGeneral) {
 		String sResultado = "Pago no registrado";
 
 		String sAccion = controlGeneral.getPagoController().mostrarPagos();
@@ -155,7 +155,7 @@ public class PagoView {
 	/***********************************************************************************************
 	 * MOSTRAR PAGO
 	 ***********************************************************************************************/
-	private static void mostrarPago(GeneralController controlGeneral) {
+	public static void mostrarPago(GeneralController controlGeneral) {
 
 		String sResultado = null;
 		int iId = 0;

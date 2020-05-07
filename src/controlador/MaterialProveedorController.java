@@ -8,8 +8,9 @@ import controlador.database.ConexionDB;
 import modelo.proveedor.Proveedor;
 import modelo.proveedor.TipoProveedor;
 
-public class MaterialProveedorController {
+public class MaterialProveedorController implements IMaterialProveedorController{
 
+	@Override
 	public boolean determinarMaterial(String sNombreMaterial) {
 		boolean bEncontrado = false;
 		String sql = "SELECT COUNT(*) FROM PROVEEDOR_MATERIAL WHERE NOMBRE_MATERIAL = '" + sNombreMaterial + "';";
@@ -22,7 +23,7 @@ public class MaterialProveedorController {
 	}
 
 	
-
+	@Override
 	public Proveedor obtenerProveedorMaterial(String sNombreMaterial) {
 		Proveedor oProveedor = null;
 		String sNombreBD = null;

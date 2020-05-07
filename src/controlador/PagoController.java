@@ -8,8 +8,9 @@ import java.util.Date;
 import controlador.database.ConexionDB;
 import modelo.pago.Pago;
 
-public class PagoController {
+public class PagoController implements IPagoController{
 
+	@Override
 	public boolean add(Pago oPago) {
 		boolean bAniadido = false;
 		int iId = 0;
@@ -47,12 +48,14 @@ public class PagoController {
 
 		return bAniadido;
 	}
-
-	private java.sql.Date convert(java.util.Date uDate) {
+	
+	@Override
+	public java.sql.Date convert(java.util.Date uDate) {
 		java.sql.Date sDate = new java.sql.Date(uDate.getTime());
 		return sDate;
 	}
-
+	
+	@Override
 	public String mostrarPago(int iId) {
 		String sPago = "Pago no registrado";
 
@@ -64,6 +67,7 @@ public class PagoController {
 		return sPago;
 	}
 
+	@Override
 	public String mostrarPagos() {
 		String sPagos = "No hay pagos";
 
@@ -95,6 +99,7 @@ public class PagoController {
 		return sPagos;
 	}
 
+	@Override
 	public boolean remove(int iNumero) {
 		boolean bDelete = false;
 
@@ -106,6 +111,7 @@ public class PagoController {
 		return bDelete;
 	}
 
+	@Override
 	public boolean search(int iNumero) {
 		boolean bSearch = false;
 		String sql = "SELECT COUNT(*) FROM PAGO WHERE ID_PAGO = " + iNumero + ";";

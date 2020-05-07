@@ -43,22 +43,22 @@ public class MaterialProveedorView {
 		} while (bOption != 5);
 	}
 
-	private static void asignarMaterialProveedor() {
+	public static void asignarMaterialProveedor() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void borrarMaterialProveedor() {
+	public static void borrarMaterialProveedor() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void buscarMaterialProveedor() {
+	public static void buscarMaterialProveedor() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void mostrarMaterialProveedor() {
+	public static void mostrarMaterialProveedor() {
 		// TODO Auto-generated method stub
 
 	}

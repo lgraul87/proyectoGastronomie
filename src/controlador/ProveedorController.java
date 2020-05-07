@@ -7,8 +7,9 @@ import java.sql.Statement;
 import controlador.database.ConexionDB;
 import modelo.proveedor.Proveedor;
 
-public class ProveedorController {
+public class ProveedorController implements IProveedorController {
 
+	@Override
 	public boolean add(Proveedor oProveedor) {
 
 		boolean bAniadido = false;
@@ -53,7 +54,8 @@ public class ProveedorController {
 
 	}
 
-	private void createTipoProveedor(String sTipo) {
+	@Override
+	public void createTipoProveedor(String sTipo) {
 
 		String sql = "INSERT INTO tipo_proveedor VALUES ('" + sTipo + "');";
 
@@ -61,7 +63,8 @@ public class ProveedorController {
 
 	}
 
-	private boolean searchTipoProveedor(String sTipo) {
+	@Override
+	public boolean searchTipoProveedor(String sTipo) {
 		boolean bEncontrado = false;
 
 		String sql = "SELECT COUNT(*) FROM tipo_Proveedor WHERE nombre_tipo = '" + sTipo + "';";
@@ -78,6 +81,7 @@ public class ProveedorController {
 	 * REMOVE Proveedor
 	 ***************************************************************************************************************/
 
+	@Override
 	public boolean remove(String sNombre) {
 		boolean bRemove = false;
 		if (searchProveedor(sNombre)) {
@@ -88,7 +92,8 @@ public class ProveedorController {
 		return bRemove;
 	}
 
-	private boolean deleteProveedor(String sNombre) {
+	@Override
+	public boolean deleteProveedor(String sNombre) {
 
 		boolean bDelete = false;
 		String sTipo = null;
@@ -133,6 +138,7 @@ public class ProveedorController {
 	/***************************************************************************************************************
 	 * SEARCH USER
 	 ***************************************************************************************************************/
+	@Override
 	public boolean searchProveedor(String sNombre) {
 		boolean bEncontrado = false;
 
@@ -149,6 +155,7 @@ public class ProveedorController {
 	/***************************************************************************************************************
 	 * 1-. MOSTRAR Proveedor
 	 ***************************************************************************************************************/
+	@Override
 	public String mostrarProveedor(String sNombre) {
 		String sResultado = null;
 
@@ -194,6 +201,8 @@ public class ProveedorController {
 	/***************************************************************************************************************
 	 * 2-. MOSTRAR LISTA DE ProveedoreS
 	 ***************************************************************************************************************/
+
+	@Override
 	public String mostrarProveedores() {
 		String sResultado = "No hay Proveedores";
 

@@ -7,8 +7,9 @@ import java.sql.Statement;
 import controlador.database.ConexionDB;
 import modelo.genero.Producto;
 
-public class ProductoController {
+public class ProductoController implements IProductoController {
 
+	@Override
 	public boolean add(Producto oProducto) {
 
 		boolean bAniadido = false;
@@ -26,6 +27,7 @@ public class ProductoController {
 
 	}
 
+	@Override
 	public boolean remove(String sNombre) {
 		boolean bDelete = false;
 		String sql = "DELETE FROM PRODUCTO WHERE NOMBRE_PRODUCTO = '" + sNombre + "';";
@@ -36,6 +38,7 @@ public class ProductoController {
 
 	}
 
+	@Override
 	public boolean search(String sNombre) {
 		boolean bSearch = false;
 		String sql = "SELECT COUNT(*) FROM PRODUCTO WHERE NOMBRE_PRODUCTO = '" + sNombre + "';";
@@ -63,6 +66,7 @@ public class ProductoController {
 
 	}
 
+	@Override
 	public String mostrarProducto(String sNombre) {
 		String sProducto = "";
 
@@ -92,6 +96,7 @@ public class ProductoController {
 		return sProducto;
 	}
 
+	@Override
 	public String mostrarProductos() {
 
 		int iCount = 0;
@@ -139,6 +144,7 @@ public class ProductoController {
 		return sProducto;
 	}
 
+	@Override
 	public String mostrarCartaBebida() {
 		String sCarta = "No hay bebidas";
 		String sCartaBebida = "Carta_bebida";
@@ -171,6 +177,7 @@ public class ProductoController {
 		return sCarta;
 	}
 
+	@Override
 	public Producto obtenerProducto(String sBebida) {
 		Producto oProducto = null;
 
@@ -195,6 +202,7 @@ public class ProductoController {
 		return oProducto;
 	}
 
+	@Override
 	public boolean update(Producto oProducto, byte bCantidad) {
 
 		boolean bUpdate = false;
@@ -211,6 +219,7 @@ public class ProductoController {
 
 	}
 
+	@Override
 	public String mostrarCartaComida() {
 		String sCarta = "No hay comida";
 		String sCartaComida = "Carta_comida";

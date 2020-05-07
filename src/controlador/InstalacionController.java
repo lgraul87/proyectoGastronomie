@@ -7,8 +7,9 @@ import java.sql.Statement;
 import controlador.database.ConexionDB;
 import modelo.instalacion.Instalacion;
 
-public class InstalacionController {
+public class InstalacionController implements IInstalacionController {
 
+	@Override
 	public boolean add(Instalacion oInstalacion) {
 
 		boolean bAniadio = false;
@@ -27,7 +28,7 @@ public class InstalacionController {
 
 		return bAniadio;
 	}
-
+	@Override
 	public boolean remove(String sNombre) {
 		boolean bDelete = false;
 		String sql = "DELETE FROM INSTALACION WHERE NOMBRE = '" + sNombre + "';";
@@ -37,7 +38,7 @@ public class InstalacionController {
 
 		return bDelete;
 	}
-
+	@Override
 	public boolean search(String sNombre) {
 
 		boolean bSearch = false;
@@ -50,7 +51,7 @@ public class InstalacionController {
 
 		return bSearch;
 	}
-
+	@Override
 	public String mostrarInstalacion(String sNombre) {
 
 		String sInstalacion = "No hay esa instalacion";
@@ -85,7 +86,7 @@ public class InstalacionController {
 
 		return sInstalacion;
 	}
-
+	@Override
 	public String mostrarInstalaciones() {
 		String sInstalacion = "No hay instalaciones";
 
@@ -124,7 +125,7 @@ public class InstalacionController {
 
 		return sInstalacion;
 	}
-
+	@Override
 	public Instalacion determinarInstalacion(String sNombreLocal) {
 
 		Instalacion oInstalacion = null;
