@@ -323,4 +323,16 @@ public class UsuarioController implements IUsuarioController {
 		return oUsuario;
 
 	}
+
+	public boolean login(String sUsuarioLogin) {
+		boolean bLogin = false;
+
+		String sql = "SELECT COUNT(*) FROM USUARIO WHERE NOMBRE_USUARIO = '" + sUsuarioLogin + "';";
+
+		if (ConexionDB.executeCount(sql) != 0) {
+			bLogin = true;
+		}
+
+		return bLogin;
+	}
 }

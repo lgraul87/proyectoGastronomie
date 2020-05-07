@@ -58,7 +58,11 @@ public class Gastronomie {
 				System.out.println("Buen dia, adios");
 				ConexionDB.disconnectDatabase();
 			} else if (bOption == 4) {
-				seleccionOperaciones();
+				String sUsuarioLogin = UsuarioView.buscarUsuarioLogin(controlGeneral);
+				if (!sUsuarioLogin.equals("Cliente") && !sUsuarioLogin.equals("")) {
+					seleccionOperaciones();
+				}
+				
 			}
 		} while (bOption != 3);
 	}

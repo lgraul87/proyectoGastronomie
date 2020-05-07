@@ -223,4 +223,17 @@ public class UsuarioView {
 		System.out.println(sResultado);
 	}
 
+	public static String buscarUsuarioLogin(GeneralController controlGeneral) {
+		String sUsuario = "";
+		String sUsuarioLogin = "";
+
+		sUsuarioLogin = L.leer("Nombre: (Usuario)");
+
+		if (controlGeneral.getUsuarioController().login(sUsuarioLogin)) {
+			sUsuario = sUsuarioLogin;
+		}
+
+		return sUsuario;
+	}
+
 }
