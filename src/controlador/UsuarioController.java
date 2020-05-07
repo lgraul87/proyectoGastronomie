@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import controlador.database.ConexionDB;
+import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 
 public class UsuarioController {
@@ -271,5 +272,46 @@ public class UsuarioController {
 		}
 
 		return sResultado;
+	}
+
+	public Usuario determinarUsuarioPedido(String sDni) {
+
+		Usuario oUsuario = null;
+
+		String sql2 = "SELECT COUNT(*) FROM USUARIO WHERE DNI = '" + sDni + "';";
+
+		if (ConexionDB.executeCount(sql2) != 0) {
+
+			String sql = "SELECT * FROM USUARIO WHERE DNI = '" + sDni + "';";
+
+			try {
+				Statement statement = ConexionDB.getConnection().createStatement();
+				ResultSet resulset = statement.executeQuery(sql);
+
+				while (resulset.next()) {
+					String sDniBD = resulset.getString("dni");
+					String sNombreBD = resulset.getString("nombre");
+					String sApellidosBD = resulset.getString("apellidos");
+					int iTelefonoBD = resulset.getInt("telefono");
+					String sCorreoBD = resulset.getString("correo");
+					String sTipoBD = resulset.getString("nombre_usuario");
+
+					TipoUsuario oTipoUsuario = new TipoUsuario(sTipoBD);
+					if (iTelefonoBD == 0 && sCorreoBD == null) {
+						oUsuario = new Usuario(sNombreBD, sDniBD, sApellidosBD, oTipoUsuario);
+					} else if (iTelefonoBD != 0 && sCorreoBD == null) {
+						oUsuario = new Usuario(sNombreBD, sDniBD, sApellidosBD, iTelefonoBD, oTipoUsuario);
+					} else if (iTelefonoBD == 0 && sCorreoBD != null) {
+						oUsuario = new Usuario(sNombreBD, sDniBD, sApellidosBD, sCorreoBD, oTipoUsuario);
+					} else if (iTelefonoBD != 0 && sCorreoBD != null) {
+						oUsuario = new Usuario(sNombreBD, sDniBD, sApellidosBD, iTelefonoBD, sCorreoBD, oTipoUsuario);
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return oUsuario;
+
 	}
 }

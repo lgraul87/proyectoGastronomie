@@ -124,4 +124,42 @@ public class InstalacionController {
 
 		return sInstalacion;
 	}
+
+	public Instalacion determinarInstalacion(String sNombreLocal) {
+
+		Instalacion oInstalacion = null;
+		
+		String sql2 = "SELECT COUNT(*) FROM INSTALACION WHERE NOMBRE = '" + sNombreLocal + "';";
+		
+		if (ConexionDB.executeCount(sql2) != 0) {
+			
+		
+
+		String sql = "SELECT * FROM INSTALACION WHERE NOMBRE = '" + sNombreLocal + "';";
+
+		try {
+			Statement statement = ConexionDB.getConnection().createStatement();
+			ResultSet resultSet = statement.executeQuery(sql);
+			
+			while (resultSet.next()) {
+
+				String sNombreBD = resultSet.getString("nombre");
+				String sDescripcionBD = resultSet.getString("descripcion");
+				String sDireccionBD = resultSet.getString("direccion");
+				float fCuota = resultSet.getFloat("cuota_mensual");
+				
+				if (sDescripcionBD == null) {
+					oInstalacion = new Instalacion(sNombreBD, sDireccionBD, fCuota);
+				}else if (sDescripcionBD != null){
+					oInstalacion = new Instalacion(sNombreBD, sDireccionBD, sDireccionBD, fCuota);
+				}
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			}
+		}
+
+		return oInstalacion;
+	}
 }

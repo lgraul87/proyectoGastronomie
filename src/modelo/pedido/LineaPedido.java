@@ -3,31 +3,37 @@ package modelo.pedido;
 import modelo.genero.Material;
 import modelo.genero.Producto;
 import modelo.limitdb.LimitsDB;
+import modelo.proveedor.Proveedor;
 
 public class LineaPedido implements ILineaPedido, LimitsDB {
-	
+
 	private int iIdLineaPedido; // PK
 	private Pedido oPedido; // FK
 	private Material oMaterial; // FK
 	private Producto oProducto; // FK
 	private byte bCantidad;// NN
 	private String sTipo;
+	private Proveedor oProveedor;
 
-	public LineaPedido(int iIdLineaPedido, Pedido oPedido, Material oMaterial, byte bCantidad,String sTipo) {
+	public LineaPedido(int iIdLineaPedido, Pedido oPedido, Material oMaterial, byte bCantidad, String sTipo,
+			Proveedor oProveedor) {
 		setiIdLineaPedido(iIdLineaPedido);
 		setoPedido(oPedido);
 		setoMaterial(oMaterial);
 		setbCantidad(bCantidad);
 		setsTipo(sTipo);
+		setoProveedor(oProveedor);
 
 	}
 
-	public LineaPedido(int iIdLineaPedido, Pedido oPedido, Producto oProducto, byte bCantidad) {
+	public LineaPedido(int iIdLineaPedido, Pedido oPedido, Producto oProducto, byte bCantidad, String sTipo,
+			Proveedor oProveedor) {
 		setiIdLineaPedido(iIdLineaPedido);
 		setoPedido(oPedido);
 		setoProducto(oProducto);
 		setbCantidad(bCantidad);
 		setsTipo(sTipo);
+		setoProveedor(oProveedor);
 
 	}
 
@@ -108,10 +114,12 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 		}
 		return bValido;
 	}
+
 	@Override
 	public String getsTipo() {
 		return this.sTipo;
 	}
+
 	@Override
 	public boolean setsTipo(String sTipo) {
 		boolean bValido = false;
@@ -120,7 +128,22 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 			bValido = true;
 		}
 		return bValido;
+
 	}
+
+	public Proveedor getoProveedor() {
+		return this.oProveedor;
+	}
+
+	public boolean setoProveedor(Proveedor oProveedor) {
+		boolean bValido = false;
+		if (oProveedor != null) {
+			this.oProveedor = oProveedor;
+			bValido = true;
+		}
+		return bValido;
+	}
+
 	@Override
 	public boolean checkLineaPedido() {
 		boolean bValido = false;
@@ -166,12 +189,10 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 
 		}
 		//
-		return "LineaPedido nº: " + this.iIdLineaPedido + "  --Cliene: "
-				+ this.oPedido.getoUsuario().getsNombre() + "\n"
+		return "LineaPedido nº: " + this.iIdLineaPedido + "  --Cliente: " + this.oPedido.getoUsuario().getsNombre()
+				+ "\n"
 				//
 				+ sResultado + "  --Fecha: " + this.oPedido.getdFecha();
 	}
-
-	
 
 }

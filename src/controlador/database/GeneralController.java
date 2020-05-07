@@ -3,9 +3,11 @@ package controlador.database;
 import controlador.InstalacionController;
 import controlador.LineaPedidoController;
 import controlador.MaterialController;
+import controlador.MaterialProveedorController;
 import controlador.PagoController;
 import controlador.PedidoController;
 import controlador.ProductoController;
+import controlador.ProductoProveedorController;
 import controlador.ProveedorController;
 import controlador.UsuarioController;
 
@@ -20,6 +22,9 @@ public class GeneralController {
 	private PagoController pagoController;
 	private PedidoController pedidoController;
 	private LineaPedidoController lineaPedidoController;
+	private ProductoProveedorController productoProveedorController;
+	private MaterialProveedorController materialProveedorController;
+
 
 	public GeneralController(String sDatabase) {
 
@@ -32,6 +37,8 @@ public class GeneralController {
 		this.pagoController = new PagoController();
 		this.pedidoController = new PedidoController();
 		this.lineaPedidoController = new LineaPedidoController();
+		this.productoProveedorController = new ProductoProveedorController();
+		this.materialProveedorController = new MaterialProveedorController();
 	}
 
 	public UsuarioController getUsuarioController() {
@@ -68,6 +75,14 @@ public class GeneralController {
 
 	public LineaPedidoController getLineaPedidoController() {
 		return lineaPedidoController;
+	}
+
+	public ProductoProveedorController getProductoProveedorController() {
+		return productoProveedorController;
+	}
+
+	public MaterialProveedorController getMaterialProveedorController() {
+		return materialProveedorController;
 	}
 
 }

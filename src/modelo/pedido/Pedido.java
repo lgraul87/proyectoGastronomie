@@ -23,6 +23,15 @@ public class Pedido implements IPedido, LimitsDB {
 		setoInstalacion(oInstalacion);
 
 	}
+	public Pedido(int iIdPedido, Date dFecha, Usuario oUsuario, Instalacion oInstalacion) {
+
+		setiIdPedido(iIdPedido);
+		setdFecha(dFecha);
+		setoUsuario(oUsuario);
+		setoInstalacion(oInstalacion);
+
+	}
+	
 	@Override
 	public int getiIdPedido() {
 		return this.iIdPedido;
