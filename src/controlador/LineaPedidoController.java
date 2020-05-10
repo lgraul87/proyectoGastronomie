@@ -18,6 +18,7 @@ public class LineaPedidoController implements ILineaPedidoController {
 		boolean bAddPedido = false;
 		String sNombreProducto = null;
 		String sNombreMaterial = null;
+		String sTipoPago = null;
 
 		// #### PARA LINEA PEDIDO #######
 		int iId = 0;
@@ -48,17 +49,25 @@ public class LineaPedidoController implements ILineaPedidoController {
 
 		String sDni = oLineaPedido.getoPedido().getoUsuario().getsDni();
 
-		int idPago = 0;
+		int idPago = 1;
 
 		String sNombreInstalacion = oLineaPedido.getoPedido().getoInstalacion().getsNombreInstalacion();
 
 		// #### PARA PAGO #######
 
-		Date utilDate2 = oLineaPedido.getoPedido().getoPago().getdFecha();
+		Date utilDate2 = utilDate;
 
 		java.sql.Date sqlDate2 = convert(utilDate2);
 
-		String sTipoPago = oLineaPedido.getoPedido().getoPago().getoMetodoPago().getsNombrePago();
+		try {
+			sTipoPago = oLineaPedido.getoPedido().getoPago().getoMetodoPago().getsNombrePago();
+
+		} catch (NullPointerException e) {
+
+			sTipoPago = null;
+		} catch (Exception e) {
+			sTipoPago = null;
+		}
 
 		String sql4 = "SELECT * FROM PAGO";
 
@@ -78,8 +87,17 @@ public class LineaPedidoController implements ILineaPedidoController {
 
 		idPago = idPago + 1;
 
-		String sql6 = "INSERT INTO PAGO VALUES (" + idPago + ",'" + sqlDate2 + "','" + sTipoPago + "');";
+		String sql6 = null;
+		if (sTipoPago != null) {
 
+			 sql6 = "INSERT INTO PAGO VALUES (" + idPago + ",'" + sqlDate2 + "','" + sTipoPago + "');";
+
+		} else if (sTipoPago == null) {
+			 sql6 = "INSERT INTO PAGO VALUES (" + idPago + ",'" + sqlDate2 + "',null);";
+
+		}
+
+		
 		if (ConexionDB.executeUpdate(sql6) != 0) {
 			bAddPago = true;
 		}
@@ -139,7 +157,7 @@ public class LineaPedidoController implements ILineaPedidoController {
 			String sql3 = "INSERT INTO LINEA_PEDIDO VALUES (" + iId + "," + iCantidad + ",'" + sTipo + "'," + iIdPedido
 					+ ",'" + sNombreProducto + "',null,'" + sNombreProveedor + "');";
 
-			if (ConexionDB.executeUpdate(sql3) != 0 && bAddPago && bAddPedido) {
+			if (ConexionDB.executeUpdate(sql3) != 0  && bAddPedido) {
 				dAdd = true;
 
 			}

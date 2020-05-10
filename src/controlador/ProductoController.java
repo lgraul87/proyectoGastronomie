@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import controlador.database.ConexionDB;
+import controlador.database.GeneralController;
 import modelo.genero.Producto;
 
 public class ProductoController implements IProductoController {
@@ -250,5 +251,27 @@ public class ProductoController implements IProductoController {
 			e.printStackTrace();
 		}
 		return sCarta;
+	}
+
+	public int contarExistencias(Producto oProducto, GeneralController controlGeneral) {
+		int iExistencias = 0;
+
+		String sNombre = oProducto.getsNombreProducto();
+
+		String sql = "SELECT * FROM PRODUCTO WHERE nombre_producto = '" + sNombre + "';";
+
+		try {
+			Statement statement = ConexionDB.getConnection().createStatement();
+			ResultSet resultSet = statement.executeQuery(sql);
+
+			while (resultSet.next()) {
+
+				iExistencias = resultSet.getInt("stock");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return iExistencias;
 	}
 }

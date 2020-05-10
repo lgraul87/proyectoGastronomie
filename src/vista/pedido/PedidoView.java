@@ -42,7 +42,6 @@ public class PedidoView {
 
 		if (bOptionPedir == 1) {
 
-
 			byte bCantidad = 0;
 			byte bOption = 0;
 			String sPago = null;
@@ -108,13 +107,32 @@ public class PedidoView {
 					LineaPedido oLineaPedido = new LineaPedido(iId, oPedido, oProducto, bCantidad, "Venta", oProveedor);
 					if (controlGeneral.getLineaPedidoController().add(oLineaPedido)) {
 						sResultado = "Aniadido correctamente: " + fPrecioTotal + " euros por favor.";
+
+						int iNumero = contarExistencias(oProducto, controlGeneral);
+						if (iNumero < 10) {
+
+							new TipoUsuario("Admin");
+
+							new Usuario("Raul", "49789078F", "Lora", 873299056, "lg@gmail.com", oTipoUsuario);
+
+							oPedido = new Pedido(iId, new Date(), oUsuario, oInstalacion);
+
+							byte bPedir = 20;
+
+							LineaPedido oLineaPedidoRecarga = new LineaPedido(iId, oPedido, oProducto, bPedir, "Compra",
+									oProveedor);
+							if (controlGeneral.getLineaPedidoController().add(oLineaPedidoRecarga)) {
+
+								System.out.println("Recargando");
+							}
+						}
+
 					}
 				}
 
 			}
 
 		} else if (bOptionPedir == 2) {
-
 
 			byte bCantidad = 0;
 			byte bOption = 0;
@@ -178,16 +196,43 @@ public class PedidoView {
 					Proveedor oProveedor = new Proveedor("Gastronomie", 654554321, "Gastronomie@gmail.com",
 							oTipoProveedor);
 					Pedido oPedido = new Pedido(iId, new Date(), oUsuario, oPago, oInstalacion);
-					LineaPedido oLineaPedido = new LineaPedido(iId, oPedido, oProducto, bCantidad, "Venta", oProveedor);
+					
+					
+				LineaPedido oLineaPedido = new LineaPedido(iId, oPedido, oProducto, bCantidad, "Venta", oProveedor);
 					if (controlGeneral.getLineaPedidoController().add(oLineaPedido)) {
 						sResultado = "Aniadido correctamente: " + fPrecioTotal + " euros por favor.";
+						int iNumero = contarExistencias(oProducto, controlGeneral);
+						if (iNumero < 10) {
+
+							oTipoUsuario = new TipoUsuario("Admin");
+
+							oUsuario = new Usuario("Raul", "49789078F", "Lora", 873299056, "lg@gmail.com", oTipoUsuario);
+
+							oPedido = new Pedido(iId, new Date(), oUsuario, oInstalacion);
+
+							byte bPedir = 20;
+
+							LineaPedido oLineaPedidoRecarga = new LineaPedido(iId, oPedido, oProducto, bPedir, "Compra",
+									oProveedor);
+							if (controlGeneral.getLineaPedidoController().add(oLineaPedidoRecarga)) {
+
+								System.out.println("Recargando");
+							}
+						}
+
 					}
 				}
 
 			}
-
 		}
 		System.out.println(sResultado);
+	}
+
+	public static int contarExistencias(Producto oProducto, GeneralController controlGeneral) {
+		int iExistencias = 0;
+		iExistencias = controlGeneral.getProductoController().contarExistencias(oProducto, controlGeneral);
+
+		return iExistencias;
 	}
 
 	public static void tomarNotaTakeAway(GeneralController controlGeneral) {
@@ -210,7 +255,6 @@ public class PedidoView {
 		} while (errorControl);
 
 		if (bOptionPedir == 1) {
-
 
 			byte bCantidad = 0;
 			byte bOption = 0;
@@ -283,7 +327,6 @@ public class PedidoView {
 			}
 
 		} else if (bOptionPedir == 2) {
-
 
 			byte bCantidad = 0;
 			byte bOption = 0;
