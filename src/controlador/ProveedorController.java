@@ -17,12 +17,19 @@ public class ProveedorController implements IProveedorController {
 		boolean bCrearTipoProveedor = false;
 
 		String sNombre = oProveedor.getsNombreProveedor();
-		int iTelefono = oProveedor.getiTelefono();
+		String sTelefono = oProveedor.getsTelefono();
+		int iTelefono;
+		try {
+			 iTelefono = Integer.parseInt(sTelefono);
+
+		} catch (Exception e) {
+			iTelefono = 0;
+		}
 		String sCorreo = oProveedor.getsCorreoElectronico();
 		String sDireccion = oProveedor.getsDireccion();
 		String sTipo = oProveedor.getoTipoProveedor().getsNombreTipoProveedor();
 
-		if (!searchProveedor(sNombre)) {
+		if (!searchProveedor(oProveedor)) {
 			bCrearProveedor = true;
 		}
 		if (!searchTipoProveedor(sTipo)) {
@@ -82,10 +89,11 @@ public class ProveedorController implements IProveedorController {
 	 ***************************************************************************************************************/
 
 	@Override
-	public boolean remove(String sNombre) {
+	public boolean remove(Proveedor oProveedor) {
 		boolean bRemove = false;
-		if (searchProveedor(sNombre)) {
-			if (deleteProveedor(sNombre)) {
+
+		if (searchProveedor(oProveedor)) {
+			if (deleteProveedor(oProveedor)) {
 				bRemove = true;
 			}
 		}
@@ -93,10 +101,12 @@ public class ProveedorController implements IProveedorController {
 	}
 
 	@Override
-	public boolean deleteProveedor(String sNombre) {
+	public boolean deleteProveedor(Proveedor oProveedor) {
 
 		boolean bDelete = false;
 		String sTipo = null;
+
+		String sNombre = oProveedor.getsNombreProveedor();
 
 		String sql3 = "SELECT * FROM Proveedor WHERE nombre_proveedor = '" + sNombre + "';";
 
@@ -139,8 +149,10 @@ public class ProveedorController implements IProveedorController {
 	 * SEARCH USER
 	 ***************************************************************************************************************/
 	@Override
-	public boolean searchProveedor(String sNombre) {
+	public boolean searchProveedor(Proveedor oProveedor) {
 		boolean bEncontrado = false;
+
+		String sNombre = oProveedor.getsNombreProveedor();
 
 		String sql = "SELECT COUNT(*) FROM Proveedor WHERE nombre_proveedor = '" + sNombre + "';";
 
@@ -156,7 +168,7 @@ public class ProveedorController implements IProveedorController {
 	 * 1-. MOSTRAR Proveedor
 	 ***************************************************************************************************************/
 	@Override
-	public String mostrarProveedor(String sNombre) {
+	public String mostrarProveedor(Proveedor oProveedor) {
 		String sResultado = null;
 
 		String sNombreBD = null;
@@ -164,6 +176,8 @@ public class ProveedorController implements IProveedorController {
 		String sCorreoBD = null;
 		String sDireccionBD = null;
 		String sTipoBD = null;
+
+		String sNombre = oProveedor.getsNombreProveedor();
 
 		String sql = "SELECT * FROM Proveedor WHERE nombre_proveedor = '" + sNombre + "';";
 

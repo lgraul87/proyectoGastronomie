@@ -19,7 +19,7 @@ public class ProveedorProducto implements IProveedorProducto{
 	@Override
 	public boolean setoProducto(Producto oProducto) {
 		boolean bValido = false;
-		if (oProducto.checkProducto()) {
+		if (oProducto!=null && oProducto.checkProducto()) {
 			this.oProducto = oProducto;
 			bValido = true;
 		}
@@ -32,7 +32,7 @@ public class ProveedorProducto implements IProveedorProducto{
 	@Override
 	public boolean setoProveedor(Proveedor oProveedor) {
 		boolean bValido = false;
-		if (oProveedor.checkProveedor()) {
+		if (oProveedor != null && oProveedor.checkProveedor()) {
 			this.oProveedor = oProveedor;
 			bValido = true;
 		}
@@ -41,7 +41,7 @@ public class ProveedorProducto implements IProveedorProducto{
 	@Override
 	public boolean checkProveedorProducto() {
 		boolean bValido = false;
-		if (this.oProducto != null && this.oProveedor != null) {
+		if (this.oProducto != null && this.oProveedor != null && this.oProveedor.getoTipoProveedor().checkTipoProveedor()) {
 			bValido = true;
 
 		}
@@ -61,8 +61,8 @@ public class ProveedorProducto implements IProveedorProducto{
 	public boolean equals(Object obj) {
 		boolean bIgual = false;
 		ProveedorProducto other = (ProveedorProducto) obj;
-		if (this.checkProveedorProducto() && other.checkProveedorProducto() && this.oProducto.equals(other.oProducto)
-				&& this.oProveedor.equals(other.oProveedor)) {
+		if (this != null && other != null && this.checkProveedorProducto() && other.checkProveedorProducto() && this.oProducto.equals(other.oProducto)
+				&& this.oProveedor.equals(other.oProveedor) && this.oProveedor.getoTipoProveedor().equals(other.oProveedor.getoTipoProveedor())) {
 			bIgual = true;
 		}
 		return bIgual;

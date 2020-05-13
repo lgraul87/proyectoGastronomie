@@ -11,27 +11,38 @@ public class PagoView {
 	 * ADMIN
 	 ***********************************************************************************************/
 	public static void operacionesPago(GeneralController controlGeneral) {
-		byte bOption;
+		boolean errorControl = true;
+		byte bOption = 0;
 		do {
-			bOption = (byte) L.valida(""
-					//
-					+ "*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
-					//
-					+ "\n					ADMINISTRACION"
-					//
-					+ "\n*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
-					//
-					+ "\n"
-					//
-					+ "\n  --Aniadir Pago (Compra): (1)"
-					//
-					+ "\n  --Borrar Pago (Compra):     (2)"
-					//
-					+ "\n  --Buscar Pago (Compra): (3)"
-					//
-					+ "\n  --Mostrar Pago (Compra): (4)"
-					//
-					+ "\n  --Salir: (5)", 1, 5, 3);
+			try {
+				bOption = (byte) L.valida(""
+						//
+						+ "*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
+						//
+						+ "\n					ADMINISTRACION"
+						//
+						+ "\n*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
+						//
+						+ "\n"
+						//
+						+ "\n  --Aniadir Pago (Compra): 	(1)"
+						//
+						+ "\n  --Borrar Pago (Compra):     	(2)"
+						//
+						+ "\n  --Buscar Pago (Compra): 	(3)"
+						//
+						+ "\n  --Mostrar Pago (Compra): 	(4)"
+						//
+						+ "\n  --Salir: 			(5)", 1, 5, 3);
+
+				errorControl = false;
+
+			} catch (NumberFormatException e) {
+				System.out.println(e.getMessage());
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
 			//
 
 			if (bOption == 1) {
@@ -43,7 +54,7 @@ public class PagoView {
 			} else if (bOption == 4) {
 				mostrarPago(controlGeneral);
 			}
-		} while (bOption != 5);
+		} while (errorControl);
 	}
 
 	/***********************************************************************************************
@@ -71,9 +82,9 @@ public class PagoView {
 		} while (errorControl);
 
 		if (bOption == 1) {
-			sPago = "efectivo";
+			sPago = "Efectivo";
 		} else if (bOption == 2) {
-			sPago = "tarjeta";
+			sPago = "Tarjeta";
 		}
 
 		MetodoPago oMetodoPago = new MetodoPago(sPago);
@@ -92,30 +103,35 @@ public class PagoView {
 
 	public static void borrarPago(GeneralController controlGeneral) {
 
-		int iNumero = 0;
+		int iIdPago = 0;
+		String sResultado = "No hay pagos";
 
-		String sResultado = "No se pudo borrar el pago";
+		if (!controlGeneral.getPagoController().mostrarPagos().equals("No hay pagos")) {
 
-		String sAccion = controlGeneral.getPagoController().mostrarPagos();
-		System.out.println(sAccion);
-		if (!sAccion.equals("No hay pagos")) {
+			sResultado = "No se pudo borrar el pago";
 
-			boolean errorControl = true;
-			do {
-				try {
-					iNumero = (int) L.valida("Dime id: (Pago)", 1, 100000, 1);
-					errorControl = false;
-				} catch (NumberFormatException e) {
-					System.out.println(e.getMessage());
-				} catch (Exception e) {
-					System.out.println(e.getMessage());
+			String sAccion = controlGeneral.getPagoController().mostrarPagos();
+			System.out.println(sAccion);
+			if (!sAccion.equals("No hay pagos")) {
+
+				boolean errorControl = true;
+				do {
+					try {
+						iIdPago = (int) L.valida("Dime id: (Pago)", 1, 100000, 1);
+						errorControl = false;
+					} catch (NumberFormatException e) {
+						System.out.println(e.getMessage());
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+				} while (errorControl);
+
+				Pago oPago = new Pago(iIdPago);
+
+				if (controlGeneral.getPagoController().remove(oPago)) {
+					sResultado = "Pago borrado";
 				}
-			} while (errorControl);
-
-			if (controlGeneral.getPagoController().remove(iNumero)) {
-				sResultado = "Pago borrado";
 			}
-
 			System.out.println(sResultado);
 
 		}
@@ -125,16 +141,18 @@ public class PagoView {
 	 * BUSCAR PAGO
 	 ***********************************************************************************************/
 	public static void buscarPago(GeneralController controlGeneral) {
-		String sResultado = "Pago no registrado";
+		String sResultado = "No hay pagos";
 
-		String sAccion = controlGeneral.getPagoController().mostrarPagos();
-		if (!sAccion.equals("No hay pagos")) {
+		if (!controlGeneral.getPagoController().mostrarPagos().equals("No hay pagos")) {
 
-			int iNumero = 0;
+			System.out.println(controlGeneral.getPagoController().mostrarPagos());
+			sResultado = "Pago no registrado";
+
+			int iIdPago = 0;
 			boolean errorControl = true;
 			do {
 				try {
-					iNumero = (int) L.valida("Dime id: (Pago)", 1, 100000, 1);
+					iIdPago = (int) L.valida("Dime id: (Pago)", 1, 100000, 1);
 					errorControl = false;
 				} catch (NumberFormatException e) {
 					System.out.println(e.getMessage());
@@ -143,13 +161,15 @@ public class PagoView {
 				}
 			} while (errorControl);
 
-			if (controlGeneral.getPagoController().search(iNumero)) {
+			Pago oPago = new Pago(iIdPago);
+
+			if (controlGeneral.getPagoController().search(oPago)) {
 				sResultado = "Pago registrado";
 			}
-			System.out.println(sResultado);
-		} else {
-			System.out.println(sAccion);
+
 		}
+		System.out.println(sResultado);
+
 	}
 
 	/***********************************************************************************************
@@ -157,11 +177,11 @@ public class PagoView {
 	 ***********************************************************************************************/
 	public static void mostrarPago(GeneralController controlGeneral) {
 
-		String sResultado = null;
-		int iId = 0;
+		String sResultado = "No hay pagos";
 
-		String sAccion = controlGeneral.getPagoController().mostrarPagos();
-		if (!sAccion.equals("No hay pagos")) {
+		if (!controlGeneral.getPagoController().mostrarPagos().equals("No hay pagos")) {
+
+			int iIdPago = 0;
 
 			byte bOption = 0;
 
@@ -189,7 +209,9 @@ public class PagoView {
 				errorControl = true;
 				do {
 					try {
-						iId = (int) L.valida("Dime id: (Pago)", 1, 100000, 1);
+						iIdPago = (int) L.valida("Dime id: (Pago)", 1, 100000, 1);
+
+						errorControl = false;
 
 					} catch (NumberFormatException e) {
 						System.out.println(e.getMessage());
@@ -198,8 +220,10 @@ public class PagoView {
 					}
 				} while (errorControl);
 
-				if (controlGeneral.getPagoController().search(iId)) {
-					sResultado = controlGeneral.getPagoController().mostrarPago(iId);
+				Pago oPago = new Pago(iIdPago);
+
+				if (controlGeneral.getPagoController().search(oPago)) {
+					sResultado = controlGeneral.getPagoController().mostrarPago(oPago);
 
 				} else {
 					sResultado = "Pago no encontrado";
@@ -208,9 +232,9 @@ public class PagoView {
 			} else if (bOption == 2) {
 				sResultado = controlGeneral.getPagoController().mostrarPagos();
 			}
-			System.out.println(sResultado);
-		}else {
-			System.out.println(sAccion);
 		}
+
+		System.out.println(sResultado);
+
 	}
 }

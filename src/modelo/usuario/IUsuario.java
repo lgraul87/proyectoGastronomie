@@ -12,13 +12,17 @@ public interface IUsuario {
 
 	public boolean setsApellidos(String sApellidos);
 
-	public int getiTelefono();
+	public String getsTelefono();
 
-	public boolean setiTelefono(int iTelefono);
+	public boolean setsTelefono(String sTelefono);
 
 	public String getsCorreoElectronico();
 
 	public boolean setsCorreoElectronico(String sCorreoElectronico);
+
+	public String getsContrasenia();
+
+	public boolean setsContrasenia(String sContrasenia);
 
 	public TipoUsuario getoTipoUsuario();
 

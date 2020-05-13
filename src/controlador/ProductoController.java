@@ -29,8 +29,11 @@ public class ProductoController implements IProductoController {
 	}
 
 	@Override
-	public boolean remove(String sNombre) {
+	public boolean remove(Producto oProducto) {
 		boolean bDelete = false;
+
+		String sNombre = oProducto.getsNombreProducto();
+
 		String sql = "DELETE FROM PRODUCTO WHERE NOMBRE_PRODUCTO = '" + sNombre + "';";
 		if (ConexionDB.executeUpdate(sql) > 0) {
 			bDelete = true;
@@ -40,8 +43,11 @@ public class ProductoController implements IProductoController {
 	}
 
 	@Override
-	public boolean search(String sNombre) {
+	public boolean search(Producto oProducto) {
 		boolean bSearch = false;
+
+		String sNombre = oProducto.getsNombreProducto();
+
 		String sql = "SELECT COUNT(*) FROM PRODUCTO WHERE NOMBRE_PRODUCTO = '" + sNombre + "';";
 
 		int iCount = 0;
@@ -68,9 +74,9 @@ public class ProductoController implements IProductoController {
 	}
 
 	@Override
-	public String mostrarProducto(String sNombre) {
+	public String mostrarProducto(Producto oProducto) {
 		String sProducto = "";
-
+		String sNombre = oProducto.getsNombreProducto();
 		String sql = "SELECT * FROM PRODUCTO WHERE NOMBRE_PRODUCTO = '" + sNombre + "';";
 
 		try {
@@ -179,8 +185,9 @@ public class ProductoController implements IProductoController {
 	}
 
 	@Override
-	public Producto obtenerProducto(String sBebida) {
-		Producto oProducto = null;
+	public Producto obtenerProducto(Producto oProducto) {
+
+		String sBebida = oProducto.getsNombreProducto();
 
 		String sql = "SELECT * FROM PRODUCTO WHERE NOMBRE_PRODUCTO = '" + sBebida + "'";
 
@@ -253,6 +260,7 @@ public class ProductoController implements IProductoController {
 		return sCarta;
 	}
 
+	@Override
 	public int contarExistencias(Producto oProducto, GeneralController controlGeneral) {
 		int iExistencias = 0;
 

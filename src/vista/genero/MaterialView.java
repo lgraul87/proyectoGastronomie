@@ -10,27 +10,36 @@ public class MaterialView {
 	 * ADMIN
 	 ***********************************************************************************************/
 	public static void operacionesMaterial(GeneralController controlGeneral) {
-		byte bOption;
+		byte bOption = 0;
+		boolean errorControl = true;
 		do {
-			bOption = (byte) L.valida(""
-					//
-					+ "*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
-					//
-					+ "\n			ADMINISTRACION"
-					//
-					+ "\n*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
-					//
-					+ "\n"
-					//
-					+ "\n  --Aniadir Material (Compra): 		(1)"
-					//
-					+ "\n  --Borrar Material (Compra):     	(2)"
-					//
-					+ "\n  --Buscar Material (Compra): 		(3)"
-					//
-					+ "\n  --Mostrar Almacen (Material): 	(4)"
-					//
-					+ "\n  --Salir: 				(5)", 1, 5, 3);
+			try {
+				bOption = (byte) L.valida(""
+						//
+						+ "*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
+						//
+						+ "\n			ADMINISTRACION"
+						//
+						+ "\n*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
+						//
+						+ "\n"
+						//
+						+ "\n  --Aniadir Material (Compra): 		(1)"
+						//
+						+ "\n  --Borrar Material (Compra):     	(2)"
+						//
+						+ "\n  --Buscar Material (Compra): 		(3)"
+						//
+						+ "\n  --Mostrar Almacen (Material): 	(4)"
+						//
+						+ "\n  --Salir: 				(5)", 1, 5, 3);
+
+				errorControl = false;
+			} catch (NumberFormatException e) {
+				System.out.println(e.getMessage());
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 
 			//
 
@@ -43,7 +52,7 @@ public class MaterialView {
 			} else if (bOption == 4) {
 				mostrarAlmacen(controlGeneral);
 			}
-		} while (bOption != 5);
+		} while (errorControl);
 	}
 
 	public static void aniadirMaterial(GeneralController controlGeneral) {
@@ -95,65 +104,94 @@ public class MaterialView {
 
 	public static void borrarMaterial(GeneralController controlGeneral) {
 
-		String sResultado = "No se pudo borrar";
+		String sResultado = "No hay materiales";
 
-		String sNombre = L.leer("Nombre (Material): ");
 
-		if (controlGeneral.getMaterialController().remove(sNombre)) {
-			sResultado = "borrado correctamente";
+		if (!controlGeneral.getMaterialController().mostrarMateriales().equals("No hay materiales")) {
+			
+			System.out.println(controlGeneral.getMaterialController().mostrarMateriales());
+
+			
+			sResultado = "No se pudo borrar";
+			
+			
+			String sNombre = L.leer("Nombre (Material): ");
+
+			Material oMaterial = new Material(sNombre);
+
+			if (controlGeneral.getMaterialController().remove(oMaterial)) {
+				sResultado = "borrado correctamente";
+			}
 		}
 		System.out.println(sResultado);
 	}
 
 	public static void buscarMaterial(GeneralController controlGeneral) {
 
-		String sResultado = "No esta registrado.";
+		String sResultado = "No hay materiales";
 
-		String sNombre = L.leer("Nombre (Material): ");
 
-		if (controlGeneral.getMaterialController().search(sNombre)) {
-			sResultado = "Encontrado, esta registrado.";
+		if (!controlGeneral.getMaterialController().mostrarMateriales().equals("No hay materiales")) {
+			
+			System.out.println(controlGeneral.getMaterialController().mostrarMateriales());
+
+
+			sResultado = "No esta registrado.";
+			
+			
+			String sNombre = L.leer("Nombre (Material): ");
+
+			Material oMaterial = new Material(sNombre);
+
+			if (controlGeneral.getMaterialController().search(oMaterial)) {
+				sResultado = "Encontrado, esta registrado.";
+			}
 		}
 		System.out.println(sResultado);
 	}
 
 	public static void mostrarAlmacen(GeneralController controlGeneral) {
-		String sResultado = null;
+		String sResultado = "No hay materiales";
 
-		byte bOption = 0;
+		if (!controlGeneral.getMaterialController().mostrarMateriales().equals("No hay materiales")) {
+			
+			byte bOption = 0;
 
-		boolean errorControl = true;
+			boolean errorControl = true;
 
-		do {
-			try {
-				bOption = (byte) L.valida(""
-						//
-						+ "Un Material: 		(1)"
-						//
-						+ "\nLista de Materiales: 	(2)", 1, 2, 3);
+			do {
+				try {
+					bOption = (byte) L.valida(""
+							//
+							+ "Un Material: 		(1)"
+							//
+							+ "\nLista de Materiales: 	(2)", 1, 2, 3);
 
-				errorControl = false;
+					errorControl = false;
 
-			} catch (NumberFormatException e) {
-				System.out.println(e.getMessage());
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				} catch (NumberFormatException e) {
+					System.out.println(e.getMessage());
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			} while (errorControl);
+
+			if (bOption == 1) {
+
+				String sNombre = L.leer("Nombre (Material):");
+
+				Material oMaterial = new Material(sNombre);
+
+				if (controlGeneral.getMaterialController().search(oMaterial)) {
+					sResultado = controlGeneral.getMaterialController().mostrarMaterial(oMaterial);
+
+				} else {
+					sResultado = "Material no encontrado";
+				}
+
+			} else if (bOption == 2) {
+				sResultado = controlGeneral.getMaterialController().mostrarMateriales();
 			}
-		} while (errorControl);
-
-		if (bOption == 1) {
-
-			String sNombre = L.leer("Nombre (Material):");
-
-			if (controlGeneral.getMaterialController().search(sNombre)) {
-				sResultado = controlGeneral.getMaterialController().mostrarMaterial(sNombre);
-
-			} else {
-				sResultado = "Proveedor no encontrado";
-			}
-
-		} else if (bOption == 2) {
-			sResultado = controlGeneral.getMaterialController().mostrarMateriales();
 		}
 		System.out.println(sResultado);
 	}

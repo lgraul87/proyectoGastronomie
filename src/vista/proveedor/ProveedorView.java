@@ -12,27 +12,38 @@ public class ProveedorView {
 	 * @param controlGeneral
 	 ***********************************************************************************************/
 	public static void operacionesProveedor(GeneralController controlGeneral) {
-		byte bOption;
+		byte bOption = 0;
+		boolean errorControl = true;
 		do {
-			bOption = (byte) L.valida(""
-					//
-					+ "*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
-					//
-					+ "\n					ADMINISTRACION"
-					//
-					+ "\n*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
-					//
-					+ "\n"
-					//
-					+ "\n  --Aniadir Proveedor (Compra): (1)"
-					//
-					+ "\n  --Borrar Proveedor (Compra):     (2)"
-					//
-					+ "\n  --Buscar Proveedor (Compra): (3)"
-					//
-					+ "\n  --Mostrar Proveedor (Compra): (4)"
-					//
-					+ "\n  --Salir: (5)", 1, 5, 3);
+			try {
+				bOption = (byte) L.valida(""
+						//
+						+ "*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
+						//
+						+ "\n					ADMINISTRACION"
+						//
+						+ "\n*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
+						//
+						+ "\n"
+						//
+						+ "\n  --Aniadir Proveedor (Compra): 	(1)"
+						//
+						+ "\n  --Borrar Proveedor (Compra):     	(2)"
+						//
+						+ "\n  --Buscar Proveedor (Compra): 		(3)"
+						//
+						+ "\n  --Mostrar Proveedor (Compra): 	(4)"
+						//
+						+ "\n  --Salir: 				(5)", 1, 5, 3);
+
+				errorControl = false;
+
+			} catch (NumberFormatException e) {
+				System.out.println(e.getMessage());
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
 			//
 
 			if (bOption == 1) {
@@ -44,7 +55,7 @@ public class ProveedorView {
 			} else if (bOption == 4) {
 				mostrarProveedor(controlGeneral);
 			}
-		} while (bOption != 5);
+		} while (errorControl);
 	}
 
 	/***********************************************************************************************
@@ -53,7 +64,6 @@ public class ProveedorView {
 	public static void aniadirProveedor(GeneralController controlGeneral) {
 
 		String sResultado = "";
-		int iTelefono = 0;
 		String sCorreo = null;
 		boolean bCorreo = false;
 		Proveedor oProveedor = null;
@@ -61,19 +71,9 @@ public class ProveedorView {
 
 		String sNombre = L.leer("Nombre (Proveedor): ");
 
-		boolean errorControl = true;
-		do {
-			try {
-				iTelefono = (int) L.valida("Telefono (Proveedor):?", 100000000, 999999999, 1);
-				errorControl = false;
-			} catch (NumberFormatException e) {
-				System.out.println(e.getMessage());
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-		} while (errorControl);
+		String sTelefono = L.leer("Telefono (Proveedor): ");
 
-		errorControl = true;
+		boolean errorControl = true;
 		do {
 			try {
 				bOptionCorreo = (byte) L.valida("¿Desea aniadir un correo (Proveedor):?" + "\nSi: (1)" + "\nNo: (2)", 1,
@@ -99,12 +99,12 @@ public class ProveedorView {
 		TipoProveedor oTipoProveedor = new TipoProveedor(sTipoProveedor);
 
 		if (bCorreo) {
-			oProveedor = new Proveedor(sNombre, iTelefono, sCorreo, sDireccion, oTipoProveedor);
+			oProveedor = new Proveedor(sNombre, sTelefono, sCorreo, sDireccion, oTipoProveedor);
 
 		} else if (!bCorreo) {
-			oProveedor = new Proveedor( sNombre,  iTelefono,  sDireccion,  oTipoProveedor);
+			oProveedor = new Proveedor(sNombre, sTelefono, sDireccion, oTipoProveedor);
 
-		} 
+		}
 
 		boolean bAccion = controlGeneral.getProveedorController().add(oProveedor);
 
@@ -122,14 +122,21 @@ public class ProveedorView {
 
 	public static void borrarProveedor(GeneralController controlGeneral) {
 
-		String sResultado = "No se pudo borrar el Proveedor";
+		String sResultado = "No hay Proveedores";
 
-		String sNombre = L.leer("Nombre (Proveedor):");
 
-		if (controlGeneral.getProveedorController().remove(sNombre)) {
-			sResultado = "Proveedor borrado";
+		if (!controlGeneral.getProveedorController().mostrarProveedores().equals("No hay Proveedores")) {
+			System.out.println(controlGeneral.getProveedorController().mostrarProveedores());
+
+			sResultado = "No se pudo borrar el Proveedor";
+			String sNombre = L.leer("Nombre (Proveedor):");
+
+			Proveedor oProveedor = new Proveedor(sNombre);
+
+			if (controlGeneral.getProveedorController().remove(oProveedor)) {
+				sResultado = "Proveedor borrado";
+			}
 		}
-
 		System.out.println(sResultado);
 
 	}
@@ -138,12 +145,22 @@ public class ProveedorView {
 	 * BUSCAR Proveedor
 	 ***********************************************************************************************/
 	public static void buscarProveedor(GeneralController controlGeneral) {
-		String sResultado = "Proveedor no registrado";
+		String sResultado = "No hay Proveedores";
 
-		String sNombre = L.leer("Nombre (Proveedor): ");
 
-		if (controlGeneral.getProveedorController().searchProveedor(sNombre)) {
-			sResultado = "Proveedor registrado";
+		if (!controlGeneral.getProveedorController().mostrarProveedores().equals("No hay Proveedores")) {
+			
+			System.out.println(controlGeneral.getProveedorController().mostrarProveedores());
+
+			sResultado = "Proveedor no registrado";
+
+			String sNombre = L.leer("Nombre (Proveedor): ");
+
+			Proveedor oProveedor = new Proveedor(sNombre);
+
+			if (controlGeneral.getProveedorController().searchProveedor(oProveedor)) {
+				sResultado = "Proveedor registrado";
+			}
 		}
 		System.out.println(sResultado);
 	}
@@ -153,42 +170,45 @@ public class ProveedorView {
 	 ***********************************************************************************************/
 	public static void mostrarProveedor(GeneralController controlGeneral) {
 
-		String sResultado = null;
+		String sResultado = "No hay Proveedores";
 
-		byte bOption = 0;
+		if (!controlGeneral.getProveedorController().mostrarProveedores().equals("No hay Proveedores")) {
 
-		boolean errorControl = true;
+			byte bOption = 0;
 
-		do {
-			try {
-				bOption = (byte) L.valida(""
-						//
-						+ "Un Proveedor: 		(1)"
-						//
-						+ "\nLista de Proveedores: 	(2)", 1, 2, 3);
+			boolean errorControl = true;
 
-				errorControl = false;
+			do {
+				try {
+					bOption = (byte) L.valida(""
+							//
+							+ "Un Proveedor: 		(1)"
+							//
+							+ "\nLista de Proveedores: 	(2)", 1, 2, 3);
 
-			} catch (NumberFormatException e) {
-				System.out.println(e.getMessage());
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
+					errorControl = false;
+
+				} catch (NumberFormatException e) {
+					System.out.println(e.getMessage());
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			} while (errorControl);
+
+			if (bOption == 1) {
+
+				String sNombre = L.leer("Nombre (Proveedor):");
+				Proveedor oProveedor = new Proveedor(sNombre);
+				if (controlGeneral.getProveedorController().searchProveedor(oProveedor)) {
+					sResultado = controlGeneral.getProveedorController().mostrarProveedor(oProveedor);
+
+				} else {
+					sResultado = "Proveedor no encontrado";
+				}
+
+			} else if (bOption == 2) {
+				sResultado = controlGeneral.getProveedorController().mostrarProveedores();
 			}
-		} while (errorControl);
-
-		if (bOption == 1) {
-
-			String sNombre = L.leer("Nombre (Proveedor):");
-
-			if (controlGeneral.getProveedorController().searchProveedor(sNombre)) {
-				sResultado = controlGeneral.getProveedorController().mostrarProveedor(sNombre);
-
-			} else {
-				sResultado = "Proveedor no encontrado";
-			}
-
-		} else if (bOption == 2) {
-			sResultado = controlGeneral.getProveedorController().mostrarProveedores();
 		}
 		System.out.println(sResultado);
 	}

@@ -16,6 +16,12 @@ public class Material implements IMaterial, LimitsDB {
 		setShStock(shStock);
 		setsTipo(sTipo);
 	}
+	
+	public Material(String sNombreMaterial) {
+
+		setsNombreMaterial(sNombreMaterial);
+		
+	}
 
 	@Override
 	public String getsNombreMaterial() {
@@ -24,7 +30,8 @@ public class Material implements IMaterial, LimitsDB {
 
 	private boolean setsNombreMaterial(String sNombreMaterial) { // PK
 		boolean bValido = false;
-		if (sNombreMaterial != null && sNombreMaterial.length() <= MAX_CHAR_15) {
+		if (sNombreMaterial != null && sNombreMaterial.length() > MIN_CHAR_0
+				&& sNombreMaterial.length() <= MAX_CHAR_15) {
 			this.sNombreMaterial = sNombreMaterial;
 			bValido = true;
 		}
@@ -73,7 +80,7 @@ public class Material implements IMaterial, LimitsDB {
 	@Override
 	public boolean setsTipo(String sTipo) {
 		boolean bValido = false;
-		if (sTipo != null && sTipo.length() <= MAX_CHAR_30) {
+		if (sTipo != null && sTipo.length() > MIN_CHAR_0 && sTipo.length() <= MAX_CHAR_30) {
 			this.sTipo = sTipo;
 
 		}
@@ -101,7 +108,8 @@ public class Material implements IMaterial, LimitsDB {
 	public boolean equals(Object obj) {
 		boolean bIgual = false;
 		Material other = (Material) obj;
-		if (this.checkMaterial() && other.checkMaterial() && this.sNombreMaterial.equals(other.sNombreMaterial)) {
+		if (this != null && other != null && this.checkMaterial() && other.checkMaterial()
+				&& this.sNombreMaterial.equals(other.sNombreMaterial)) {
 			bIgual = true;
 		}
 		return bIgual;

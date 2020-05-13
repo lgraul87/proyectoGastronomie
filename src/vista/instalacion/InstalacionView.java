@@ -12,27 +12,38 @@ public class InstalacionView {
 	 * @param controlGeneral
 	 ***********************************************************************************************/
 	public static void operacionesInstalacion(GeneralController controlGeneral) {
-		byte bOption;
+		byte bOption = 0;
+		boolean errorControl = true;
 		do {
-			bOption = (byte) L.valida(""
-					//
-					+ "*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
-					//
-					+ "\n		ADMINISTRACION"
-					//
-					+ "\n*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
-					//
-					+ "\n"
-					//
-					+ "\n  --Aniadir Instalacion (Alquiler): 	(1)"
-					//
-					+ "\n  --Borrar Instalacion (Alquiler):     	(2)"
-					//
-					+ "\n  --Buscar Instalacion (Alquiler): 	(3)"
-					//
-					+ "\n  --Mostrar Instalacion (Alquiler): 	(4)"
-					//
-					+ "\n  --Salir: 				(5)", 1, 5, 3);
+			try {
+
+				bOption = (byte) L.valida(""
+						//
+						+ "*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
+						//
+						+ "\n		ADMINISTRACION"
+						//
+						+ "\n*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
+						//
+						+ "\n"
+						//
+						+ "\n  --Aniadir Instalacion (Alquiler): 	(1)"
+						//
+						+ "\n  --Borrar Instalacion (Alquiler):     	(2)"
+						//
+						+ "\n  --Buscar Instalacion (Alquiler): 	(3)"
+						//
+						+ "\n  --Mostrar Instalacion (Alquiler): 	(4)"
+						//
+						+ "\n  --Salir: 				(5)", 1, 5, 3);
+
+				errorControl = false;
+			} catch (NumberFormatException e) {
+				System.out.println(e.getMessage());
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
 			//
 
 			if (bOption == 1) {
@@ -44,7 +55,7 @@ public class InstalacionView {
 			} else if (bOption == 4) {
 				mostrarInstalacion(controlGeneral);
 			}
-		} while (bOption != 5);
+		} while (errorControl);
 	}
 
 	public static void aniadirInstalacion(GeneralController controlGeneral) {
@@ -104,65 +115,87 @@ public class InstalacionView {
 
 	public static void borrarInstalacion(GeneralController controlGeneral) {
 
-		String sResultado = "No se pudo borrar";
+		String sResultado = "No hay instalaciones";
 
-		String sNombre = L.leer("Nombre: (Instalacion)");
 
-		if (controlGeneral.getInstalacionController().remove(sNombre)) {
-			sResultado = "Borrado satisfactorio";
+		if (!controlGeneral.getInstalacionController().mostrarInstalaciones().equals("No hay instalaciones")) {
+			System.out.println(controlGeneral.getInstalacionController().mostrarInstalaciones());
+			sResultado = "No se pudo borrar";
+			
+
+			String sNombre = L.leer("Nombre: (Instalacion)");
+
+			Instalacion oInstalacion = new Instalacion(sNombre);
+
+			if (controlGeneral.getInstalacionController().remove(oInstalacion)) {
+				sResultado = "Borrado satisfactorio";
+			}
 		}
 		System.out.println(sResultado);
 	}
 
 	public static void buscarInstalacion(GeneralController controlGeneral) {
 
-		String sResultado = "No esta registrado";
+		String sResultado = "No hay instalaciones";
 
-		String sNombre = L.leer("Nombre: (Instalacion)");
 
-		if (controlGeneral.getInstalacionController().search(sNombre)) {
-			sResultado = "Encontrado, esta registrado";
+		if (!controlGeneral.getInstalacionController().mostrarInstalaciones().equals("No hay instalaciones")) {
+			System.out.println(controlGeneral.getInstalacionController().mostrarInstalaciones());
+
+			
+			sResultado = "No esta registrado";
+			String sNombre = L.leer("Nombre: (Instalacion)");
+
+			Instalacion oInstalacion = new Instalacion(sNombre);
+
+			if (controlGeneral.getInstalacionController().search(oInstalacion)) {
+				sResultado = "Encontrado, esta registrado";
+			}
 		}
 		System.out.println(sResultado);
 	}
 
 	public static void mostrarInstalacion(GeneralController controlGeneral) {
-		String sResultado = null;
+		String sResultado = "No hay instalaciones";
 
 		byte bOption = 0;
+		if (!controlGeneral.getInstalacionController().mostrarInstalaciones().equals("No hay instalaciones")) {
 
-		boolean errorControl = true;
+			boolean errorControl = true;
 
-		do {
-			try {
-				bOption = (byte) L.valida(""
-						//
-						+ "Una instalacion: 		(1)"
-						//
-						+ "\nLista de instalaciones: 	(2)", 1, 2, 3);
+			do {
+				try {
+					bOption = (byte) L.valida(""
+							//
+							+ "Una instalacion: 		(1)"
+							//
+							+ "\nLista de instalaciones: 	(2)", 1, 2, 3);
 
-				errorControl = false;
+					errorControl = false;
 
-			} catch (NumberFormatException e) {
-				System.out.println(e.getMessage());
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				} catch (NumberFormatException e) {
+					System.out.println(e.getMessage());
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			} while (errorControl);
+
+			if (bOption == 1) {
+
+				String sNombre = L.leer("Nombre (Instalacion):");
+
+				Instalacion oInstalacion = new Instalacion(sNombre);
+
+				if (controlGeneral.getInstalacionController().search(oInstalacion)) {
+					sResultado = controlGeneral.getInstalacionController().mostrarInstalacion(oInstalacion);
+
+				} else {
+					sResultado = "Instalacion no encontrada";
+				}
+
+			} else if (bOption == 2) {
+				sResultado = controlGeneral.getInstalacionController().mostrarInstalaciones();
 			}
-		} while (errorControl);
-
-		if (bOption == 1) {
-
-			String sNombre = L.leer("Nombre (Instalacion):");
-
-			if (controlGeneral.getInstalacionController().search(sNombre)) {
-				sResultado = controlGeneral.getInstalacionController().mostrarInstalacion(sNombre);
-
-			} else {
-				sResultado = "Instalacion no encontrada";
-			}
-
-		} else if (bOption == 2) {
-			sResultado = controlGeneral.getInstalacionController().mostrarInstalaciones();
 		}
 		System.out.println(sResultado);
 	}

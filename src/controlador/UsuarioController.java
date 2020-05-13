@@ -6,6 +6,7 @@ import java.sql.Statement;
 import controlador.database.ConexionDB;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
+import vista.usuario.UsuarioView;
 
 public class UsuarioController implements IUsuarioController {
 
@@ -22,11 +23,24 @@ public class UsuarioController implements IUsuarioController {
 		String sApellidos = oUsuario.getsApellidos();
 		String sDni = oUsuario.getsDni();
 		String sCorreo = oUsuario.getsCorreoElectronico();
+		String sContrasenia = oUsuario.getsContrasenia();
+
+		String hash = UsuarioView.encryptThisString(sContrasenia);
+
 		String sTipo = oUsuario.getoTipoUsuario().getsNombreTipoUsuario();
 
-		int iTelefono = oUsuario.getiTelefono();
+		String sTelefono = oUsuario.getsTelefono();
 
-		if (!searchUser(sDni)) {
+		int iTelefono;
+		try {
+			iTelefono = Integer.parseInt(sTelefono);
+		} catch (Exception e) {
+			iTelefono = 0;
+		}
+
+		Usuario oUsuario2 = new Usuario(sDni);
+
+		if (!searchUser(oUsuario2)) {
 			bCrearUsuario = true;
 		}
 		if (!searchTipoUsuario(sTipo)) {
@@ -42,24 +56,26 @@ public class UsuarioController implements IUsuarioController {
 			String sql = "";
 			if (iTelefono == 0 && sCorreo == null) {
 				sql = "INSERT INTO USUARIO VALUES ('" + sDni + "','" + sNombre + "','" + sApellidos + "'," + iTelefono
-						+ ",NULL,'" + sTipo + "');";
+						+ ",NULL,'" + hash + "','" + sTipo + "');";
 
 			} else if (iTelefono != 0 && sCorreo == null) {
 				sql = "INSERT INTO USUARIO VALUES ('" + sDni + "','" + sNombre + "','" + sApellidos + "'," + iTelefono
-						+ ",NULL,'" + sTipo + "');";
+						+ ",NULL,'" + hash + "','" + sTipo + "');";
 
 			} else if (iTelefono == 0 && sCorreo != null) {
 				sql = "INSERT INTO USUARIO VALUES ('" + sDni + "','" + sNombre + "','" + sApellidos + "'," + iTelefono
-						+ ",'" + sCorreo + "','" + sTipo + "');";
+						+ ",'" + sCorreo + "','" + hash + "','" + sTipo + "');";
 
 			} else if (iTelefono != 0 && sCorreo != null) {
 				sql = "INSERT INTO USUARIO VALUES ('" + sDni + "','" + sNombre + "','" + sApellidos + "'," + iTelefono
-						+ ",'" + sCorreo + "','" + sTipo + "');";
+						+ ",'" + sCorreo + "','" + hash + "','" + sTipo + "');";
 
 			}
 
-			ConexionDB.executeCount(sql);
-			bAniadido = true;
+			if (ConexionDB.executeUpdate(sql) != 0) {
+				bAniadido = true;
+
+			}
 		}
 
 		return bAniadido;
@@ -94,10 +110,10 @@ public class UsuarioController implements IUsuarioController {
 	 ***************************************************************************************************************/
 
 	@Override
-	public boolean remove(String sDni) {
+	public boolean remove(Usuario oUsuario) {
 		boolean bRemove = false;
-		if (searchUser(sDni)) {
-			if (deleteUser(sDni)) {
+		if (searchUser(oUsuario)) {
+			if (deleteUser(oUsuario)) {
 				bRemove = true;
 			}
 		}
@@ -105,10 +121,12 @@ public class UsuarioController implements IUsuarioController {
 	}
 
 	@Override
-	public boolean deleteUser(String sDni) {
+	public boolean deleteUser(Usuario oUsuario) {
 
 		boolean bDelete = false;
 		String sTipo = null;
+
+		String sDni = oUsuario.getsDni();
 
 		String sql3 = "SELECT * FROM USUARIO WHERE DNI = '" + sDni + "';";
 
@@ -151,9 +169,9 @@ public class UsuarioController implements IUsuarioController {
 	 * SEARCH USER
 	 ***************************************************************************************************************/
 	@Override
-	public boolean searchUser(String sDni) {
+	public boolean searchUser(Usuario oUsuario) {
 		boolean bEncontrado = false;
-
+		String sDni = oUsuario.getsDni();
 		String sql = "SELECT COUNT(*) FROM usuario WHERE dni = '" + sDni + "';";
 
 		if (ConexionDB.executeCount(sql) != 0) {
@@ -168,7 +186,7 @@ public class UsuarioController implements IUsuarioController {
 	 * 1-. MOSTRAR USUARIO
 	 ***************************************************************************************************************/
 	@Override
-	public String mostrarUsuario(String sDni) {
+	public String mostrarUsuario(Usuario oUsuario) {
 		String sResultado = null;
 		int iTelefonoBD = 0;
 
@@ -177,6 +195,8 @@ public class UsuarioController implements IUsuarioController {
 		String sDniBD = null;
 		String sCorreoBD = null;
 		String sTipoBD = null;
+
+		String sDni = oUsuario.getsDni();
 
 		String sql = "SELECT * FROM USUARIO WHERE DNI = '" + sDni + "';";
 
@@ -283,9 +303,9 @@ public class UsuarioController implements IUsuarioController {
 	}
 
 	@Override
-	public Usuario determinarUsuarioPedido(String sDni) {
+	public Usuario determinarUsuarioPedido(Usuario oUsuario) {
 
-		Usuario oUsuario = null;
+		String sDni = oUsuario.getsDni();
 
 		String sql2 = "SELECT COUNT(*) FROM USUARIO WHERE DNI = '" + sDni + "';";
 
@@ -303,17 +323,24 @@ public class UsuarioController implements IUsuarioController {
 					String sApellidosBD = resulset.getString("apellidos");
 					int iTelefonoBD = resulset.getInt("telefono");
 					String sCorreoBD = resulset.getString("correo");
+					String sContrasenia = resulset.getString("contrasenia");
 					String sTipoBD = resulset.getString("nombre_usuario");
 
+					String sTelefonoParse = Integer.toString(iTelefonoBD);
+
 					TipoUsuario oTipoUsuario = new TipoUsuario(sTipoBD);
+
 					if (iTelefonoBD == 0 && sCorreoBD == null) {
-						oUsuario = new Usuario(sNombreBD, sDniBD, sApellidosBD, oTipoUsuario);
+						oUsuario = new Usuario(sNombreBD, sDniBD, sApellidosBD, sContrasenia, oTipoUsuario);
 					} else if (iTelefonoBD != 0 && sCorreoBD == null) {
-						oUsuario = new Usuario(sNombreBD, sDniBD, sApellidosBD, iTelefonoBD, oTipoUsuario);
+						oUsuario = new Usuario(sNombreBD, sDniBD, sApellidosBD, sTelefonoParse, "null", sContrasenia,
+								oTipoUsuario);
 					} else if (iTelefonoBD == 0 && sCorreoBD != null) {
-						oUsuario = new Usuario(sNombreBD, sDniBD, sApellidosBD, sCorreoBD, oTipoUsuario);
+						oUsuario = new Usuario(sNombreBD, sDniBD, sApellidosBD, "null", sCorreoBD, sContrasenia,
+								oTipoUsuario);
 					} else if (iTelefonoBD != 0 && sCorreoBD != null) {
-						oUsuario = new Usuario(sNombreBD, sDniBD, sApellidosBD, iTelefonoBD, sCorreoBD, oTipoUsuario);
+						oUsuario = new Usuario(sNombreBD, sDniBD, sApellidosBD, sTelefonoParse, sCorreoBD, sContrasenia,
+								oTipoUsuario);
 					}
 				}
 			} catch (SQLException e) {
@@ -324,10 +351,11 @@ public class UsuarioController implements IUsuarioController {
 
 	}
 
-	public boolean login(String sUsuarioLogin) {
+	@Override
+	public boolean login(String hash) {
 		boolean bLogin = false;
 
-		String sql = "SELECT COUNT(*) FROM USUARIO WHERE NOMBRE_USUARIO = '" + sUsuarioLogin + "';";
+		String sql = "SELECT COUNT(*) FROM USUARIO WHERE CONTRASENIA = '" + hash + "';";
 
 		if (ConexionDB.executeCount(sql) != 0) {
 			bLogin = true;
@@ -335,4 +363,7 @@ public class UsuarioController implements IUsuarioController {
 
 		return bLogin;
 	}
+
+	
+	
 }

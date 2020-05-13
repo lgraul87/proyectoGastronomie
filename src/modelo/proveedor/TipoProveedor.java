@@ -15,7 +15,7 @@ public class TipoProveedor implements ITipoProveedor,LimitsDB {
 
 	private boolean setsNombreTipoProveedor(String sNombreTipoProveedor) {  //PK
 		boolean bValido = false;
-		if (sNombreTipoProveedor != null && sNombreTipoProveedor.length() <= MAX_CHAR_15) {
+		if (sNombreTipoProveedor != null && sNombreTipoProveedor.length() > MIN_CHAR_0 && sNombreTipoProveedor.length() <= MAX_CHAR_15) {
 			this.sNombreTipoProveedor = sNombreTipoProveedor;
 			bValido = true;
 		}
@@ -42,7 +42,7 @@ public class TipoProveedor implements ITipoProveedor,LimitsDB {
 	public boolean equals(Object obj) {
 		boolean bIgual = false;
 		TipoProveedor other = (TipoProveedor) obj;
-		if (this.checkTipoProveedor() && other.checkTipoProveedor()
+		if (this != null && other != null && this.checkTipoProveedor() && other.checkTipoProveedor()
 				&& this.sNombreTipoProveedor.equals(other.sNombreTipoProveedor)) {
 			bIgual = true;
 		}

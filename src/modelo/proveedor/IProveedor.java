@@ -4,9 +4,9 @@ public interface IProveedor {
 
 	public String getsNombreProveedor();
 
-	public int getiTelefono();
+	public String getsTelefono();
 
-	public boolean setiTelefono(int iTelefono);
+	public boolean setsTelefono(String sTelefono);
 
 	public String getsCorreoElectronico();
 

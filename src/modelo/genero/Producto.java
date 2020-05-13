@@ -8,12 +8,18 @@ public class Producto implements IProducto, LimitsDB {
 	private short shStock; // NN
 	private String sTipo;
 
-	public Producto(String sNombreProducto, float fPrecio, short shStock,String sTipo) {
+	public Producto(String sNombreProducto, float fPrecio, short shStock, String sTipo) {
 
 		setsNombreProducto(sNombreProducto);
 		setfPrecio(fPrecio);
 		setShStock(shStock);
 		setsTipo(sTipo);
+	}
+	
+	public Producto(String sNombreProducto) {
+
+		setsNombreProducto(sNombreProducto);
+		
 	}
 
 	@Override
@@ -23,7 +29,8 @@ public class Producto implements IProducto, LimitsDB {
 
 	private boolean setsNombreProducto(String sNombreProducto) { // PK
 		boolean bValido = false;
-		if (sNombreProducto != null && sNombreProducto.length() <= MAX_CHAR_15) {
+		if (sNombreProducto != null && sNombreProducto.length() > MIN_CHAR_0
+				&& sNombreProducto.length() <= MAX_CHAR_15) {
 			this.sNombreProducto = sNombreProducto;
 			bValido = true;
 		}
@@ -63,20 +70,23 @@ public class Producto implements IProducto, LimitsDB {
 		}
 		return bValido;
 	}
+
 	@Override
 	public String getsTipo() {
 		return this.sTipo;
 	}
+
 	@Override
 	public boolean setsTipo(String sTipo) {
 		boolean bValido = false;
-		if (sTipo.equals(CARTA_BEBIDA)|| sTipo.equals(CARTA_COMIDA)||sTipo.equals(DERIVADOS)) {
+		if (sTipo != null && sTipo.equals(CARTA_BEBIDA) || sTipo.equals(CARTA_COMIDA) || sTipo.equals(DERIVADOS)) {
 			this.sTipo = sTipo;
 			bValido = true;
 
 		}
 		return bValido;
 	}
+
 	@Override
 	public boolean checkProducto() {
 		boolean bValido = false;
@@ -98,7 +108,8 @@ public class Producto implements IProducto, LimitsDB {
 	public boolean equals(Object obj) {
 		boolean bIgual = false;
 		Producto other = (Producto) obj;
-		if (this.checkProducto() && other.checkProducto() && this.sNombreProducto.equals(other.sNombreProducto)) {
+		if (this != null && other != null && this.checkProducto() && other.checkProducto()
+				&& this.sNombreProducto.equals(other.sNombreProducto)) {
 			bIgual = true;
 		}
 		return bIgual;

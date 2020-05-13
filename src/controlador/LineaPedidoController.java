@@ -7,6 +7,7 @@ import java.util.Date;
 
 import controlador.database.ConexionDB;
 import modelo.pedido.LineaPedido;
+import modelo.proveedor.Proveedor;
 
 public class LineaPedidoController implements ILineaPedidoController {
 
@@ -19,6 +20,12 @@ public class LineaPedidoController implements ILineaPedidoController {
 		String sNombreProducto = null;
 		String sNombreMaterial = null;
 		String sTipoPago = null;
+		String sDni = null;
+		int idPago = 1;
+		java.sql.Date sqlDate = null;
+		java.sql.Date sqlDate2 = null;
+
+		String sNombreInstalacion = null;
 
 		// #### PARA LINEA PEDIDO #######
 		int iId = 0;
@@ -42,32 +49,14 @@ public class LineaPedidoController implements ILineaPedidoController {
 
 		String sNombreProveedor = oLineaPedido.getoProveedor().getsNombreProveedor();
 
-		// #### PARA PEDIDO #######
-		Date utilDate = oLineaPedido.getoPedido().getdFecha();
-
-		java.sql.Date sqlDate = convert(utilDate);
-
-		String sDni = oLineaPedido.getoPedido().getoUsuario().getsDni();
-
-		int idPago = 1;
-
-		String sNombreInstalacion = oLineaPedido.getoPedido().getoInstalacion().getsNombreInstalacion();
-
 		// #### PARA PAGO #######
 
+		Date utilDate = oLineaPedido.getoPedido().getdFecha();
 		Date utilDate2 = utilDate;
+		sqlDate2 = convert(utilDate2);
+		sqlDate = convert(utilDate);
 
-		java.sql.Date sqlDate2 = convert(utilDate2);
-
-		try {
-			sTipoPago = oLineaPedido.getoPedido().getoPago().getoMetodoPago().getsNombrePago();
-
-		} catch (NullPointerException e) {
-
-			sTipoPago = null;
-		} catch (Exception e) {
-			sTipoPago = null;
-		}
+		sTipoPago = oLineaPedido.getoPedido().getoPago().getoMetodoPago().getsNombrePago();
 
 		String sql4 = "SELECT * FROM PAGO";
 
@@ -87,17 +76,8 @@ public class LineaPedidoController implements ILineaPedidoController {
 
 		idPago = idPago + 1;
 
-		String sql6 = null;
-		if (sTipoPago != null) {
+		String sql6 = "INSERT INTO PAGO VALUES (" + idPago + ",'" + sqlDate2 + "','" + sTipoPago + "');";
 
-			 sql6 = "INSERT INTO PAGO VALUES (" + idPago + ",'" + sqlDate2 + "','" + sTipoPago + "');";
-
-		} else if (sTipoPago == null) {
-			 sql6 = "INSERT INTO PAGO VALUES (" + idPago + ",'" + sqlDate2 + "',null);";
-
-		}
-
-		
 		if (ConexionDB.executeUpdate(sql6) != 0) {
 			bAddPago = true;
 		}
@@ -119,126 +99,11 @@ public class LineaPedidoController implements ILineaPedidoController {
 		}
 
 		iIdPedido = iIdPedido + 1;
+		sNombreInstalacion = oLineaPedido.getoPedido().getoInstalacion().getsNombreInstalacion();
 
-		String sql5 = "";
+		sDni = oLineaPedido.getoPedido().getoUsuario().getsDni();
 
-		if (sDni != null) {
-			sql5 = "INSERT INTO PEDIDO VALUES (" + iIdPedido + ",'" + sqlDate + "','" + sDni + "'," + idPago + ",'"
-					+ sNombreInstalacion + "');";
-		} else if (sDni == null) {
-			sql5 = "INSERT INTO PEDIDO VALUES (" + iIdPedido + ",'" + sqlDate + "',null," + idPago + ",'"
-					+ sNombreInstalacion + "');";
-		}
-
-		if (ConexionDB.executeUpdate(sql5) != 0) {
-			bAddPedido = true;
-		}
-
-		String sql = "SELECT * FROM LINEA_PEDIDO";
-
-		try {
-			Statement statement = ConexionDB.getConnection().createStatement();
-			ResultSet resultSet = statement.executeQuery(sql);
-			while (resultSet.next()) {
-
-				int iNumeroBD = resultSet.getInt("id_linea_pedido");
-				if (iId < iNumeroBD) {
-					iId = iNumeroBD;
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		iId = iId + 1;
-
-		if (sNombreProducto != null && sNombreMaterial == null) {
-
-			String sql3 = "INSERT INTO LINEA_PEDIDO VALUES (" + iId + "," + iCantidad + ",'" + sTipo + "'," + iIdPedido
-					+ ",'" + sNombreProducto + "',null,'" + sNombreProveedor + "');";
-
-			if (ConexionDB.executeUpdate(sql3) != 0  && bAddPedido) {
-				dAdd = true;
-
-			}
-
-		} else if (sNombreProducto == null && sNombreMaterial != null) {
-
-			String sql3 = "INSERT INTO LINEA_PEDIDO VALUES (" + iId + "," + iCantidad + ",'" + sTipo + "'," + iIdPedido
-					+ ",null,'" + sNombreMaterial + "','" + sNombreProveedor + "');";
-
-			if (ConexionDB.executeUpdate(sql3) != 0 && bAddPago && bAddPedido) {
-				dAdd = true;
-
-			}
-		}
-
-		return dAdd;
-	}
-
-	@Override
-	public java.sql.Date convert(java.util.Date uDate) {
-		java.sql.Date sDate = new java.sql.Date(uDate.getTime());
-		return sDate;
-	}
-
-	@Override
-	public boolean addSinPago(LineaPedido oLineaPedido) {
-		boolean dAdd = false;
-		boolean bAddPedido = false;
-		String sNombreProducto = null;
-		String sNombreMaterial = null;
-
-		// #### PARA LINEA PEDIDO #######
-		int iId = 0;
-		int iCantidad = (int) oLineaPedido.getbCantidad();
-		String sTipo = oLineaPedido.getsTipo();
-		int iIdPedido = 0;
-
-		try {
-			sNombreProducto = oLineaPedido.getoProducto().getsNombreProducto();
-
-		} catch (Exception e) {
-			sNombreProducto = null;
-		}
-
-		try {
-			sNombreMaterial = oLineaPedido.getoMaterial().getsNombreMaterial();
-
-		} catch (Exception e) {
-			sNombreMaterial = null;
-		}
-
-		String sNombreProveedor = oLineaPedido.getoProveedor().getsNombreProveedor();
-
-		// #### PARA PEDIDO #######
-		Date utilDate = oLineaPedido.getoPedido().getdFecha();
-
-		java.sql.Date sqlDate = convert(utilDate);
-
-		String sDni = oLineaPedido.getoPedido().getoUsuario().getsDni();
-
-		String sNombreInstalacion = oLineaPedido.getoPedido().getoInstalacion().getsNombreInstalacion();
-
-		String sql2 = "SELECT * FROM PEDIDO";
-
-		try {
-			Statement statement = ConexionDB.getConnection().createStatement();
-			ResultSet resultSet = statement.executeQuery(sql2);
-			while (resultSet.next()) {
-
-				int iNumeroBD = resultSet.getInt("id_pedido");
-				if (iIdPedido < iNumeroBD) {
-					iIdPedido = iNumeroBD;
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		iIdPedido = iIdPedido + 1;
-
-		String sql5 = "INSERT INTO PEDIDO VALUES (" + iIdPedido + ",'" + sqlDate + "','" + sDni + "',null,'"
+		String sql5 = "INSERT INTO PEDIDO VALUES (" + iIdPedido + ",'" + sqlDate + "','" + sDni + "'," + idPago + ",'"
 				+ sNombreInstalacion + "');";
 
 		if (ConexionDB.executeUpdate(sql5) != 0) {
@@ -278,7 +143,83 @@ public class LineaPedidoController implements ILineaPedidoController {
 			String sql3 = "INSERT INTO LINEA_PEDIDO VALUES (" + iId + "," + iCantidad + ",'" + sTipo + "'," + iIdPedido
 					+ ",null,'" + sNombreMaterial + "','" + sNombreProveedor + "');";
 
-			if (ConexionDB.executeUpdate(sql3) != 0 && bAddPedido) {
+			if (ConexionDB.executeUpdate(sql3) != 0 && bAddPago && bAddPedido) {
+				dAdd = true;
+
+			}
+		}
+
+		return dAdd;
+	}
+
+	@Override
+	public java.sql.Date convert(java.util.Date uDate) {
+
+		java.sql.Date sDate = new java.sql.Date(uDate.getTime());
+		return sDate;
+	}
+
+	@Override
+	public boolean addSinPago(LineaPedido oLineaPedido) {
+		boolean dAdd = false;
+		String sNombreProducto = null;
+		String sNombreMaterial = null;
+
+		// #### PARA LINEA PEDIDO #######
+		int iId = 0;
+		int iCantidad = (int) oLineaPedido.getbCantidad();
+		String sTipo = oLineaPedido.getsTipo();
+
+		try {
+			sNombreProducto = oLineaPedido.getoProducto().getsNombreProducto();
+
+		} catch (Exception e) {
+			sNombreProducto = null;
+		}
+
+		try {
+			sNombreMaterial = oLineaPedido.getoMaterial().getsNombreMaterial();
+
+		} catch (Exception e) {
+			sNombreMaterial = null;
+		}
+
+		String sNombreProveedor = oLineaPedido.getoProveedor().getsNombreProveedor();
+
+		String sql = "SELECT * FROM LINEA_PEDIDO";
+
+		try {
+			Statement statement = ConexionDB.getConnection().createStatement();
+			ResultSet resultSet = statement.executeQuery(sql);
+			while (resultSet.next()) {
+
+				int iNumeroBD = resultSet.getInt("id_linea_pedido");
+				if (iId < iNumeroBD) {
+					iId = iNumeroBD;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		iId = iId + 1;
+
+		if (sNombreProducto != null && sNombreMaterial == null) {
+
+			String sql3 = "INSERT INTO LINEA_PEDIDO VALUES (" + iId + "," + iCantidad + ",'" + sTipo + "',null,'"
+					+ sNombreProducto + "',null,'" + sNombreProveedor + "');";
+
+			if (ConexionDB.executeUpdate(sql3) != 0) {
+				dAdd = true;
+
+			}
+
+		} else if (sNombreProducto == null && sNombreMaterial != null) {
+
+			String sql3 = "INSERT INTO LINEA_PEDIDO VALUES (" + iId + "," + iCantidad + ",'" + sTipo + "',null,null,'"
+					+ sNombreMaterial + "','" + sNombreProveedor + "');";
+
+			if (ConexionDB.executeUpdate(sql3) != 0) {
 				dAdd = true;
 
 			}
@@ -357,9 +298,10 @@ public class LineaPedidoController implements ILineaPedidoController {
 	}
 
 	@Override
-	public boolean searchPedidoProveedor(String sNombreProveedor) {
+	public boolean searchPedidoProveedor(Proveedor oProveedor) {
 		boolean bSearch = false;
 
+		String sNombreProveedor = oProveedor.getsNombreProveedor();
 		String sql = "SELECT COUNT(*) FROM LINEA_PEDIDO WHERE NOMBRE_PROVEEDOR = '" + sNombreProveedor + "';";
 
 		if (ConexionDB.executeCount(sql) != 0) {
@@ -369,9 +311,11 @@ public class LineaPedidoController implements ILineaPedidoController {
 	}
 
 	@Override
-	public String mostrarPedidoProveedor(String sNombreProveedor) {
+	public String mostrarPedidoProveedor(Proveedor oProveedor) {
 
 		String sPedidos = "No hay lineas de pedidos con ese proveedor";
+
+		String sNombreProveedor = oProveedor.getsNombreProveedor();
 
 		String sql2 = "SELECT COUNT(*) FROM LINEA_PEDIDO WHERE NOMBRE_PROVEEDOR = '" + sNombreProveedor + "';";
 
@@ -412,7 +356,7 @@ public class LineaPedidoController implements ILineaPedidoController {
 
 	@Override
 	public String mostrarPedidos() {
-		String sPedidos = "No hay pedidos ";
+		String sPedidos = "No hay pedidos";
 		String sNombre = null;
 
 		String sql2 = "SELECT COUNT(*) FROM LINEA_PEDIDO ;";
@@ -476,4 +420,33 @@ public class LineaPedidoController implements ILineaPedidoController {
 
 		return sPedidos;
 	}
+
+	@Override
+	public int autoId() {
+		int id = 1;
+
+		String sql = "SELECT * FROM LINEA_PEDIDO";
+
+		try {
+			Statement statement = ConexionDB.getConnection().createStatement();
+			ResultSet resultSet = statement.executeQuery(sql);
+
+			while (resultSet.next()) {
+
+				int idBD = resultSet.getInt("id_pedido");
+
+				if (idBD > id) {
+					id = idBD;
+				}
+			}
+
+			id = id + 1;
+			resultSet.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return id;
+	}
+
 }

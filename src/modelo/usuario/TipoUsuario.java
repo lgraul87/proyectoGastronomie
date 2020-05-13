@@ -17,7 +17,8 @@ public class TipoUsuario implements ITipoUsuario, LimitsDB {
 
 	private boolean setsNombreTipoUsuario(String sNombreTipoUsuario) {
 		boolean bValido = false;
-		if (sNombreTipoUsuario != null && sNombreTipoUsuario.length() <= MAX_CHAR_10) {
+		if (sNombreTipoUsuario != null && sNombreTipoUsuario.length() > MIN_CHAR_0
+				&& sNombreTipoUsuario.length() <= MAX_CHAR_10) {
 			this.sNombreTipoUsuario = sNombreTipoUsuario;
 		}
 		return bValido;
@@ -44,7 +45,7 @@ public class TipoUsuario implements ITipoUsuario, LimitsDB {
 	public boolean equals(Object obj) {
 		boolean bIgual = true;
 		TipoUsuario other = (TipoUsuario) obj;
-		if (this.checkTipoUsuario() && other.checkTipoUsuario()
+		if (this != null && other != null && this.checkTipoUsuario() && other.checkTipoUsuario()
 				&& this.sNombreTipoUsuario.equals(other.sNombreTipoUsuario)) {
 			bIgual = true;
 		}

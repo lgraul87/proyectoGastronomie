@@ -51,6 +51,8 @@ public class PedidoView {
 
 			String sBebida = L.leer("¡Que te pongo!\n--------------------------\nNombre: (Bebida)");
 
+			Producto oProducto = new Producto(sBebida);
+
 			errorControl = true;
 			do {
 				try {
@@ -77,10 +79,10 @@ public class PedidoView {
 			} while (errorControl);
 
 			if (bOption == 1) {
-				sPago = "efectivo";
+				sPago = "Efectivo";
 			}
 			if (bOption == 2) {
-				sPago = "tarjeta";
+				sPago = "Tarjeta";
 			}
 			MetodoPago oMetodoPago = new MetodoPago(sPago);
 
@@ -90,9 +92,10 @@ public class PedidoView {
 
 			TipoUsuario oTipoUsuario = new TipoUsuario("Cliente");
 			Instalacion oInstalacion = new Instalacion(sNombreLocal, "Central", 1000);
-			Usuario oUsuario = new Usuario("Cliente", "Cliente", "Cliente", oTipoUsuario);
 
-			Producto oProducto = controlGeneral.getProductoController().obtenerProducto(sBebida);
+			Usuario oUsuario = new Usuario("Cliente", "123456789", "Cliente", "Sin", oTipoUsuario);
+
+			oProducto = controlGeneral.getProductoController().obtenerProducto(oProducto);
 
 			if (oProducto != null) {
 
@@ -101,9 +104,11 @@ public class PedidoView {
 				if (controlGeneral.getProductoController().update(oProducto, bCantidad)) {
 
 					TipoProveedor oTipoProveedor = new TipoProveedor("Gastronomie");
-					Proveedor oProveedor = new Proveedor("Gastronomie", 654554321, "Gastronomie@gmail.com",
-							oTipoProveedor);
-					Pedido oPedido = new Pedido(iId, new Date(), oUsuario, oPago, oInstalacion);
+					Proveedor oProveedor = new Proveedor("Gastronomie", "654554321", "Gastronomie@gmail.com",
+							"Comercio 73", oTipoProveedor);
+					Pedido oPedido = new Pedido(controlGeneral.getLineaPedidoController().autoId(), new Date(),
+							oUsuario, oPago, oInstalacion);
+
 					LineaPedido oLineaPedido = new LineaPedido(iId, oPedido, oProducto, bCantidad, "Venta", oProveedor);
 					if (controlGeneral.getLineaPedidoController().add(oLineaPedido)) {
 						sResultado = "Aniadido correctamente: " + fPrecioTotal + " euros por favor.";
@@ -111,9 +116,10 @@ public class PedidoView {
 						int iNumero = contarExistencias(oProducto, controlGeneral);
 						if (iNumero < 10) {
 
-							new TipoUsuario("Admin");
+							oTipoUsuario = new TipoUsuario("Admin");
 
-							new Usuario("Raul", "49789078F", "Lora", 873299056, "lg@gmail.com", oTipoUsuario);
+							oUsuario = new Usuario("Raul", "49789078F", "Lora", "873299056", "lg@gmail.com", "Raul123",
+									oTipoUsuario);
 
 							oPedido = new Pedido(iId, new Date(), oUsuario, oInstalacion);
 
@@ -121,7 +127,7 @@ public class PedidoView {
 
 							LineaPedido oLineaPedidoRecarga = new LineaPedido(iId, oPedido, oProducto, bPedir, "Compra",
 									oProveedor);
-							if (controlGeneral.getLineaPedidoController().add(oLineaPedidoRecarga)) {
+							if (controlGeneral.getLineaPedidoController().addSinPago(oLineaPedidoRecarga)) {
 
 								System.out.println("Recargando");
 							}
@@ -143,6 +149,7 @@ public class PedidoView {
 
 			String sTapas = L.leer("¡Que te pongo!\n--------------------------\nNombre: (Tapa)");
 
+			Producto oProducto = new Producto(sTapas);
 			errorControl = true;
 			do {
 				try {
@@ -182,9 +189,10 @@ public class PedidoView {
 
 			TipoUsuario oTipoUsuario = new TipoUsuario("Cliente");
 			Instalacion oInstalacion = new Instalacion(sNombreLocal, "Central", 1000);
-			Usuario oUsuario = new Usuario("Cliente", "Cliente", "Cliente", oTipoUsuario);
 
-			Producto oProducto = controlGeneral.getProductoController().obtenerProducto(sTapas);
+			Usuario oUsuario = new Usuario("Cliente", "123456789", "Cliente", "Sin", oTipoUsuario);
+
+			oProducto = controlGeneral.getProductoController().obtenerProducto(oProducto);
 
 			if (oProducto != null) {
 
@@ -193,12 +201,11 @@ public class PedidoView {
 				if (controlGeneral.getProductoController().update(oProducto, bCantidad)) {
 
 					TipoProveedor oTipoProveedor = new TipoProveedor("Gastronomie");
-					Proveedor oProveedor = new Proveedor("Gastronomie", 654554321, "Gastronomie@gmail.com",
+					Proveedor oProveedor = new Proveedor("Gastronomie", "654554321", "Gastronomie@gmail.com",
 							oTipoProveedor);
 					Pedido oPedido = new Pedido(iId, new Date(), oUsuario, oPago, oInstalacion);
-					
-					
-				LineaPedido oLineaPedido = new LineaPedido(iId, oPedido, oProducto, bCantidad, "Venta", oProveedor);
+
+					LineaPedido oLineaPedido = new LineaPedido(iId, oPedido, oProducto, bCantidad, "Venta", oProveedor);
 					if (controlGeneral.getLineaPedidoController().add(oLineaPedido)) {
 						sResultado = "Aniadido correctamente: " + fPrecioTotal + " euros por favor.";
 						int iNumero = contarExistencias(oProducto, controlGeneral);
@@ -206,7 +213,8 @@ public class PedidoView {
 
 							oTipoUsuario = new TipoUsuario("Admin");
 
-							oUsuario = new Usuario("Raul", "49789078F", "Lora", 873299056, "lg@gmail.com", oTipoUsuario);
+							oUsuario = new Usuario("Raul", "49789078F", "Lora", "873299056", "lg@gmail.com", "Raul123",
+									oTipoUsuario);
 
 							oPedido = new Pedido(iId, new Date(), oUsuario, oInstalacion);
 
@@ -214,7 +222,7 @@ public class PedidoView {
 
 							LineaPedido oLineaPedidoRecarga = new LineaPedido(iId, oPedido, oProducto, bPedir, "Compra",
 									oProveedor);
-							if (controlGeneral.getLineaPedidoController().add(oLineaPedidoRecarga)) {
+							if (controlGeneral.getLineaPedidoController().addSinPago(oLineaPedidoRecarga)) {
 
 								System.out.println("Recargando");
 							}
@@ -265,6 +273,8 @@ public class PedidoView {
 
 			String sBebida = L.leer("¡Que te pongo!\n--------------------------\nNombre: (Bebida)");
 
+			Producto oProducto = new Producto(sBebida);
+
 			errorControl = true;
 			do {
 				try {
@@ -291,10 +301,10 @@ public class PedidoView {
 			} while (errorControl);
 
 			if (bOption == 1) {
-				sPago = "efectivo";
+				sPago = "Efectivo";
 			}
 			if (bOption == 2) {
-				sPago = "tarjeta";
+				sPago = "Tarjeta";
 			}
 			MetodoPago oMetodoPago = new MetodoPago(sPago);
 
@@ -304,9 +314,10 @@ public class PedidoView {
 
 			TipoUsuario oTipoUsuario = new TipoUsuario("Cliente");
 			Instalacion oInstalacion = new Instalacion(sNombreLocal, "Central", 1000);
-			Usuario oUsuario = new Usuario("Cliente", "Cliente", "Cliente", oTipoUsuario);
 
-			Producto oProducto = controlGeneral.getProductoController().obtenerProducto(sBebida);
+			Usuario oUsuario = new Usuario("Cliente", "123456789", "Cliente", "Sin", oTipoUsuario);
+
+			oProducto = controlGeneral.getProductoController().obtenerProducto(oProducto);
 
 			if (oProducto != null) {
 
@@ -315,12 +326,35 @@ public class PedidoView {
 				if (controlGeneral.getProductoController().update(oProducto, bCantidad)) {
 
 					TipoProveedor oTipoProveedor = new TipoProveedor("Gastronomie");
-					Proveedor oProveedor = new Proveedor("Gastronomie", 654554321, "Gastronomie@gmail.com",
-							oTipoProveedor);
-					Pedido oPedido = new Pedido(iId, new Date(), oUsuario, oPago, oInstalacion);
+					Proveedor oProveedor = new Proveedor("Gastronomie", "654554321", "Gastronomie@gmail.com",
+							"Comercio 73", oTipoProveedor);
+					Pedido oPedido = new Pedido(controlGeneral.getLineaPedidoController().autoId(), new Date(),
+							oUsuario, oPago, oInstalacion);
+
 					LineaPedido oLineaPedido = new LineaPedido(iId, oPedido, oProducto, bCantidad, "Venta", oProveedor);
 					if (controlGeneral.getLineaPedidoController().add(oLineaPedido)) {
 						sResultado = "Aniadido correctamente: " + fPrecioTotal + " euros por favor.";
+
+						int iNumero = contarExistencias(oProducto, controlGeneral);
+						if (iNumero < 10) {
+
+							oTipoUsuario = new TipoUsuario("Admin");
+
+							oUsuario = new Usuario("Raul", "49789078F", "Lora", "873299056", "lg@gmail.com", "Raul123",
+									oTipoUsuario);
+
+							oPedido = new Pedido(iId, new Date(), oUsuario, oInstalacion);
+
+							byte bPedir = 20;
+
+							LineaPedido oLineaPedidoRecarga = new LineaPedido(iId, oPedido, oProducto, bPedir, "Compra",
+									oProveedor);
+							if (controlGeneral.getLineaPedidoController().addSinPago(oLineaPedidoRecarga)) {
+
+								System.out.println("Recargando");
+							}
+						}
+
 					}
 				}
 
@@ -337,6 +371,7 @@ public class PedidoView {
 
 			String sTapas = L.leer("¡Que te pongo!\n--------------------------\nNombre: (Tapa)");
 
+			Producto oProducto = new Producto(sTapas);
 			errorControl = true;
 			do {
 				try {
@@ -376,9 +411,10 @@ public class PedidoView {
 
 			TipoUsuario oTipoUsuario = new TipoUsuario("Cliente");
 			Instalacion oInstalacion = new Instalacion(sNombreLocal, "Central", 1000);
-			Usuario oUsuario = new Usuario("Cliente", "Cliente", "Cliente", oTipoUsuario);
 
-			Producto oProducto = controlGeneral.getProductoController().obtenerProducto(sTapas);
+			Usuario oUsuario = new Usuario("Cliente", "123456789", "Cliente", "Sin", oTipoUsuario);
+
+			oProducto = controlGeneral.getProductoController().obtenerProducto(oProducto);
 
 			if (oProducto != null) {
 
@@ -387,17 +423,37 @@ public class PedidoView {
 				if (controlGeneral.getProductoController().update(oProducto, bCantidad)) {
 
 					TipoProveedor oTipoProveedor = new TipoProveedor("Gastronomie");
-					Proveedor oProveedor = new Proveedor("Gastronomie", 654554321, "Gastronomie@gmail.com",
+					Proveedor oProveedor = new Proveedor("Gastronomie", "654554321", "Gastronomie@gmail.com",
 							oTipoProveedor);
 					Pedido oPedido = new Pedido(iId, new Date(), oUsuario, oPago, oInstalacion);
+
 					LineaPedido oLineaPedido = new LineaPedido(iId, oPedido, oProducto, bCantidad, "Venta", oProveedor);
 					if (controlGeneral.getLineaPedidoController().add(oLineaPedido)) {
 						sResultado = "Aniadido correctamente: " + fPrecioTotal + " euros por favor.";
+						int iNumero = contarExistencias(oProducto, controlGeneral);
+						if (iNumero < 10) {
+
+							oTipoUsuario = new TipoUsuario("Admin");
+
+							oUsuario = new Usuario("Raul", "49789078F", "Lora", "873299056", "lg@gmail.com", "Raul123",
+									oTipoUsuario);
+
+							oPedido = new Pedido(iId, new Date(), oUsuario, oInstalacion);
+
+							byte bPedir = 20;
+
+							LineaPedido oLineaPedidoRecarga = new LineaPedido(iId, oPedido, oProducto, bPedir, "Compra",
+									oProveedor);
+							if (controlGeneral.getLineaPedidoController().addSinPago(oLineaPedidoRecarga)) {
+
+								System.out.println("Recargando");
+							}
+						}
+
 					}
 				}
 
 			}
-
 		}
 		System.out.println(sResultado);
 	}
@@ -406,27 +462,38 @@ public class PedidoView {
 	 * ADMIN
 	 ****************************************************************************************************/
 	public static void operacionesPedido(GeneralController controlGeneral) {
-		byte bOption;
+		byte bOption = 0;
+		boolean errorControl = true;
 		do {
-			bOption = (byte) L.valida(""
-					//
-					+ "*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
-					//
-					+ "\n	ADMINISTRACION"
-					//
-					+ "\n*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
-					//
-					+ "\n"
-					//
-					+ "\n  --Aniadir Pedido (Compras): 		(1)"
-					//
-					+ "\n  --Borrar Pedido (Compras):     	(2)"
-					//
-					+ "\n  --Buscar Pedido (Compras): 		(3)"
-					//
-					+ "\n  --Mostrar Pedido (Compras): 		(4)"
-					//
-					+ "\n  --Salir: 				(5)", 1, 5, 3);
+			try {
+				bOption = (byte) L.valida(""
+						//
+						+ "*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
+						//
+						+ "\n	ADMINISTRACION"
+						//
+						+ "\n*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
+						//
+						+ "\n"
+						//
+						+ "\n  --Aniadir Pedido (Compras): 		(1)"
+						//
+						+ "\n  --Borrar Pedido (Compras):     	(2)"
+						//
+						+ "\n  --Buscar Pedido (Compras): 		(3)"
+						//
+						+ "\n  --Mostrar Pedido (Compras): 		(4)"
+						//
+						+ "\n  --Salir: 				(5)", 1, 5, 3);
+
+				errorControl = false;
+
+			} catch (NumberFormatException e) {
+				System.out.println(e.getMessage());
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
 			//
 
 			if (bOption == 1) {
@@ -438,7 +505,7 @@ public class PedidoView {
 			} else if (bOption == 4) {
 				mostrarPedido(controlGeneral);
 			}
-		} while (bOption != 5);
+		} while (errorControl);
 	}
 
 	/***********************************************************************************************
@@ -459,7 +526,9 @@ public class PedidoView {
 		Proveedor oProveedor = null;
 		sDni = L.leer("Dni: (Usuario)");
 
-		Usuario oUsuario = determinarUsuarioPedido(sDni, controlGeneral);
+		Usuario oUsuario = new Usuario(sDni);
+
+		oUsuario = determinarUsuarioPedido(oUsuario, controlGeneral);
 
 		if (oUsuario != null) {
 
@@ -549,7 +618,9 @@ public class PedidoView {
 
 						String sNombreLocal = L.leer("Nombre: (Instalacion o Local)");
 
-						Instalacion oInstalacion = determinarInstalacion(sNombreLocal, controlGeneral);
+						Instalacion oInstalacion = new Instalacion(sNombreLocal);
+
+						oInstalacion = determinarInstalacion(oInstalacion, controlGeneral);
 
 						if (oInstalacion != null) {
 
@@ -567,7 +638,9 @@ public class PedidoView {
 
 						String sNombreLocal = L.leer("Nombre: (Instalacion o Local)");
 
-						Instalacion oInstalacion = determinarInstalacion(sNombreLocal, controlGeneral);
+						Instalacion oInstalacion = new Instalacion(sNombreLocal);
+
+						oInstalacion = determinarInstalacion(oInstalacion, controlGeneral);
 
 						if (oInstalacion != null) {
 							Pedido oPedido = new Pedido(iId, new Date(), oUsuario, oInstalacion);
@@ -590,9 +663,11 @@ public class PedidoView {
 
 				String sNombreMaterial = L.leer("Nombre: (Material)");
 
-				if (determinarMaterial(sNombreMaterial, controlGeneral)) {
+				Material oMaterial = new Material(sNombreMaterial);
 
-					oProveedor = obtenerProveedorMaterial(sNombreMaterial, controlGeneral);
+				if (determinarMaterial(oMaterial, controlGeneral)) {
+
+					oProveedor = obtenerProveedorMaterial(oMaterial, controlGeneral);
 
 					errorControl = true;
 					do {
@@ -618,7 +693,6 @@ public class PedidoView {
 						}
 					} while (errorControl);
 
-					Material oMaterial = null;
 					oMaterial = new Material(sNombreMaterial, fPrecio, (short) bCantidad, "Derivados");
 
 					errorControl = true;
@@ -660,7 +734,9 @@ public class PedidoView {
 
 						String sNombreLocal = L.leer("Nombre: (Instalacion o Local)");
 
-						Instalacion oInstalacion = determinarInstalacion(sNombreLocal, controlGeneral);
+						Instalacion oInstalacion = new Instalacion(sNombreLocal);
+
+						oInstalacion = determinarInstalacion(oInstalacion, controlGeneral);
 
 						if (oInstalacion != null) {
 
@@ -678,7 +754,9 @@ public class PedidoView {
 
 						String sNombreLocal = L.leer("Nombre: (Instalacion o Local)");
 
-						Instalacion oInstalacion = determinarInstalacion(sNombreLocal, controlGeneral);
+						Instalacion oInstalacion = new Instalacion(sNombreLocal);
+
+						oInstalacion = determinarInstalacion(oInstalacion, controlGeneral);
 
 						if (oInstalacion != null) {
 							Pedido oPedido = new Pedido(iId, new Date(), oUsuario, oInstalacion);
@@ -711,11 +789,13 @@ public class PedidoView {
 
 		int iNumero = 0;
 
-		String sResultado = "No se pudo borrar la linea de pedido";
+		String sResultado = "No hay pedidos";
 
-		String sAccion = controlGeneral.getLineaPedidoController().mostrarPedidosPorId();
-		System.out.println(sAccion);
-		if (!sAccion.equals("No hay lineas de pedidos")) {
+		if (!controlGeneral.getLineaPedidoController().mostrarPedidos().equals("No hay pedidos")) {
+
+			sResultado = "No se pudo borrar la linea de pedido";
+
+			System.out.println(controlGeneral.getLineaPedidoController().mostrarPedidosPorId());
 
 			boolean errorControl = true;
 			do {
@@ -732,21 +812,21 @@ public class PedidoView {
 			if (controlGeneral.getLineaPedidoController().remove(iNumero)) {
 				sResultado = "Linea de Pedido borrado";
 			}
-
-			System.out.println(sResultado);
-
 		}
+		System.out.println(sResultado);
+
 	}
 
 	/***********************************************************************************************
 	 * BUSCAR LINEA DE PEDIDO
 	 ***********************************************************************************************/
 	public static void buscarPedido(GeneralController controlGeneral) {
-		String sResultado = "Linea de Pedido no registrado";
 
-		String sAccion = controlGeneral.getLineaPedidoController().mostrarPedidosPorId();
-		System.out.println(sAccion);
-		if (!sAccion.equals("No hay lineas de pedidos")) {
+		String sResultado = "No hay pedidos";
+
+		if (!controlGeneral.getLineaPedidoController().mostrarPedidos().equals("No hay pedidos")) {
+
+			sResultado = "Linea de Pedido no registrado";
 
 			int iNumero = 0;
 			boolean errorControl = true;
@@ -764,10 +844,10 @@ public class PedidoView {
 			if (controlGeneral.getLineaPedidoController().search(iNumero)) {
 				sResultado = "Linea registrada";
 			}
-			System.out.println(sResultado);
-		} else {
-			System.out.println(sAccion);
+
 		}
+
+		System.out.println(sResultado);
 	}
 
 	/***********************************************************************************************
@@ -775,9 +855,9 @@ public class PedidoView {
 	 ***********************************************************************************************/
 	public static void mostrarPedido(GeneralController controlGeneral) {
 
-		String sResultado = null;
-		String sAccion = controlGeneral.getLineaPedidoController().mostrarPedidosPorId();
-		if (!sAccion.equals("No hay lineas de pedidos")) {
+		String sResultado = "No hay pedidos";
+
+		if (!controlGeneral.getLineaPedidoController().mostrarPedidos().equals("No hay pedidos")) {
 
 			byte bOption = 0;
 
@@ -805,28 +885,30 @@ public class PedidoView {
 
 				sNombreProveedor = L.leer("Nombre: (Proveedor)");
 
-				if (controlGeneral.getLineaPedidoController().searchPedidoProveedor(sNombreProveedor)) {
-					sResultado = controlGeneral.getLineaPedidoController().mostrarPedidoProveedor(sNombreProveedor);
+				Proveedor oProveedor = new Proveedor(sNombreProveedor);
+
+				if (controlGeneral.getLineaPedidoController().searchPedidoProveedor(oProveedor)) {
+					sResultado = controlGeneral.getLineaPedidoController().mostrarPedidoProveedor(oProveedor);
 
 				} else {
-					sResultado = "Pedido no encontrado";
+					sResultado = "No hay lineas de pedidos con ese proveedor";
 				}
 
 			} else if (bOption == 2) {
 				sResultado = controlGeneral.getLineaPedidoController().mostrarPedidos();
 			}
-			System.out.println(sResultado);
-		} else {
-			System.out.println(sAccion);
+
 		}
+
+		System.out.println(sResultado);
 	}
 
 	/*******************************************************************************************************************
 	 * OBTENER USUARIO A PARTIR DE UN DNI
 	 *******************************************************************************************************************/
-	public static Usuario determinarUsuarioPedido(String sDni, GeneralController controlGeneral) {
+	public static Usuario determinarUsuarioPedido(Usuario oUsuario, GeneralController controlGeneral) {
 
-		Usuario oUsuario = controlGeneral.getUsuarioController().determinarUsuarioPedido(sDni);
+		oUsuario = controlGeneral.getUsuarioController().determinarUsuarioPedido(oUsuario);
 
 		return oUsuario;
 	}
@@ -834,10 +916,10 @@ public class PedidoView {
 	/*******************************************************************************************************************
 	 * DETERMINAR MATERIAL
 	 *******************************************************************************************************************/
-	public static boolean determinarMaterial(String sNombreMaterial, GeneralController controlGeneral) {
+	public static boolean determinarMaterial(Material oMaterial, GeneralController controlGeneral) {
 		boolean bEncontrado = false;
 
-		if (controlGeneral.getMaterialProveedorController().determinarMaterial(sNombreMaterial)) {
+		if (controlGeneral.getMaterialProveedorController().determinarMaterial(oMaterial)) {
 			bEncontrado = true;
 		}
 
@@ -847,10 +929,10 @@ public class PedidoView {
 	/*******************************************************************************************************************
 	 * OBTENER PROVEEDOR A PARTIR DE UN MATERIAL
 	 *******************************************************************************************************************/
-	public static Proveedor obtenerProveedorMaterial(String sNombreMaterial, GeneralController controlGeneral) {
+	public static Proveedor obtenerProveedorMaterial(Material oMaterial, GeneralController controlGeneral) {
 		Proveedor oProveedor = null;
 
-		oProveedor = controlGeneral.getMaterialProveedorController().obtenerProveedorMaterial(sNombreMaterial);
+		oProveedor = controlGeneral.getMaterialProveedorController().obtenerProveedorMaterial(oMaterial);
 		return oProveedor;
 	}
 
@@ -881,10 +963,9 @@ public class PedidoView {
 	/*******************************************************************************************************************
 	 * DETERMINAR INSTALACION
 	 *******************************************************************************************************************/
-	public static Instalacion determinarInstalacion(String sNombreLocal, GeneralController controlGeneral) {
-		Instalacion oInstalacion = null;
+	public static Instalacion determinarInstalacion(Instalacion oInstalacion, GeneralController controlGeneral) {
 
-		oInstalacion = controlGeneral.getInstalacionController().determinarInstalacion(sNombreLocal);
+		oInstalacion = controlGeneral.getInstalacionController().determinarInstalacion(oInstalacion);
 		return oInstalacion;
 	}
 

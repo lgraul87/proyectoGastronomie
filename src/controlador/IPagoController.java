@@ -8,12 +8,12 @@ public interface IPagoController {
 
 	public java.sql.Date convert(java.util.Date uDate);
 
-	public String mostrarPago(int iId);
+	public String mostrarPago(Pago oPago);
 
 	public String mostrarPagos();
 
-	public boolean remove(int iNumero);
+	public boolean remove(Pago oPago);
 
-	public boolean search(int iNumero);
+	public boolean search(Pago oPago);
 
 }

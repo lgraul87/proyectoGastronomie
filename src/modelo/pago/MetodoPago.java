@@ -16,7 +16,7 @@ public class MetodoPago implements IMetodoPago, LimitsDB {
 
 	private boolean setsNombrePago(String sNombrePago) { // PK
 		boolean bValido = false;
-		if (sNombrePago != null && sNombrePago.length() <= MAX_CHAR_30) {
+		if (sNombrePago != null && sNombrePago.length() > MIN_CHAR_0 && sNombrePago.length() <= MAX_CHAR_30) {
 			this.sNombrePago = sNombrePago;
 
 		}
@@ -44,7 +44,8 @@ public class MetodoPago implements IMetodoPago, LimitsDB {
 	public boolean equals(Object obj) {
 		boolean bIgual = false;
 		MetodoPago other = (MetodoPago) obj;
-		if (this.checkMetodoPago() && other.checkMetodoPago() && this.sNombrePago.equals(other.sNombrePago)) {
+		if (this != null && other != null && this.checkMetodoPago() && other.checkMetodoPago()
+				&& this.sNombrePago.equals(other.sNombrePago)) {
 			bIgual = true;
 		}
 		return bIgual;

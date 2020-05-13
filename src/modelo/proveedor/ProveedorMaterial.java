@@ -19,7 +19,7 @@ public class ProveedorMaterial implements IProveedorMaterial{
 	@Override
 	public boolean setoMaterial(Material oMaterial) {
 		boolean bValido = false;
-		if (oMaterial.checkMaterial()) {
+		if (oMaterial != null && oMaterial.checkMaterial()) {
 			this.oMaterial = oMaterial;
 			bValido = true;
 		}
@@ -32,7 +32,7 @@ public class ProveedorMaterial implements IProveedorMaterial{
 	@Override
 	public boolean setoProveedor(Proveedor oProveedor) {
 		boolean bValido = false;
-		if (oProveedor.checkProveedor()) {
+		if (oProveedor!=null && oProveedor.checkProveedor()) {
 			this.oProveedor = oProveedor;
 			bValido = true;
 		}
@@ -41,7 +41,7 @@ public class ProveedorMaterial implements IProveedorMaterial{
 	@Override
 	public boolean checkProveedorMaterial() {
 		boolean bValido = false;
-		if (this.oMaterial != null && this.oProveedor != null) {
+		if (this.oMaterial != null && this.oProveedor != null && this.oProveedor.getoTipoProveedor().checkTipoProveedor()) {
 			bValido = true;
 
 		}
@@ -61,8 +61,8 @@ public class ProveedorMaterial implements IProveedorMaterial{
 	public boolean equals(Object obj) {
 		boolean bIgual = false;
 		ProveedorMaterial other = (ProveedorMaterial) obj;
-		if (this.checkProveedorMaterial() && other.checkProveedorMaterial() && this.oMaterial.equals(other.oMaterial)
-				&& this.oProveedor.equals(other.oProveedor)) {
+		if (this != null && other != null && this.checkProveedorMaterial() && other.checkProveedorMaterial() && this.oProveedor.getoTipoProveedor().checkTipoProveedor() && this.oMaterial.equals(other.oMaterial)
+				&& this.oProveedor.equals(other.oProveedor) && this.oProveedor.getoTipoProveedor().equals(other.oProveedor.getoTipoProveedor())) {
 			bIgual = true;
 		}
 		return bIgual;

@@ -10,13 +10,13 @@ public interface IProveedorController {
 
 	public boolean searchTipoProveedor(String sTipo);
 
-	public boolean remove(String sNombre);
+	public boolean remove(Proveedor oProveedor);
 
-	public boolean deleteProveedor(String sNombre);
+	public boolean deleteProveedor(Proveedor oProveedor);
 
-	public boolean searchProveedor(String sNombre);
+	public boolean searchProveedor(Proveedor oProveedor);
 
-	public String mostrarProveedor(String sNombre);
+	public String mostrarProveedor(Proveedor oProveedor);
 
 	public String mostrarProveedores();
 

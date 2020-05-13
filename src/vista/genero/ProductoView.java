@@ -10,27 +10,38 @@ public class ProductoView {
 	 * ADMIN
 	 ***********************************************************************************************/
 	public static void operacionesProducto(GeneralController controlGeneral) {
-		byte bOption;
+		byte bOption = 0;
+		boolean errorControl = true;
 		do {
-			bOption = (byte) L.valida(""
-					//
-					+ "*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
-					//
-					+ "\n		ADMINISTRACION"
-					//
-					+ "\n*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
-					//
-					+ "\n"
-					//
-					+ "\n  --Aniadir Producto (Compra): 		(1)"
-					//
-					+ "\n  --Borrar Producto (Compra):     	(2)"
-					//
-					+ "\n  --Buscar Producto (Compra): 		(3)"
-					//
-					+ "\n  --Mostrar Almacen (Producto): 	(4)"
-					//
-					+ "\n  --Salir: 				(5)", 1, 5, 3);
+			try {
+				bOption = (byte) L.valida(""
+						//
+						+ "*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
+						//
+						+ "\n		ADMINISTRACION"
+						//
+						+ "\n*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *"
+						//
+						+ "\n"
+						//
+						+ "\n  --Aniadir Producto (Compra): 		(1)"
+						//
+						+ "\n  --Borrar Producto (Compra):     	(2)"
+						//
+						+ "\n  --Buscar Producto (Compra): 		(3)"
+						//
+						+ "\n  --Mostrar Almacen (Producto): 	(4)"
+						//
+						+ "\n  --Salir: 				(5)", 1, 5, 3);
+
+				errorControl = false;
+
+			} catch (NumberFormatException e) {
+				System.out.println(e.getMessage());
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
 			//
 
 			if (bOption == 1) {
@@ -42,7 +53,7 @@ public class ProductoView {
 			} else if (bOption == 4) {
 				mostrarAlmacen(controlGeneral);
 			}
-		} while (bOption != 5);
+		} while (errorControl);
 	}
 
 	public static void aniadirProducto(GeneralController controlGeneral) {
@@ -112,65 +123,87 @@ public class ProductoView {
 
 	public static void borrarProducto(GeneralController controlGeneral) {
 
-		String sResultado = "No se pudo borrar";
+		String sResultado = "No hay productos";
 
-		String sNombre = L.leer("Nombre (Producto): ");
+		if (!controlGeneral.getProductoController().mostrarProductos().equals("No hay productos")) {
+			sResultado = "No se pudo borrar";
 
-		if (controlGeneral.getProductoController().remove(sNombre)) {
-			sResultado = "borrado correctamente";
+			System.out.println(controlGeneral.getProductoController().mostrarProductos());
+
+			String sNombre = L.leer("Nombre (Producto): ");
+
+			Producto oProducto = new Producto(sNombre);
+
+			if (controlGeneral.getProductoController().remove(oProducto)) {
+				sResultado = "borrado correctamente";
+			}
 		}
 		System.out.println(sResultado);
 	}
 
 	public static void buscarProducto(GeneralController controlGeneral) {
 
-		String sResultado = "No esta registrado.";
+		String sResultado = "No hay productos";
 
-		String sNombre = L.leer("Nombre (Producto): ");
+		if (!controlGeneral.getProductoController().mostrarProductos().equals("No hay productos")) {
 
-		if (controlGeneral.getProductoController().search(sNombre)) {
-			sResultado = "Encontrado, esta registrado.";
+			System.out.println(controlGeneral.getProductoController().mostrarProductos());
+
+			sResultado = "No esta registrado.";
+
+			String sNombre = L.leer("Nombre (Producto): ");
+
+			Producto oProducto = new Producto(sNombre);
+
+			if (controlGeneral.getProductoController().search(oProducto)) {
+				sResultado = "Encontrado, esta registrado.";
+			}
 		}
 		System.out.println(sResultado);
 	}
 
 	public static void mostrarAlmacen(GeneralController controlGeneral) {
-		String sResultado = null;
+		String sResultado = "No hay productos";
 
-		byte bOption = 0;
+		if (!controlGeneral.getProductoController().mostrarProductos().equals("No hay productos")) {
 
-		boolean errorControl = true;
+			byte bOption = 0;
 
-		do {
-			try {
-				bOption = (byte) L.valida(""
-						//
-						+ "Un Producto: 		(1)"
-						//
-						+ "\nLista de Productos: 	(2)", 1, 2, 3);
+			boolean errorControl = true;
 
-				errorControl = false;
+			do {
+				try {
+					bOption = (byte) L.valida(""
+							//
+							+ "Un Producto: 		(1)"
+							//
+							+ "\nLista de Productos: 	(2)", 1, 2, 3);
 
-			} catch (NumberFormatException e) {
-				System.out.println(e.getMessage());
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
+					errorControl = false;
+
+				} catch (NumberFormatException e) {
+					System.out.println(e.getMessage());
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			} while (errorControl);
+
+			if (bOption == 1) {
+
+				String sNombre = L.leer("Nombre (Producto):");
+
+				Producto oProducto = new Producto(sNombre);
+
+				if (controlGeneral.getProductoController().search(oProducto)) {
+					sResultado = controlGeneral.getProductoController().mostrarProducto(oProducto);
+
+				} else {
+					sResultado = "Producto no encontrado";
+				}
+
+			} else if (bOption == 2) {
+				sResultado = controlGeneral.getProductoController().mostrarProductos();
 			}
-		} while (errorControl);
-
-		if (bOption == 1) {
-
-			String sNombre = L.leer("Nombre (Producto):");
-
-			if (controlGeneral.getProductoController().search(sNombre)) {
-				sResultado = controlGeneral.getProductoController().mostrarProducto(sNombre);
-
-			} else {
-				sResultado = "Producto no encontrado";
-			}
-
-		} else if (bOption == 2) {
-			sResultado = controlGeneral.getProductoController().mostrarProductos();
 		}
 		System.out.println(sResultado);
 	}

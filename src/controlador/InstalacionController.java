@@ -29,8 +29,11 @@ public class InstalacionController implements IInstalacionController {
 		return bAniadio;
 	}
 	@Override
-	public boolean remove(String sNombre) {
+	public boolean remove(Instalacion oInstalacion) {
 		boolean bDelete = false;
+		
+		String sNombre = oInstalacion.getsNombreInstalacion();
+		
 		String sql = "DELETE FROM INSTALACION WHERE NOMBRE = '" + sNombre + "';";
 		if (ConexionDB.executeUpdate(sql) > 0) {
 			bDelete = true;
@@ -39,9 +42,11 @@ public class InstalacionController implements IInstalacionController {
 		return bDelete;
 	}
 	@Override
-	public boolean search(String sNombre) {
+	public boolean search(Instalacion oInstalacion) {
 
 		boolean bSearch = false;
+		
+		String sNombre = oInstalacion.getsNombreInstalacion();
 
 		String sql = "SELECT COUNT(*) FROM INSTALACION WHERE NOMBRE = '" + sNombre + "';";
 
@@ -52,9 +57,11 @@ public class InstalacionController implements IInstalacionController {
 		return bSearch;
 	}
 	@Override
-	public String mostrarInstalacion(String sNombre) {
+	public String mostrarInstalacion(Instalacion oInstalacion) {
 
 		String sInstalacion = "No hay esa instalacion";
+		
+		String sNombre = oInstalacion.getsNombreInstalacion();
 
 		String sql = "SELECT * FROM INSTALACION WHERE NOMBRE = '" + sNombre + "';";
 
@@ -126,9 +133,11 @@ public class InstalacionController implements IInstalacionController {
 		return sInstalacion;
 	}
 	@Override
-	public Instalacion determinarInstalacion(String sNombreLocal) {
+	public Instalacion determinarInstalacion(Instalacion oInstalacion) {
 
-		Instalacion oInstalacion = null;
+		
+		
+		String sNombreLocal = oInstalacion.getsNombreInstalacion();
 		
 		String sql2 = "SELECT COUNT(*) FROM INSTALACION WHERE NOMBRE = '" + sNombreLocal + "';";
 		

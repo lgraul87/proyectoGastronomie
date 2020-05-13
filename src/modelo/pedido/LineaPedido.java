@@ -9,14 +9,14 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 
 	private int iIdLineaPedido; // PK
 	private Pedido oPedido; // FK
-	private Material oMaterial; // FK
-	private Producto oProducto; // FK
+	private Material oMaterial; // FK Puede estar o no
+	private Producto oProducto; // FK Puede estar o no
 	private byte bCantidad;// NN
-	private String sTipo;
-	private Proveedor oProveedor;
+	private String sTipo;// NN
+	private Proveedor oProveedor;// NN
 
-	public LineaPedido(int iIdLineaPedido, Pedido oPedido, Material oMaterial, byte bCantidad, String sTipo,
-			Proveedor oProveedor) {
+	public LineaPedido(int iIdLineaPedido, Pedido oPedido, Material oMaterial, byte bCantidad,
+			String sTipo, Proveedor oProveedor) {
 		setiIdLineaPedido(iIdLineaPedido);
 		setoPedido(oPedido);
 		setoMaterial(oMaterial);
@@ -25,15 +25,19 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 		setoProveedor(oProveedor);
 
 	}
-
-	public LineaPedido(int iIdLineaPedido, Pedido oPedido, Producto oProducto, byte bCantidad, String sTipo,
-			Proveedor oProveedor) {
+	public LineaPedido(int iIdLineaPedido, Pedido oPedido, Producto oProducto, byte bCantidad,
+			String sTipo, Proveedor oProveedor) {
 		setiIdLineaPedido(iIdLineaPedido);
 		setoPedido(oPedido);
 		setoProducto(oProducto);
 		setbCantidad(bCantidad);
 		setsTipo(sTipo);
 		setoProveedor(oProveedor);
+
+	}
+
+	public LineaPedido(int iIdLineaPedido) {
+		setiIdLineaPedido(iIdLineaPedido);
 
 	}
 
@@ -61,8 +65,9 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 	@Override
 	public boolean setoPedido(Pedido oPedido) {
 		boolean bValido = false;
-		if (oPedido != null) {
+		if (oPedido != null && oPedido.checkPedido()) {
 			this.oPedido = oPedido;
+			bValido = true;
 		}
 		return bValido;
 
@@ -76,9 +81,14 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 	@Override
 	public boolean setoMaterial(Material oMaterial) {
 		boolean bValido = false;
-		if (oMaterial != null) {
+		if (oMaterial != null && oMaterial.checkMaterial()) {
 			this.oMaterial = oMaterial;
+			bValido = true;
+
+		} else {
+			this.oMaterial = null;
 		}
+		bValido = true;
 		return bValido;
 
 	}
@@ -91,9 +101,14 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 	@Override
 	public boolean setoProducto(Producto oProducto) {
 		boolean bValido = false;
-		if (oProducto != null) {
+		if (oProducto != null && oProducto.checkProducto()) {
 			this.oProducto = oProducto;
+			bValido = true;
+
+		} else {
+			this.oProducto = null;
 		}
+		bValido = true;
 		return bValido;
 
 	}
@@ -123,21 +138,21 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 	@Override
 	public boolean setsTipo(String sTipo) {
 		boolean bValido = false;
-		if (sTipo.equals(COMPRAS) || sTipo.equals(VENTAS)) {
+		if (sTipo != null && sTipo.equals(COMPRAS) || sTipo != null && sTipo.equals(VENTAS)) {
 			this.sTipo = sTipo;
 			bValido = true;
 		}
 		return bValido;
 
 	}
-
+	@Override
 	public Proveedor getoProveedor() {
 		return this.oProveedor;
 	}
 
 	public boolean setoProveedor(Proveedor oProveedor) {
 		boolean bValido = false;
-		if (oProveedor != null) {
+		if (oProveedor != null && oProveedor.checkProveedor()) {
 			this.oProveedor = oProveedor;
 			bValido = true;
 		}
@@ -147,8 +162,9 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 	@Override
 	public boolean checkLineaPedido() {
 		boolean bValido = false;
-		if (this.iIdLineaPedido != -1 && this.oPedido != null && this.oMaterial != null && this.bCantidad != -1
-				|| this.iIdLineaPedido != -1 && this.oPedido != null && this.oProducto != null
+		if (this.iIdLineaPedido != -1 && this.oPedido != null && this.oMaterial != null && this.oProducto == null
+				&& this.bCantidad != -1
+				|| this.iIdLineaPedido != -1 && this.oPedido != null && this.oMaterial == null && this.oProducto != null
 						&& this.bCantidad != -1) {
 			bValido = true;
 		}
@@ -167,7 +183,8 @@ public class LineaPedido implements ILineaPedido, LimitsDB {
 	public boolean equals(Object obj) {
 		boolean bIgual = false;
 		LineaPedido other = (LineaPedido) obj;
-		if (checkLineaPedido() && other.checkLineaPedido() && this.iIdLineaPedido == other.iIdLineaPedido) {
+		if (this != null && other != null && checkLineaPedido() && other.checkLineaPedido()
+				&& this.iIdLineaPedido == other.iIdLineaPedido) {
 			bIgual = true;
 		}
 		return bIgual;

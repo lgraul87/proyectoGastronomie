@@ -11,7 +11,7 @@ public class Pedido implements IPedido, LimitsDB {
 	private int iIdPedido; // PK
 	private Date dFecha; // NN
 	private Usuario oUsuario; // FK
-	private Pago oPago; // FK
+	private Pago oPago; // FK puede estar o no
 	private Instalacion oInstalacion; // FK
 
 	public Pedido(int iIdPedido, Date dFecha, Usuario oUsuario, Pago oPago, Instalacion oInstalacion) {
@@ -23,6 +23,7 @@ public class Pedido implements IPedido, LimitsDB {
 		setoInstalacion(oInstalacion);
 
 	}
+
 	public Pedido(int iIdPedido, Date dFecha, Usuario oUsuario, Instalacion oInstalacion) {
 
 		setiIdPedido(iIdPedido);
@@ -31,15 +32,21 @@ public class Pedido implements IPedido, LimitsDB {
 		setoInstalacion(oInstalacion);
 
 	}
-	
+
+	public Pedido(int iIdPedido) {
+
+		setiIdPedido(iIdPedido);
+
+	}
+
 	@Override
 	public int getiIdPedido() {
 		return this.iIdPedido;
 	}
-	
+
 	private boolean setiIdPedido(int iIdPedido) {
 		boolean bValido = false;
-		if (iIdPedido >= MIN_INT_0 && iIdPedido <= MAX_INT_100) {
+		if (iIdPedido > MIN_INT_0 && iIdPedido <= MAX_INT_10000000) {
 			this.iIdPedido = iIdPedido;
 			bValido = true;
 		} else {
@@ -47,10 +54,12 @@ public class Pedido implements IPedido, LimitsDB {
 		}
 		return bValido;
 	}
+
 	@Override
 	public Date getdFecha() {
 		return this.dFecha;
 	}
+
 	@Override
 	public boolean setdFecha(Date dFecha) {
 		boolean bValido = false;
@@ -59,47 +68,56 @@ public class Pedido implements IPedido, LimitsDB {
 		}
 		return bValido;
 	}
+
 	@Override
 	public Usuario getoUsuario() {
 		return this.oUsuario;
 	}
+
 	@Override
 	public boolean setoUsuario(Usuario oUsuario) {
 		boolean bValido = false;
-		if (oUsuario != null) {
+		if (oUsuario != null && oUsuario.checkUsuario()) {
 			this.oUsuario = oUsuario;
 		}
 		return bValido;
 	}
+
 	@Override
 	public Pago getoPago() {
 		return oPago;
 	}
+
 	@Override
 	public boolean setoPago(Pago oPago) {
 		boolean bValido = false;
-		if (oPago != null) {
+		if (oPago != null && oPago.checkPago()) {
 			this.oPago = oPago;
 		}
 		return bValido;
 	}
+
 	@Override
 	public Instalacion getoInstalacion() {
 		return this.oInstalacion;
 	}
+
 	@Override
 	public boolean setoInstalacion(Instalacion oInstalacion) {
 		boolean bValido = false;
-		if (oInstalacion != null) {
+		if (oInstalacion != null && oInstalacion.checkInstalacion()) {
 			this.oInstalacion = oInstalacion;
 		}
 		return bValido;
 	}
+
 	@Override
 	public boolean checkPedido() {
 		boolean bValido = false;
 		if (this.iIdPedido != -1 && this.dFecha != null && this.oInstalacion != null && this.oUsuario != null
-				&& this.oPago != null) {
+				&& this.oPago != null && this.oUsuario.checkUsuario()
+				&& this.oUsuario.getoTipoUsuario().checkTipoUsuario() && this.oPago.checkPago()
+				&& this.oPago.getoMetodoPago().checkMetodoPago()) {
 			bValido = true;
 
 		}
@@ -118,7 +136,7 @@ public class Pedido implements IPedido, LimitsDB {
 	public boolean equals(Object obj) {
 		boolean bIgual = false;
 		Pedido other = (Pedido) obj;
-		if (checkPedido() && other.checkPedido() && this.iIdPedido == other.iIdPedido) {
+		if (this != null && other != null && checkPedido() && other.checkPedido() && this.iIdPedido == other.iIdPedido) {
 			bIgual = true;
 		}
 		return bIgual;

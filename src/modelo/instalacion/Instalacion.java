@@ -22,6 +22,10 @@ public class Instalacion implements IInstalacion, LimitsDB {
 		setsDireccion(sDireccion);
 		setfCuotaMensual(fCuotaMensual);
 	}
+	
+	public Instalacion(String sNombreInstalacion) {
+		setsNombreInstalacion(sNombreInstalacion);
+	}
 
 	@Override
 	public String getsNombreInstalacion() {
@@ -30,7 +34,8 @@ public class Instalacion implements IInstalacion, LimitsDB {
 
 	private boolean setsNombreInstalacion(String sNombreInstalacion) { // PK
 		boolean bValido = false;
-		if (sNombreInstalacion != null && sNombreInstalacion.length() <= MAX_CHAR_30) {
+		if (sNombreInstalacion != null && sNombreInstalacion.length() > MIN_CHAR_0
+				&& sNombreInstalacion.length() <= MAX_CHAR_30) {
 			this.sNombreInstalacion = sNombreInstalacion;
 			bValido = true;
 		}
@@ -45,7 +50,7 @@ public class Instalacion implements IInstalacion, LimitsDB {
 	@Override
 	public boolean setsDescripcion(String sDescripcion) {
 		boolean bValido = false;
-		if (sDescripcion != null && sDescripcion.length() <= MAX_CHAR_100) {
+		if (sDescripcion != null && sDescripcion.length() > MIN_CHAR_0 && sDescripcion.length() <= MAX_CHAR_100) {
 			this.sDescripcion = sDescripcion;
 			bValido = true;
 		}
@@ -60,7 +65,7 @@ public class Instalacion implements IInstalacion, LimitsDB {
 	@Override
 	public boolean setsDireccion(String sDireccion) {
 		boolean bValido = false;
-		if (sDireccion != null && sDireccion.length() <= MAX_CHAR_40) {
+		if (sDireccion != null && sDireccion.length() > MIN_CHAR_0 && sDireccion.length() <= MAX_CHAR_40) {
 			this.sDireccion = sDireccion;
 			bValido = true;
 		}
@@ -105,7 +110,7 @@ public class Instalacion implements IInstalacion, LimitsDB {
 	public boolean equals(Object obj) {
 		boolean bIgual = false;
 		Instalacion other = (Instalacion) obj;
-		if (this.checkInstalacion() && other.checkInstalacion()
+		if (this != null && other != null && this.checkInstalacion() && other.checkInstalacion()
 				&& this.sNombreInstalacion.equals(other.sNombreInstalacion)) {
 			bIgual = true;
 		}

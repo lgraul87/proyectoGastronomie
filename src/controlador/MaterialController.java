@@ -28,8 +28,10 @@ public class MaterialController implements IMaterialController{
 	}
 
 	@Override
-	public boolean remove(String sNombre) {
+	public boolean remove(Material oMaterial) {
 		boolean bDelete = false;
+		
+		String sNombre = oMaterial.getsNombreMaterial();
 		String sql = "DELETE FROM MATERIAL WHERE NOMBRE_MATERIAL = '" + sNombre + "';";
 		if (ConexionDB.executeUpdate(sql) > 0) {
 			bDelete = true;
@@ -39,8 +41,11 @@ public class MaterialController implements IMaterialController{
 	}
 
 	@Override
-	public boolean search(String sNombre) {
+	public boolean search(Material oMaterial) {
 		boolean bSearch = false;
+		
+		String sNombre = oMaterial.getsNombreMaterial();
+		
 		String sql = "SELECT COUNT(*) FROM MATERIAL WHERE NOMBRE_MATERIAL = '" + sNombre + "';";
 
 		int iCount = 0;
@@ -67,8 +72,10 @@ public class MaterialController implements IMaterialController{
 	}
 
 	@Override
-	public String mostrarMaterial(String sNombre) {
+	public String mostrarMaterial(Material oMaterial) {
 		String sMaterial = "";
+		
+		String sNombre = oMaterial.getsNombreMaterial();
 
 		String sql = "SELECT * FROM MATERIAL WHERE NOMBRE_MATERIAL = '" + sNombre + "';";
 

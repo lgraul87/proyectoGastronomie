@@ -1,6 +1,7 @@
 package controlador;
 
 import modelo.pedido.LineaPedido;
+import modelo.proveedor.Proveedor;
 
 public interface ILineaPedidoController {
 
@@ -16,10 +17,12 @@ public interface ILineaPedidoController {
 
 	public java.sql.Date convert(java.util.Date uDate);
 
-	public boolean searchPedidoProveedor(String sNombreProveedor);
+	public boolean searchPedidoProveedor(Proveedor oProveedor);
 
-	public String mostrarPedidoProveedor(String sNombreProveedor);
+	public String mostrarPedidoProveedor(Proveedor oProveedor);
 
 	public String mostrarPedidos();
+	
+	public int autoId();
 
 }

@@ -3,7 +3,10 @@ package modelo.limitdb;
 public interface LimitsDB {
 
 	// ------- CHAR -----------//
-	public final int MAX_CHAR_9 = 9;
+	public final byte CHAR_TELEFONO_9 = 9;
+	public final byte CHAR_DNI_9 = 9;
+
+	public final int MIN_CHAR_0 = 0;
 	public final int MAX_CHAR_10 = 10;
 	public final int MAX_CHAR_15 = 15;
 	public final int MAX_CHAR_20 = 20;
@@ -11,6 +14,8 @@ public interface LimitsDB {
 	public final int MAX_CHAR_40 = 40;
 	public final int MAX_CHAR_50 = 50;
 	public final int MAX_CHAR_100 = 100;
+	public final int MAX_CHAR_250 = 250;
+
 
 	// ------- NUMERIC -----------//
 

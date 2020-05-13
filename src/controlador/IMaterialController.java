@@ -6,11 +6,11 @@ public interface IMaterialController {
 
 	public boolean add(Material oMaterial);
 
-	public boolean remove(String sNombre);
+	public boolean remove(Material oMaterial);
 
-	public boolean search(String sNombre);
+	public boolean search(Material oMaterial);
 
-	public String mostrarMaterial(String sNombre);
+	public String mostrarMaterial(Material oMaterial);
 
 	public String mostrarMateriales();
 

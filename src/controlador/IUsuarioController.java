@@ -10,16 +10,21 @@ public interface IUsuarioController {
 
 	public boolean searchTipoUsuario(String sTipo);
 
-	public boolean remove(String sDni);
+	public boolean remove(Usuario oUsuario);
 
-	public boolean deleteUser(String sDni);
+	public boolean deleteUser(Usuario oUsuario);
 
-	public boolean searchUser(String sDni);
+	public boolean searchUser(Usuario oUsuario);
 
-	public String mostrarUsuario(String sDni);
+	public String mostrarUsuario(Usuario oUsuario);
 
 	public String mostrarUsuarios();
 
-	public Usuario determinarUsuarioPedido(String sDni);
+	public Usuario determinarUsuarioPedido(Usuario oUsuario);
+
+	public boolean login(String hash);
+	
+	
+	
 
 }

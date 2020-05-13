@@ -2,6 +2,7 @@ package modelo.pedido;
 
 import modelo.genero.Material;
 import modelo.genero.Producto;
+import modelo.proveedor.Proveedor;
 
 public interface ILineaPedido {
 
@@ -37,5 +38,7 @@ public interface ILineaPedido {
 	public boolean equals(Object obj);
 
 	public String toString();
+
+	public Proveedor getoProveedor();
 
 }

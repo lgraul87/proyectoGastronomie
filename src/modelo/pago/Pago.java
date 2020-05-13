@@ -16,6 +16,12 @@ public class Pago implements IPago, LimitsDB {
 		setoMetodoPago(oMetodoPago);
 
 	}
+	public Pago(int iIdPago) {
+		setiIdPago(iIdPago);
+	
+	}
+	
+
 	@Override
 	public int getiIdPago() {
 		return this.iIdPago;
@@ -31,10 +37,12 @@ public class Pago implements IPago, LimitsDB {
 		}
 		return bValido;
 	}
+
 	@Override
 	public Date getdFecha() {
 		return this.dFecha;
 	}
+
 	@Override
 	public boolean setdFecha(Date dFecha) {
 		boolean bValido = false;
@@ -44,10 +52,12 @@ public class Pago implements IPago, LimitsDB {
 		}
 		return bValido;
 	}
+
 	@Override
 	public MetodoPago getoMetodoPago() {
 		return this.oMetodoPago;
 	}
+
 	@Override
 	public boolean setoMetodoPago(MetodoPago oMetodoPago) {
 		boolean bValido = false;
@@ -57,10 +67,12 @@ public class Pago implements IPago, LimitsDB {
 		}
 		return bValido;
 	}
+
 	@Override
 	public boolean checkPago() {
 		boolean bValido = false;
-		if (this.iIdPago != -1 && this.dFecha != null && this.oMetodoPago != null) {
+		if (this.iIdPago != -1 && this.dFecha != null && this.oMetodoPago != null
+				&& this.oMetodoPago.checkMetodoPago()) {
 			bValido = true;
 		}
 		return bValido;
@@ -78,7 +90,7 @@ public class Pago implements IPago, LimitsDB {
 	public boolean equals(Object obj) {
 		boolean bIgual = false;
 		Pago other = (Pago) obj;
-		if (this.checkPago() && other.checkPago() && this.iIdPago == other.iIdPago) {
+		if (this != null && other != null && this.checkPago() && other.checkPago() && this.iIdPago == other.iIdPago) {
 			bIgual = true;
 		}
 		return bIgual;
@@ -88,7 +100,7 @@ public class Pago implements IPago, LimitsDB {
 	public String toString() {
 		return "  -- Nº: " + this.iIdPago + "\n"
 		//
-				+ "  --Type: " + this.oMetodoPago.toString() 
+				+ "  --Type: " + this.oMetodoPago.toString()
 				//
 				+ "  --Fecha: " + this.dFecha + "\n";
 	}
